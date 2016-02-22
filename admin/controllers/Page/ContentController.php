@@ -86,66 +86,13 @@ class ContentController extends \Admin\Controller\AdminController
         $this->oView->display_length = $display_length;
 
         $this->oView->add_link = site_url("page/content/add/".$page_code);
-        $this->oView->delete_link = site_url("page/content/delete/".$page_code);
+        $this->oView->delete_link = site_url("page/content/delete-content/".$page_code);
         $this->oView->update_link = site_url("page/content/update/".$page_code);
         $this->oView->active_link = site_url("page/content/switch-status/".$page_code);
         $this->oView->load_data_link = site_url("page/content/load-data-content/".$page_code.'/'.$cat_id);
 
         $this->renderView('page/content/list');
     }
-
-
-// 	public function listAction($page_code, $offset = 0, $by = 'sort_order', $order = 'DESC')
-	public function listSAVEAction($page_code, $cat_id = 0)
-	{
-		$this->_loadConfigPage($page_code);
-		
-		$cat_id = intval($cat_id);
-		$offset = $this->oInput->get('offset', 0);
-		$by = $this->oInput->get('by', 'sort_order');
-		$order = $this->oInput->get('order', 'DESC');
-		
-		if(df($this->_rowPageConf['data']['use_category'], 0) == 1)
-		{
-			// --- Use Category ---//
-			$objCat = new Category();
-			$this->oView->arrMenuTree = $objCat->loadMenuTree($this->_page_id, $this->_confLn['default_lang']);
-			
-			$currentCategoryName = "--- Filter Category ---";
-			if($cat_id != 0)
-			{
-				$row = $objCat->getRowDataCategory($cat_id);
-				$currentCategoryName = $row['ln_cat_field']["{$this->_confLn['default_lang']}"]['name'];
-			}
-			$this->oView->currentCategoryName = $currentCategoryName;
-		}
-		
-		$this->oView->add_link = site_url("page/content/add/".$page_code);
-		$this->oView->delete_link = site_url("page/content/delete/".$page_code);
-		$this->oView->update_link = site_url("page/content/update/".$page_code);
-		$this->oView->active_link = site_url("page/content/active/".$page_code);
-		
-		$offset = intval($offset);
-		$offset = ($offset % $this->_items_per_page != 0 ? 0 : $offset);
-
-		$rowPageConf = $this->_objPageConf->getRow("code = ?", array($page_code));
-		$page_id = $rowPageConf['id'];
-		
-		$rsContent = $this->_objPageContent->getListDisplay($page_id, $this->_confLn['default_lang'], $cat_id, $offset, $this->_items_per_page, "{$by} {$order}");
-		$this->oView->rsContent = $rsContent;
-		
-		$oPaginator = new Paginator();
-        $oPaginator->current_url = site_url("page/content/list/{$page_code}/{$cat_id}?offset=%d&by={$by}&order={$order}");
-        $oPaginator->offset = $offset;
-        $oPaginator->items_per_page = $this->_items_per_page;
-        $oPaginator->items_total = $this->_objPageContent->getTotalRow('page_id = ?', array($page_id));
-        $oPaginator->mid_range = 7;
-        $oPaginator->paginate();
-
-		$this->oView->oPaginator = $oPaginator;
-		
-    	$this->renderView('page/content/list');
-	}
 
 	public function addAction($page_code)
 	{
@@ -307,11 +254,45 @@ class ContentController extends \Admin\Controller\AdminController
 		$this->oView->arrLnImage = $arrLnImage;
 		
 		$this->oView->arrGalleryField = $arrGalleryField;
-		
-	
+
 		$this->renderView('page/content/_form');
 	}
-	
+
+    public function deleteContentAction($page_code, $content_id)
+    {
+        $returnVal['result'] = false;
+        $returnVal['message'] = '';
+        $returnVal['data'] = '';
+        // Load permission
+        $this->detectModifyPermission('page/content/'.$page_code);
+        if ($this->_isModify) {
+            $rowContent = $this->_objPageContent->getRowDataContent($content_id);
+            if (!empty($rowContent))
+            {
+                $result = $this->_objPageContent->deleteContent($content_id);
+                if ($result)
+                {
+                    // Delete image , get info from $rowContent
+                    @unlink(__UPLOAD_DATA_PATH.$rowContent['main_field']['icon']);
+                    @unlink(__UPLOAD_DATA_PATH.$rowContent['main_field']['image']);
+                    @unlink(__UPLOAD_DATA_PATH.'thumb_'.$rowContent['main_field']['image']);
+                    foreach ($rowContent['ln_field'] as $ln => $value) {
+                        @unlink(__UPLOAD_DATA_PATH.$value['ln_icon']);
+                        @unlink(__UPLOAD_DATA_PATH.$value['ln_image']);
+                        @unlink(__UPLOAD_DATA_PATH.'thumb_'.$value['ln_image']);
+                    }
+                }
+                $returnVal['result'] = true;
+            }
+        }
+        // -- Demo sleep --
+        sleep(1);
+
+        echo json_encode($returnVal);
+        exit();
+    }
+
+
 	public function deleteAction($page_code, $content_id)
 	{
 		// Load permission
@@ -341,10 +322,10 @@ class ContentController extends \Admin\Controller\AdminController
 
     public function switchStatusAction($page_code, $content_id)
     {
-        // Load permission
         $returnVal['result'] = '';
         $returnVal['message'] = '';
         $returnVal['data'] = '';
+        // Load permission
         $this->detectModifyPermission('page/content/'.$page_code);
         if (!$this->_isModify)
             $returnVal['result'] = false;

@@ -59,9 +59,9 @@
                 'sClass': 'text-center',
                 'aTargets': ['col_active'], // Column to target
                 'mRender': function ( data, type, row ) {
-                    html = "<a href='javascript:void(0);' onclick='switchStatusItem(this, \"<?php echo $active_link; ?>\", "+row[0]+")' status='"+data+"' title='UnActive' class='btn btn-circle btn-gray'><i class='icon-remove-circle'></i></a>";
+                    html = "<a href='javascript:void(0);' onclick='switchStatusItem(this, "+row[0]+")' status='"+data+"' title='UnActive' class='btn btn-circle btn-gray'><i class='icon-remove-circle'></i></a>";
                     if (data == 1)
-                        html = "<a href='javascript:void(0);' onclick='switchStatusItem(this, \"<?php echo $active_link; ?>\", "+row[0]+")' status='"+data+"' title='Active' class='btn btn-circle btn-lime'><i class='icon-ok-sign'></i></a>";
+                        html = "<a href='javascript:void(0);' onclick='switchStatusItem(this, "+row[0]+")' status='"+data+"' title='Active' class='btn btn-circle btn-lime'><i class='icon-ok-sign'></i></a>";
                     return html;
                 }
             },{
@@ -70,7 +70,8 @@
                 'aTargets': ['col_action'], // Column to target
                 'mRender': function ( data, type, row ) {
                     html = '<a href="<?php echo $update_link; ?>/'+row[0]+'" class="btn btn-small btn-gray" title=""><i class="icon-edit"></i></a>';
-                    html += '<a href="javascript:confimDelete(\'<?php echo $delete_link; ?>/'+row[0]+'\');" class="btn btn-small btn-danger" title=""><i class="icon-trash"></i></a>';
+//                    html += '<a href="javascript:confimDelete(\'<?php //echo $delete_link; ?>///'+row[0]+'\');" class="btn btn-small btn-danger" title=""><i class="icon-trash"></i></a>';
+                    html += '<a href="javascript:void(0);" onclick="deleteRow(this,'+row[0]+')" class="btn btn-small btn-danger" title=""><i class="icon-trash"></i></a>';
                     return html;
                 }
             }],
@@ -86,20 +87,33 @@
 //            },
             "sPaginationType": "full_numbers"
         });
-
-//        $('#table2 tbody').on('click', 'tr', function () {
-//            var data = contentTable.row( this ).data();
-//            alert( 'You clicked on '+data[0]+'\'s row' );
-//        } );
-
     });
 
-    function switchStatusItem(link, url, id)
+    function deleteRow(link, id)
+    {
+        currentRow = $(link).closest("tr");
+        $('#myDeleteConfirmModal').modal('toggle');
+        $('#myQuestion').html("<i class='icon-warning-sign modal-icon'></i> Are you sure you want to delete row ? ");
+        $('#modal-form-delete').bind('click', function(e) {
+            $(link).removeClass();
+            $(link).html("<img src='<?php echo __IMAGE_URL; ?>/loading_small.gif' width='25'>");
+            $.ajax({url: '<?php echo $delete_link; ?>/'+id, success: function(result){
+                result = jQuery.parseJSON(result);
+                if(result.result)
+                {
+                    // -- Reload datatables --
+                    contentTable.row(currentRow).remove().draw(false);
+                }
+            }});
+        });
+    }
+
+    function switchStatusItem(link, id)
     {
         status = $(link).attr('status');
         $(link).removeClass();
         $(link).html("<img src='<?php echo __IMAGE_URL; ?>/loading_small.gif' width='25'>");
-        $.ajax({url: url+'/'+id, success: function(result){
+        $.ajax({url: '<?php echo $active_link; ?>/'+id, success: function(result){
             result = jQuery.parseJSON(result);
             if(result.result)
             {
