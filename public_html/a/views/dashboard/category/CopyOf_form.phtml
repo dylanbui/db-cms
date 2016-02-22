@@ -1,0 +1,164 @@
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> Category</h1>
+                        <h4>Category !</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i> <?php echo $box_title; ?></h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+<form method="POST" class="form-horizontal form-bordered" action="">                            
+							    <ul data-tabs="tabs" class="nav nav-tabs" id="tabs">
+							    	<li class="active">
+							    		<a data-toggle="tab" href="#tab_id_1">
+							    			<i class="icon-cogs"></i>&nbsp;General							    		</a>
+							    	</li>
+							    	<li>
+							    		<a data-toggle="tab" href="#tab_id_2">
+							    			<i class="icon-cogs"></i>&nbsp;Data							    		</a>
+							    	</li>
+							    </ul>
+							    
+							    
+
+							    
+							    <div style="overflow: hidden;" class="tab-content" id="my-tab-content">
+							    															    
+							        <div id="tab_id_1" class="tab-pane active">
+							        
+							        
+										<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+										
+										<?php 
+											foreach ($configure_languages['languages'] as $code => $row) :
+										?>
+											
+									    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+									    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+									    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		</a>
+									    	</li>
+									    	
+										<?php endforeach; ?>
+																			    	
+									    </ul>							        
+							        
+									    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+									    
+									    <?php 
+											foreach ($configure_languages['languages'] as $code => $row) :
+										?>
+									    															    
+									        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>">
+									        
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Name (<?php echo $code; ?>)</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-xxlarge" value="" id="name_<?php echo $code; ?>" name="name_<?php echo $code; ?>">
+			                                        </div>
+			                                    </div>
+			                                    
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Description (<?php echo $code; ?>)</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-xxlarge" value="" id="description_<?php echo $code; ?>" name="description_<?php echo $code; ?>">
+			                                        </div>
+			                                    </div>
+			                                   
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Icon (<?php echo $code; ?>)</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-xxlarge" value="" id="icon_<?php echo $code; ?>" name="icon_<?php echo $code; ?>">
+			                                        </div>
+			                                    </div>
+
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Image (<?php echo $code; ?>)</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-xxlarge" value="" id="image_<?php echo $code; ?>" name="image_<?php echo $code; ?>">
+			                                        </div>
+			                                    </div>			                                    
+									        
+									        </div>
+									        
+										<?php endforeach; ?>
+																			        
+									        
+									    </div>							        
+
+	                                    
+                                    							            
+							            
+							        </div>
+							        							    							    
+									<div id="tab_id_2" class="tab-pane">
+							        
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Code</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-large" value="" id="code" name="code">
+			                                        </div>
+			                                    </div>
+			                                    
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Parent Code</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-large" value="" id="parent_code" name="parent_code">
+			                                        </div>
+			                                    </div>
+                                
+												<div class="control-group">
+			                                       	<label class="control-label">Active</label>
+			                                       	<div class="controls">
+			                                          	<label class="checkbox">
+			                                            	<input type="checkbox" id="active" name="active" value="1" checked>
+			                                          	</label>
+			                                       	</div>
+			                                    </div>                                    
+			                                    
+			                                    <div class="control-group">
+			                                        <label class="control-label" for="textfield4">Order</label>
+			                                        <div class="controls">
+			                                            <input type="text" class="input-mini" value="" id="order" name="order">
+			                                        </div>
+			                                    </div>                                
+							            
+							        </div>
+							        
+							        
+ 	                                    <div class="form-actions"> 
+	                                       <button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+	                                    </div>
+							        
+
+							    </div>
+
+
+							    
+ 								<script type="text/javascript"> 								
+								    jQuery(document).ready(function ($) {
+								        $('#tabs').tab();
+								    });
+								</script>                               
+                            
+                            </div>                            
+                                
+</form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                

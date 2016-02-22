@@ -1,0 +1,64 @@
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> <?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?></h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i><?php echo $box_action; ?></h3>
+                                <div class="box-tool">
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+                            
+<form method="POST" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">                            
+
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Content</label>
+                                        <div class="controls">
+                                        	<textarea rows="10" class="input-xxlarge" id="content" name="content">
+	                                        	<?php echo h($rowComment["content"]); ?>
+                                        	</textarea>
+                                        </div>
+                                    </div>
+                                
+									<div class="control-group">
+                                       	<label class="control-label">Active</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	<input type="checkbox" id="active" name="active" value="1" <?php echo n($rowComment["active"])==1?'checked':''; ?> >
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="control-group last">
+                                        <label class="control-label" for="textfield4">Order</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-mini" value="<?php echo n($rowComment["sort_order"]); ?>" id="sort_order" name="sort_order">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+                                       <a href="<?php echo $return_url; ?>" class="btn">Cancel</a>
+                                    </div>                                    
+							    
+</form>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                

@@ -1,0 +1,160 @@
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> Content Category</h1>
+                        <h4>Category !</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i> <?php echo $box_title; ?></h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+
+<?php echo form_open($link_url,array("enctype"=>"multipart/form-data","class"=>"form-horizontal form-bordered")); ?>                            
+
+<!-- 
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Code</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-large" value="<?php echo h($rowCat['code']); ?>" id="code" name="code">
+                                        </div>
+                                    </div>
+ -->                                    
+                                    
+									<div class="control-group">
+                                      <label class="control-label">Parent</label>
+                                      <div class="controls">
+                                      		<?php echo $menuTreeOptionHtml;?>
+                                      </div>
+                                   	</div>                                    
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4"></label>
+                                        <div class="controls">
+                                            
+											<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+											
+											<?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+												
+										    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+										    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+										    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		</a>
+										    	</li>
+										    	
+											<?php endforeach; ?>
+																				    	
+										    </ul>							        
+                                        
+										    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+										    
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+										    															    
+										        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>">
+										        
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Name (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+															<?php echo form_input("name_{$code}",h($rowCat["name_{$code}"]),"class ='input-xlarge'"); ?>				                                            
+				                                        </div>
+				                                    </div>
+				                                    
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Description (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                            <?php echo form_input("description_{$code}",h($rowCat["description_{$code}"]),"class ='input-xxlarge'"); ?>
+				                                        </div>
+				                                    </div>
+				                                   
+<!--				                                   
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Icon (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                            <?php echo form_input("icon_{$code}",h($rowCat["icon_{$code}"]),"class ='input-xlarge'"); ?>
+				                                        </div>
+				                                    </div>
+  -->				                                    
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Image (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                        
+					                                        <?php if (!empty($rowCat["image_{$code}"])) : ?>
+					                                        	<img src="<?php echo __UPLOAD_DATA_URL . "thumb_img_1387269404.jpg"; ?>">
+					                                        	<a href="<?php echo site_url('site/content-cat/delete-image/'.$cat_id.'/'.$code)?>">Delete</a>
+					                                        	<br><br>				                                        
+					                                        <?php endif; ?>
+				                                        	
+					                                        <?php echo form_upload("image_{$code}",h($rowCat["image_{$code}"]),"class='default'"); ?>
+				                                        </div>
+				                                    </div>			                                    
+										        
+										        </div>
+										        
+											<?php endforeach; ?>
+										        
+										    </div>                                            
+                                            
+                                            
+                                        </div>
+                                    </div>                                    
+                                
+									<div class="control-group">
+                                       	<label class="control-label">Active</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	
+                                            	<?php echo form_checkbox('active',1,n($rowCat["active"])==1?TRUE:FALSE); ?>
+                                            	
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="control-group last">
+                                        <label class="control-label" for="textfield4">Order</label>
+                                        <div class="controls">
+                                            
+                                            <?php echo form_input('sort_order',n($rowCat["sort_order"]),"class ='input-mini'"); ?>
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                    
+                                    	<?php echo form_button(array('name'=>'btnSubmit','type'=>'submit'),"<i class='icon-ok'></i> Save","class='btn btn-primary'"); ?>
+										<?php echo form_button('btnReset',"Cancel","class='btn'"); ?>
+										                                    
+                                    </div>                                    
+							    
+<?php echo form_close(); ?>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+<script type="text/javascript"> 								
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });
+
+    function openFileBrowser(id){
+        fileBrowserlink = "<?php echo __PUBLIC_JS_URL; ?>pdw_file_browser/index.php?editor=standalone&returnID=" + id;
+        window.open(fileBrowserlink,'pdwfilebrowser', 'width=1000,height=650,scrollbars=no,toolbar=no,location=no');
+   }    
+    
+</script>                                               

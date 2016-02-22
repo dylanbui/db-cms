@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Login - FLATY Admin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!--base css styles-->
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/normalize/normalize.css">
+
+        <!--page specific css styles-->
+
+        <!--flaty css styles-->
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>css/flaty.css">
+        <link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>css/flaty-responsive.css">
+
+        <link rel="shortcut icon" href="<?php echo __TEMPLATE_URL; ?>img/favicon.html">
+
+        <script src="<?php echo __TEMPLATE_URL; ?>assets/modernizr/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body class="login-page">
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        
+    
+
+        <!-- BEGIN Main Content -->
+        <div class="login-wrapper">
+        
+            <!-- BEGIN Login Form -->
+            <form id="form-login" action="<?php echo $link_url; ?>" method="post">
+                <h3>Login to your account</h3>
+                <hr/>
+                
+                <?php if ($authentication_error) : ?>
+				<div class="alert alert-error">
+					<strong>Error ! </strong> Authentication error.
+				</div>
+				<?php endif; ?>
+                
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="text" placeholder="Username" name="username" class="input-block-level" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="password" placeholder="Password" name="password" class="input-block-level" />
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary input-block-level">Sign In</button>
+                    </div>
+                </div>
+                <hr/>
+            </form>
+            <!-- END Login Form -->
+
+        </div>
+        <!-- END Main Content -->
+
+        <!--basic scripts-->
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>-->
+        <script>window.jQuery || document.write('<script src="<?php echo __TEMPLATE_URL; ?>assets/jquery/jquery-1.10.1.min.js"><\/script>')</script>
+        <script src="<?php echo __TEMPLATE_URL; ?>assets/bootstrap/bootstrap.min.js"></script>
+
+    </body>
+</html>

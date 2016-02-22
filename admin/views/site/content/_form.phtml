@@ -1,0 +1,262 @@
+
+<!--page specific css styles-->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>/assets/prettyPhoto/css/prettyPhoto.css">
+
+<!-- Add MultiFile library -->
+<script type="text/javascript" src="<?php echo __PUBLIC_JS_URL; ?>jquery.MultiFile.js"></script>
+        
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i><?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?> !</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i> <?php echo $box_title; ?></h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+                            
+<form method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">                            
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Choose category</label>
+                                        <div class="controls">
+                                            <?php echo $menuTreeOptionHtml; ?>
+                                        </div>
+                                    </div>
+			                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4"></label>
+                                        <div class="controls">
+                                            
+											<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+											
+											<?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+												
+										    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+										    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+										    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		
+										    		</a>
+										    	</li>
+										    	
+											<?php endforeach; ?>
+																				    	
+										    </ul>							        
+                                        
+										    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+										    
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+										    															    
+										        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>">
+										        
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Title (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                        	<textarea rows="3" class="input-block-level" id="title_<?php echo $code; ?>" name="title_<?php echo $code; ?>"><?php echo h($rowContent["title_{$code}"]); ?></textarea>
+				                                            
+				                                        </div>
+				                                    </div>
+				                                    
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Short Body (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                            <textarea rows="3" class="input-block-level" id="short_body_<?php echo $code; ?>" name="short_body_<?php echo $code; ?>">
+				                                            	<?php echo html($rowContent["short_body_{$code}"]); ?>
+				                                            </textarea>
+				                                        </div>
+				                                    </div>
+				                                   
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Long Body (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                            <textarea rows="5" class="input-block-level" id="long_body_<?php echo $code; ?>" name="long_body_<?php echo $code; ?>">
+				                                            	<?php echo html($rowContent["long_body_{$code}"]); ?>
+				                                            </textarea>
+				                                        </div>
+				                                    </div>
+										        
+										        </div>
+										        
+											<?php endforeach; ?>
+										        
+										    </div>                                            
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                    
+									<div class="control-group">
+                                       	<label class="control-label">Image File</label>
+										<div class="controls">
+										
+                                         <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="input-append">
+                                               <div class="uneditable-input">
+                                                  <i class="icon-file fileupload-exists"></i> 
+                                                  <span class="fileupload-preview"></span>
+                                               </div>
+                                               <span class="btn btn-file">
+                                                   <span class="fileupload-new">Select file</span>
+                                                   <span class="fileupload-exists">Change</span>
+                                                   <input type="file" class="default" id="image_file" name="image_file"/>
+                                               </span>
+                                               <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                            </div>
+                                         </div>
+                                         
+                                         <?php if (!empty($rowContent["image_file"])) : ?>
+                                         <ul class="gallery">
+											<li>
+		                                        <a title="&nbsp;<?php echo h($rowContent["image_file"]); ?>" rel="prettyPhoto" href="<?php echo __UPLOAD_DATA_URL . $rowContent['image_file']; ?>">
+		                                            <div>
+		                                                <img alt="" src="<?php echo __UPLOAD_DATA_URL .'thumb_'. $rowContent['image_file']; ?>">
+		                                            </div>
+		                                        </a>
+		                                        <div class="gallery-tools">
+		                                            <a href="<?php echo site_url('site/content/delete-image/'.$content_id)?>"><i class="icon-trash"></i></a>
+		                                        </div>
+		                                    </li>                                         
+                                         </ul>
+                                         <?php endif; ?>
+                                                                                  
+                                      </div>                                       	
+                                    </div>                                    
+                                
+									<div class="control-group">
+                                       	<label class="control-label">Choose Multi Image Gallery</label>
+                                       	<div class="controls">
+                                            <input type="file" id="image_gallery" name="image_gallery[]" class="multi max-10 accept-gif|jpg|png" />
+
+											<?php if (!empty($rsGalleryImages)) : ?>                                            
+												<table class="table gallery">
+				                                    <thead>
+				                                        <tr>
+				                                            <th></th>
+				                                            <th></th>
+				                                            <th></th>
+				                                            <th></th>
+				                                        </tr>
+				                                    </thead>
+				                                    <tbody>                                    
+				                                    <?php
+				                                    	$i = 1; 
+				                                    	foreach ($rsGalleryImages as $image) : ?>
+				                                        <tr>
+				                                            <td><?php echo $i; ?></td>
+				                                            <td>
+						                                        <a title="&nbsp;<?php echo h($image["image"]); ?>" rel="prettyPhoto" href="<?php echo __UPLOAD_DATA_URL . $image['image']; ?>">
+						                                            <div>
+						                                                <img alt="" width=50 src="<?php echo __UPLOAD_DATA_URL .'thumb_'. $image['image']; ?>">
+						                                            </div>
+						                                        </a>                                            
+				                                            </td>
+				                                            <td></td>
+				                                            <td>
+				                                            	<a href="<?php echo site_url('site/content/delete-gallery-image/'.$content_id.'/'.$image['id'])?>" title="" class="btn btn-danger btn-small show-tooltip" data-original-title="Delete"><i class="icon-trash"></i></a>
+				                                            </td>
+				                                        </tr>
+													<?php
+														$i++; 
+														endforeach; ?>                                        
+				                                    </tbody>
+				                                </table>
+											<?php endif; ?>                                            
+                                            
+<!--                                              
+                                            <?php if (!empty($rsGalleryImages)) : ?>
+	                                       	<ul class="gallery">
+		                                       	<?php foreach ($rsGalleryImages as $image) : ?>
+												<li>
+			                                        <a title="&nbsp;<?php echo h($image["image"]); ?>" rel="prettyPhoto" href="<?php echo __UPLOAD_DATA_URL . $image['image']; ?>">
+			                                            <div>
+			                                                <img alt="" src="<?php echo __UPLOAD_DATA_URL .'thumb_'. $image['image']; ?>">
+			                                                <i></i>
+			                                            </div>
+			                                        </a>
+			                                        <div class="gallery-tools">
+			                                            <a href="<?php echo site_url('site/content/delete-gallery-image/'.$image['id'])?>"><i class="icon-trash"></i></a>
+			                                        </div>
+			                                    </li>
+		                                       	<?php endforeach; ?>
+	                                       	</ul>
+	                                       	<?php endif; ?>
+-->	                                       	
+                                            
+                                       	</div>
+                                    </div>
+                                    
+									<div class="control-group">
+                                       	<label class="control-label">Active</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	<input type="checkbox" id="active" name="active" value="1" <?php echo n($rowContent["active"])==1?'checked':''; ?> >
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="control-group last">
+                                        <label class="control-label" for="textfield4">Order</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-mini" value="<?php echo n($rowContent['sort_order']); ?>" id="sort_order" name="sort_order">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+                                       <button type="button" class="btn">Cancel</button>
+                                    </div>                                    
+							    
+</form>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+<script type="text/javascript"> 								
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+
+	    <?php 
+			foreach ($configure_languages['languages'] as $code => $row) :
+		?>
+
+			CKEDITOR.replace( 'short_body_<?php echo $code; ?>',
+					{
+						toolbar : 'Basic_1'
+					});
+
+			CKEDITOR.replace( 'long_body_<?php echo $code; ?>',
+					{
+						toolbar : 'Basic_1'
+					});			
+			
+		<?php endforeach; ?>
+
+        
+    });
+
+</script>
+
+
+<!--page specific plugin scripts-->
+<script src="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+
+

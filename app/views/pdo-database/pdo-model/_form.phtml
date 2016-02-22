@@ -1,0 +1,51 @@
+<script src="<?php echo __JS_URL; ?>ckeditor/ckeditor.js"></script>
+
+<h1><?= $title; ?></h1>
+
+<?= html($errorMessage); ?>
+
+<form action="<?= $link; ?>" name="frmAction" method="POST">
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+	<tr>
+		<td width="10%">First Name
+		<td><input type="text" name="first_name" value="<?= h($data['first_name']); ?>" size="40">
+	</tr>
+	<tr>
+		<td>Last Name
+		<td><input type="text" name="last_name" value="<?= h($data['last_name']); ?>" size="40">
+	</tr>
+	<tr>
+		<td>Email
+		<td><input type="text" name="email" value="<?= h($data['email']); ?>" size="40">
+	</tr>
+	<tr>
+		<td>Address
+		<td><input type="text" name="address" value="<?= h($data['address']); ?>" size="40">
+	</tr>
+	<tr>
+		<td>Summary
+		<td><textarea rows="6" cols="50" id="summary" name="summary"><?= h($data['summary']); ?></textarea>
+	</tr>
+	<tr>
+		<td>Content HTML
+		<td>
+			<textarea cols="80" id="description" name="description" rows="5">
+				<?= html($data['description']); ?>
+			</textarea>		
+	</tr>			
+	<tr>
+		<td colspan="2"><br><input type="submit" value="Save">&nbsp;<input type="reset" value="Reset"> 
+	</tr>
+</table>	
+
+</form>
+
+<script type="text/javascript">
+	
+	CKEDITOR.replace('description',{
+        toolbar : 'Basic_1'
+    });
+
+</script>
+

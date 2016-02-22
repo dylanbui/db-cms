@@ -1,0 +1,108 @@
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> List Content</h1>
+                        <h4>List Category !</h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<div class="btn-toolbar text-right">
+				<a href="<?php echo site_url('site/content/add'); ?>" class="btn btn-primary"><i class="icon-plus"></i> New Content</a>			
+			</div>
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-table"></i></h3>
+                                <div class="box-tool">
+                                    <a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-hover fill-head">
+                                    <thead>
+                                        <tr>
+                                            <th width="2%">#</th>
+                                            <th width="10%">Code</th>
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+                                            <th>Title <?php echo strtoupper($code); ?></th>                                            											
+											<?php endforeach; ?>                                            
+                                            <th style="width: 70px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                    <?php
+                                    	$i = 1; 
+                                    	foreach ($rsContent as $rowContent) :
+                                    ?>
+                                    
+									<tr>
+										<td><?php echo $i; ?></td>
+										<td></td>
+									    <?php 
+											foreach ($configure_languages['languages'] as $code => $row) :
+										?>
+                                            <td><?php echo h($rowContent["title_{$code}"]); ?></td>                                            											
+										<?php endforeach; ?>										
+										<td>	
+											<div class="btn-group">
+												<a class="btn btn-small btn-gray" title="" href="<?php echo site_url("site/content/edit/{$rowContent['id']}")?>"><i class="icon-edit"></i></a>		
+												<a class="btn btn-small btn-danger" title="" href="javascript:confimDelete('<?php echo site_url("site/content/delete/{$rowContent['id']}")?>');"><i class="icon-trash"></i></a>	
+											</div>
+										</td>
+									</tr>                                    
+                                    
+                                    <?php
+                                    		$i++; 
+                                    	endforeach; 
+                                    ?>
+                                        
+                                    </tbody>
+                                </table>
+                            
+								<div class="pagination text-right">
+								<?php
+									// Make your db query here. Include $pages->limit as described in step 8.	(i.e. SELECT id,fname,lname FROM employees $pages->limit)
+									echo $pages->display_jump_menu(); // Optional – displays the page jump menu									
+									echo $pages->display_pages(); // Optional call which will display the page numbers after the results.
+								?>
+								
+	                            </div>                 
+	                            
+<!-- 								<div class="pagination text-right"> -->
+<!--                                     <ul> -->
+<!--                                         <li><a href="#">← Prev</a></li> -->
+<!--                                         <li><a href="#">1</a></li> -->
+<!--                                         <li><a href="#">2</a></li> -->
+<!--                                         <li class="active"><a href="#">3</a></li> -->
+<!--                                         <li><a href="#">4</a></li> -->
+<!--                                         <li><a href="#">5</a></li> -->
+<!--                                         <li><a href="#">6</a></li> -->
+<!--                                         <li><a href="#">Next → </a></li> -->
+<!--                                     </ul> -->
+<!-- 	                            </div>	                                        -->
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+                			
+			
+		</div>
+	</div>
+</div>
+
+

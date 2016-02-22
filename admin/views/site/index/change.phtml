@@ -1,0 +1,23 @@
+<h1>Welcome to Duc Bui</h1>
+<?= $title; ?>
+
+<br>
+
+<table width="100%" border="1" cellpadding="1" cellspacing="1">
+<tr>
+	<th>Tieu de
+
+</tr>
+
+<?php
+	foreach ($rs as $row) :
+?>
+	<tr>
+		<td><?= $row['title']; ?>
+	</tr>
+<?
+	endforeach;
+?>
+
+</table>	
+

@@ -1,0 +1,17 @@
+<h1>Welcome to Duc Bui</h1>
+<?= $title; ?>
+
+<p>Hien thi phan duoc render vao<p>
+
+<br>
+
+<?= $part_render; ?>
+
+<br>
+
+RENDER lai 1 lan nua trong code template
+
+<?= Module::run(new Request('site/home/part-render',array('Title duoc truyen vao AGAIN')));?>
+
+
+

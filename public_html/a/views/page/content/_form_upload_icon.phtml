@@ -1,0 +1,57 @@
+<?php
+
+// $arrIconInfo = $arrLnImage
+// $dataContentIcon = $dataContent['ln_field'][$code]['ln_icon']
+// $inputFileName = ln_image[<?php echo $code; ][icon]
+
+    $required = "default";
+    $required_text = "";
+    if (df($arrIconInfo['icon']['required'],0) == 1
+        && is_null($dataContentIcon)) // Edit hinh anh
+    {
+        $required .= " required";
+        $required_text = "<span class='red'> (*) </span>";
+    }
+    $help_inline = $arrIconInfo['icon']['width'].' x '.$arrIconInfo['icon']['height'];
+    $tmp_width = ($arrIconInfo['icon']['width'] > 0 ? $arrIconInfo['icon']['width'] : $arrIconInfo['icon']['height'])/2;
+    $tmp_height = ($arrIconInfo['icon']['height'] > 0 ? $arrIconInfo['icon']['height'] : $arrIconInfo['icon']['width'])/2;
+
+    $thumb_style = "max-width: ".$tmp_width."px; max-height: ".$tmp_height."px;";
+?>
+
+
+<div class="control-group">
+    <label class="control-label">
+        <?php
+        echo h(df($arrIconInfo['icon']['field_name'],'icon'));
+        echo $required_text;
+        ?>
+    </label>
+    <div class="controls">
+
+        <div data-provides="fileupload" class="fileupload fileupload-<?= is_null($dataContentIcon)?'new':'exists'; ?> ">
+            <input type="hidden" value="" name="">
+            <div style="<?= $thumb_style; ?>" class="fileupload-new thumbnail">
+                <img alt="" src="http://www.placehold.it/<?=$tmp_width;?>x<?=$tmp_height;?>/EFEFEF/AAAAAA&text=choose+image">
+            </div>
+            <div style="<?= $thumb_style; ?>line-height: 20px;" class="fileupload-preview fileupload-exists thumbnail">
+                <?php
+                    if(!is_null($dataContentIcon))
+                        echo "<img src='".__UPLOAD_DATA_URL.$dataContentIcon."' />";
+                ?>
+            </div>
+            <div>
+                <span class="btn btn-file">
+                    <span class="fileupload-new">Select image</span>
+                    <span class="fileupload-exists">Change</span>
+                    <input type="file" class="<?php echo $required; ?>"
+                           name="<?= $inputFileName; ?>"
+                           id="<?= $inputFileName; ?>">
+                </span>
+                <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+            </div>
+        </div>
+        <span class='help-inline'><?= $help_inline; ?></span>
+
+    </div>
+</div>

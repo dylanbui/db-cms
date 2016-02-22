@@ -1,0 +1,101 @@
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i><?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?></h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<div class="clearfix">
+				<div class="pull-left">
+					<div class="btn-toolbar">
+					
+					</div>				
+				</div>
+				<div class="pull-right">
+					<div class="btn-toolbar">
+									
+					</div>				
+				</div>
+			</div>
+			
+			<div>
+				<b>Câu hỏi :</b> <?php echo h($rowQuestion['question']); ?>			
+			</div>
+			<br>
+			<div>
+				<b>Trả lời:</b> <?php echo h($rowQuestion['answer']); ?>			
+			</div>						
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-table"></i><?php echo $box_action; ?></h3>
+                                <div class="box-tool">
+                                </div>
+                            </div>
+                            <div class="box-content">
+                            
+                                <ul class="messages">
+                                
+                                    <?php
+                                    	foreach ($rsComment as $rowComment) :
+                                    		$active_link = site_url('amway/comment/active/'.$rowComment['question_id'].'/'.$rowComment['id']);
+                                    ?>
+                                
+                                    <li>
+<!--                                         <img alt="" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash1/t1.0-1/c71.0.579.579/s50x50/250107_10100350563924029_1315140_n.jpg"> -->
+                                        <img src="http://graph.facebook.com/<?php echo $rowComment['fbid']; ?>/picture">
+                                        <div>
+                                            <div>
+                                                <h5 class="<?php echo ($rowComment['active'] == 1 ? "green" : "red"); ?>">David</h5>
+                                                <span class="time"><i class="icon-time"></i> <?php echo h($rowComment["create_at"]); ?></span>
+                                            </div>
+                                            <p><?php echo h($rowComment["content"]); ?></p>
+                                            
+											<div class="messages-actions">
+                                                <a title="" href="<?php echo $active_link.'/1'; ?>" class="show-tooltip" data-original-title="Approve">
+                                                	<i class="icon-ok green"></i>
+                                                </a>
+                                                <a title="" href="<?php echo $active_link.'/0'?>" class="show-tooltip" data-original-title="Disapprove">
+                                                	<i class="icon-remove red"></i>
+                                                </a>
+                                                <a title="" href="<?php echo site_url('amway/comment/edit/'.$rowComment['question_id'].'/'.$rowComment['id']); ?>" class="show-tooltip" data-original-title="Edit">
+                                                	<i class="icon-edit orange"></i>
+                                                </a>                                                
+												<a href="javascript:confimDelete('<?php echo site_url("amway/comment/delete/{$rowComment['question_id']}/{$rowComment['id']}")?>');" title='' class="show-tooltip" data-original-title="Remove">
+                                                	<i class="icon-trash gray"></i>
+                                                </a>
+                                            </div>                                            
+                                            
+                                        </div>
+                                    </li>
+                                    
+                                    <?php endforeach; ?>
+                                    
+                                </ul>
+
+                            
+                            
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+                			
+			
+		</div>
+	</div>
+</div>
+
+

@@ -1,0 +1,110 @@
+<?php
+
+function displaySubMenu($rsSubMenuCats, $counter, $cfg_languages)
+{
+	$str_html = "";
+	foreach ($rsSubMenuCats as $rowSubMenuCat)
+	{
+		$str_html .= "<tr>";
+		
+		$str_html .= "<td></td>";
+		$str_html .= "<td>".h($rowSubMenuCat['code'])."</td>";
+		
+		foreach ($cfg_languages['languages'] as $code => $row)
+		{
+			$padding = 20*$counter;
+			$str_html .= "<td style='padding-left: {$padding}px'>".h($rowSubMenuCat["name_{$code}"])."</td>";
+		}
+		
+		$str_html .= "<td>";
+		$str_html .= "	<div class='btn-group'>";
+		$str_html .=  "		<a href='' title='' class='btn btn-small btn-gray'><i class='icon-edit'></i></a>";
+		$str_html .=  "		<a href='javascript:confimDelete(\"\");' title='' class='btn btn-small btn-danger'><i class='icon-trash'></i></a>";
+		$str_html .=  "	</div>";
+		$str_html .=  "</td>";		
+		
+		$str_html .= "</tr>";
+		
+		$str_html .= displaySubMenu($rowSubMenuCat['sub_menus'], $counter + 1, $cfg_languages);
+	}
+	
+	return $str_html;
+}
+
+?>
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> Category</h1>
+                        <h4>Category !</h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<div class="btn-toolbar text-right">
+				<a href="<?php echo site_url('dashboard/category/add'); ?>" class="btn btn-primary"><i class="icon-plus"></i> New Category</a>			
+			</div>
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-table"></i></h3>
+                                <div class="box-tool">
+                                    <a href="#" data-action="collapse"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-hover fill-head">
+                                    <thead>
+                                        <tr>
+                                            <th width="2%">#</th>
+                                            <th width="10%">Code</th>
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+                                            <th>Name <?php echo strtoupper($code); ?></th>                                            											
+											<?php endforeach; ?>                                            
+                                            <th style="width: 70px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+									<?php echo displaySubMenu($arrMenuTree, 0, $configure_languages); ?>                                        
+                                        
+                                    </tbody>
+                                </table>
+                            
+<!-- 								<div class="pagination text-left"> -->
+<!--                                     <ul> -->
+<!--                                         <li><a href="#">← Prev</a></li> -->
+<!--                                         <li><a href="#">1</a></li> -->
+<!--                                         <li><a href="#">2</a></li> -->
+<!--                                         <li class="active"><a href="#">3</a></li> -->
+<!--                                         <li><a href="#">4</a></li> -->
+<!--                                         <li><a href="#">5</a></li> -->
+<!--                                         <li><a href="#">6</a></li> -->
+<!--                                         <li><a href="#">Next → </a></li> -->
+<!--                                     </ul> -->
+<!-- 	                            </div>                             -->
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+                			
+			
+		</div>
+	</div>
+</div>
+
+

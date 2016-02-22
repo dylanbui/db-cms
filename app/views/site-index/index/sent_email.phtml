@@ -1,0 +1,56 @@
+<!-- Add jQuery library -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>jquery-1.8.1.min.js"></script>
+<script type="text/javascript" src="<?php echo __JS_URL; ?>ckeditor/ckeditor.js"></script>
+
+<script type="text/javascript"> 								
+
+
+jQuery(document).ready(function ($) {
+	console.debug(CKEDITOR.basePath);
+    CKEDITOR.replace( 'email_content', {
+		
+ 		// Similar to example the above, defines a "Basic" toolbar with only one strip containing three buttons.
+ 		// Note that this setting is composed by "toolbar_" added by the toolbar name, which in this case is called "Basic".
+ 		// This second part of the setting name can be anything. You must use this name in the CKEDITOR.config.toolbar setting,
+ 		// so you instruct the editor which toolbar_(name) setting to use.
+		
+		// customConfig : 'ckeditor/config_basic.js'
+		toolbar : 'Basic_1'
+		
+    });	
+    
+});
+
+</script>
+
+<h1><?= $sub_title; ?></h1>
+<br>
+
+<form action="" name="frmAction" method="POST" enctype="multipart/form-data">
+
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+
+    <tr>
+        <td><?= $returnSentMail; ?>
+    </tr>
+
+    <tr>
+		<td>Email
+		<td><input type="text" name="email" value="" size="40" placeholder="Email Address">
+	</tr>
+    <tr>
+        <td>Subject
+        <td><input type="text" name="subject" value="" size="80" placeholder="Subject">
+    </tr>
+	<tr>
+		<td>Email Content HTML
+		<td>
+			<textarea cols="80" id="email_content" name="email_content" rows="10"></textarea>
+	</tr>		
+	<tr>
+		<td colspan="2"><br><input type="submit" value="Sent">&nbsp;<input type="reset" value="Reset">
+	</tr>		
+</table>	
+
+</form>
+

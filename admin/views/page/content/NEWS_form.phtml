@@ -1,0 +1,435 @@
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!--page specific css styles-->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/css/prettyPhoto.css">
+
+<!-- Add MultiFile library -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>jquery.MultiFile.js"></script>
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+			<div>
+            	<h1><i class="icon-edit"></i>Content : <?php echo h($rowPageConf['name']); ?></h1>
+				<h4><?php echo $page_title; ?></h4>
+			</div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+ 			
+<form id="validation-form"  method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" action="<?php echo $form_link; ?>">
+
+			<div class="clearfix">
+			
+			<?php if (df($arrGalleryField['use_gallery'],0) == 1 && $page_action == 'update')  : ?>
+            	<div class="pull-left btn-toolbar">
+					<a href=# onclick="openGalleryWindow('<?php echo $gallery_link; ?>')" class="btn btn-primary">
+						<i class="icon-picture"></i> Gallery Image (<span class='number_image' id='number_image'><?php echo $totalGalItem; ?></span>)
+					</a>
+		 		</div>
+			<?php endif ; ?>
+                                    
+            	<div class="pull-right btn-toolbar">
+					<button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+					<a href="<?php echo $cancel_link; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+		 		</div>
+			</div>
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+				<div class="span12">
+				
+						<?php echo show_message($notify_msg['msg_title'], $notify_msg['msg_code'] ,$notify_msg['msg_content']); ?>				
+				
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file-alt"></i><?php echo h($rowPageConf['name']); ?></h3>
+                            </div>
+                     
+                            <div class="box-content">
+                            
+                            	<?php if(df($rowPageConf['data']['use_category'], 0 ) == 1) : ?>
+								<div class="control-group">
+                                	<label class="control-label">Choose parent category</label>
+                                    <div class="controls">
+                                    	<?php echo $htmlCat; ?>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                            
+                                <?php 
+                                	foreach ($arrMainField as $fKey => $fValue) :
+                                		if (df($fValue['choose'],0) == 1) : 
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label">
+                                		<?php 
+                                			echo h(df($fValue['display_name'],$fKey));
+                                			if (df($fValue['required'],0) == 1)
+                                				echo "<span class='red'> (*) </span>";                                			 
+                                		?>
+                                	</label>
+                                    <div class="controls">
+                                    	<?php 
+                                    		echo load_define_input($fValue, "main_field[{$fKey}]", df($dataContent['main_field'][$fKey]));
+                                    	?>
+                                    </div>
+                                </div>
+                                	
+                                <?php
+                                		endif; 
+                                	endforeach; 
+                                ?>
+                                
+								<div class="control-group">
+                                        
+											<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+											
+											<?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+												
+										    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+										    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+										    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		
+										    		</a>
+										    	</li>
+										    	
+											<?php endforeach; ?>
+																				    	
+										    </ul>							        
+                                        
+										    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+										    
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+										    															    
+										        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>" style="margin-left: 20px;margin-right: 20px;">
+										        
+					                                <?php 
+					                                	foreach ($arrLnField as $fKey => $fValue) :
+					                                		if (df($fValue['choose'],0) == 1) : 
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label">
+					                                		<?php 
+					                                			echo h(df($fValue['display_name'],$fKey));
+					                                			if (df($fValue['required'],0) == 1)
+					                                				echo "<span class='red'> (*) </span>";
+					                                		?>
+					                                	</label>
+					                                    <div class="controls">
+					                                    	<?php echo load_define_input($fValue, "ln_field[{$code}][{$fKey}]", df($dataContent['ln_field'][$code][$fKey])); ?>
+					                                    </div>
+					                                </div>
+					                                	
+					                                <?php
+					                                		endif; 
+					                                	endforeach; 
+					                                ?>
+					                                
+					                                <?php 
+					                                	if (df($arrLnImage['choose'],0) == 1) :
+						                                	if (df($arrLnImage['image']['choose'],0) == 1) :
+						                                		$required = "default";
+							                                	$required_text = "";
+                                                                $ln_image = df($dataContent['ln_field'][$code]['ln_image'], NULL);
+						                                		if (df($arrLnImage['image']['required'],0) == 1
+                                                                    && is_null($ln_image)) // Edit hinh anh
+						                                		{
+					                                				$required .= " required";
+					                                				$required_text = "<span class='red'> (*) </span>";
+						                                		}
+                                                                $help_inline = $arrLnImage['image']['width'].' x '.$arrLnImage['image']['height'];
+                                                                $thumb_style = "max-width: ".($arrLnImage['image']['width']/3)."px; max-height: ".($arrLnImage['image']['height']/3)."px; line-height: 20px;";
+                                                                if (df($arrLnImage['image_thumb']['choose'],0) == 1) {
+                                                                    $help_inline .= " => Create thumb : " . $arrLnImage['image_thumb']['width'] . ' x ' . $arrLnImage['image_thumb']['height'];
+                                                                    $thumb_style = "max-width: {$arrLnImage['image_thumb']['width']}px; max-height: {$arrLnImage['image_thumb']['height']}px; line-height: 20px;";
+                                                                }
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label">
+					                                		<?php 
+					                                			echo h(df($arrLnImage['image']['field_name'],'image'));
+					                                			echo $required_text;					                                			 
+					                                		?>
+					                                		</label>
+					                                    <div class="controls">
+
+                                                            <div data-provides="fileupload" class="fileupload fileupload-<?= is_null($ln_image)?'new':'exists'; ?> ">
+                                                                <input type="hidden" value="" name="">
+                                                                <div style="width: 200px; height: 150px;" class="fileupload-new thumbnail">
+                                                                    <img alt="" src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image">
+                                                                </div>
+                                                                <div style="<?= $thumb_style; ?>" class="fileupload-preview fileupload-exists thumbnail">
+                                                                    <?php
+                                                                        if(!is_null($ln_image))
+                                                                            echo "<img src='".__UPLOAD_DATA_URL.$dataContent['ln_field'][$code]['ln_image']."' />";
+                                                                    ?>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="btn btn-file">
+                                                                        <span class="fileupload-new">Select image</span>
+                                                                        <span class="fileupload-exists">Change</span>
+                                                                        <input type="file" class="<?php echo $required; ?>" name="ln_image[<?php echo $code; ?>][image]" id="ln_image[<?php echo $code; ?>][image]">
+                                                                    </span>
+                                                                    <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                                                                </div>
+                                                            </div>
+					                                    	<span class='help-inline'><?= $help_inline; ?></span>
+
+					                                    </div>
+					                                </div>
+					                                	
+					                                <?php
+						                                	endif;
+						                                	if (df($arrLnImage['icon']['choose'],0) == 1) :
+							                                	$required = "default";
+							                                	$required_text = "";
+							                                	if (df($arrLnImage['icon']['required'],0) == 1
+                                                                    && is_null(df($dataContent['ln_field'][$code]['ln_icon'], NULL))) // Edit icon
+							                                	{
+							                                		$required .= " required";
+							                                		$required_text = "<span class='red'> (*) </span>";
+							                                	}
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label">
+					                                		<?php 
+					                                			echo h(df($arrLnImage['icon']['field_name'],'icon'));
+				                                				echo $required_text;
+					                                		?>
+					                                	</label>
+					                                    <div class="controls">
+					                                    	<input type="file" class="<?php echo $required; ?>" name="ln_image[<?php echo $code; ?>][icon]" id="ln_image[<?php echo $code; ?>][icon]">
+					                                    	<span class='help-inline'><?php echo $arrLnImage['icon']['width'].' x '.$arrLnImage['icon']['height']; ?></span>
+					                                    </div>
+				                                    	<?php
+				                                    	 	if(!is_null(df($dataContent['ln_field'][$code]['ln_icon'], NULL)))
+				                                    	 	{
+				                                    	 		echo "<br><br>";
+				                                    	 		echo "<img src='".__UPLOAD_DATA_URL.$dataContent['ln_field'][$code]['ln_icon']."' width=70 />";
+				                                    	 	}
+				                                    	?>					                                    
+					                                </div>					                                                                
+					                                
+					                                <?php
+					                                		endif;
+					                                	endif; 
+					                                ?>                                
+										        
+										        </div>
+										        
+											<?php endforeach; ?>
+											
+										    </div>                                            
+                                            
+                                    </div>
+                                    
+                                    
+                                <?php 
+                                	if (df($arrMainImage['choose'],0) == 1) :
+	                                	if (df($arrMainImage['image']['choose'],0) == 1) :
+		                                	$required = "default";
+		                                	$required_text = "";
+		                                	if (df($arrMainImage['image']['required'],0) == 1
+                                                && is_null(df($dataContent['main_field']['image'], NULL))) // Edit main image
+		                                	{
+		                                		$required .= " required";
+		                                		$required_text = "<span class='red'> (*) </span>";
+		                                	}
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label">
+                                		<?php 
+                                			echo h(df($arrMainImage['image']['field_name'],'image'));
+                                			echo $required_text;
+                                		?>
+                                	</label>
+                                    <div class="controls">
+                                    	<input type="file" class="<?php echo $required; ?>" name="image" id="image">
+                                    	<span class='help-inline'>
+                                    		<?php 
+                                    			echo $arrMainImage['image']['width'].' x '.$arrMainImage['image']['height'];  
+                                    			if (df($arrMainImage['image_thumb']['choose'],0) == 1)
+                                    				echo " => Create thumb : ".$arrMainImage['image_thumb']['width'].' x '.$arrMainImage['image_thumb']['height'];
+                                    		?>
+                                    	</span>
+                                    	<?php
+                                    	 	if(!is_null(df($dataContent['main_field']['image'], NULL)))
+                                    	 	{
+                                    	 		echo "<br><br>";
+                                    	 		echo "<img src='".__UPLOAD_DATA_URL.$dataContent['main_field']['image']."' width=70 />";
+                                    	 	}
+                                    	?>					                                    
+                                    </div>
+                                </div>
+                                	
+                                <?php
+	                                	endif;
+	                                	if (df($arrMainImage['icon']['choose'],0) == 1) :
+		                                	$required = "default";
+		                                	$required_text = "";
+		                                	if (df($arrMainImage['icon']['required'],0) == 1
+                                                && is_null(df($dataContent['main_field']['icon'], NULL))) // Edit main icon
+		                                	{
+		                                		$required .= " required";
+		                                		$required_text = "<span class='red'> (*) </span>";
+		                                	}
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label">
+                                		<?php 
+                                			echo h(df($arrMainImage['icon']['field_name'],'icon'));
+                                			echo $required_text;
+                                		?>
+                                	</label>
+                                    <div class="controls">
+                                    	<input type="file" class="<?php echo $required; ?>" name="icon" id="icon">
+                                    	<span class='help-inline'><?php echo $arrMainImage['icon']['width'].' x '.$arrMainImage['icon']['height']; ?></span>
+                                    	<?php
+                                    	 	if(!is_null(df($dataContent['main_field']['icon'], NULL)))
+                                    	 	{
+                                    	 		echo "<br><br>";
+                                    	 		echo "<img src='".__UPLOAD_DATA_URL.$dataContent['main_field']['icon']."' width=70 />";
+                                    	 	}
+                                    	?>					                                    
+                                    	
+                                    </div>
+                                </div>                                                                
+                                
+                                <?php
+                                		endif;
+                                	endif; 
+                                ?>                                
+
+                                <?php if (df($arrGalleryField['use_gallery'],0) == 1 && $page_action == 'add')  : ?>
+                                <!-- Upload for gallery   -->
+                                <div class="control-group">
+                                	<label class="control-label">
+                                		Upload Multi Image Gallery
+                                	</label>
+                                    <div class="controls">
+                                    	<input type="file" id="image_gallery" name="image_gallery[]" class="multi max-10 accept-gif|jpg|png"/>
+                                    	<span class='help-inline'>
+                                    	<?php 
+                                    			if (df($arrGalleryField['image']['choose'],0) == 1)
+                                    				echo "Image gallery size : ".$arrGalleryField['image']['width'].' x '.$arrGalleryField['image']['height'];
+                                    			if (df($arrGalleryField['image_thumb']['choose'],0) == 1)
+                                    				echo "<br> => Create thumb : ".$arrGalleryField['image_thumb']['width'].' x '.$arrGalleryField['image_thumb']['height'];
+                                    			if (df($arrGalleryField['icon']['choose'],0) == 1)
+                                    				echo "<br> => Create icon : ".$arrGalleryField['icon']['width'].' x '.$arrGalleryField['icon']['height'];                                    			
+                                    	?>
+                                    	</span>
+                                    </div>
+                                </div>                                    
+								<?php endif; ?>
+
+                                <div class="control-group">
+                                	<label class="control-label text-info">Sort Order</label>
+                                    <div class="controls">
+                                    	<input type="text" class="input-mini" id="main_field[sort_order]" name="main_field[sort_order]" value="<?php echo df($dataContent['main_field']['sort_order'],''); ?>" /> 
+                                    </div>
+                                </div>
+                                
+								<div class="control-group">
+									<label class="control-label text-info">Active</label>
+                                    <div class="controls">
+                                    	<input type="checkbox" id="main_field[active]" name="main_field[active]" value="1" <?php echo check_or_select_input($dataContent['main_field']['active']); ?>>
+									</div>
+								</div>                                
+								
+                            </div>
+                            
+                        </div>
+                    </div>			
+			
+			
+			</div>
+			<!-- END Main Content -->
+			
+			<div class="clearfix">
+			
+			<?php if (df($arrGalleryField['use_gallery'],0) == 1 && $page_action == 'update')  : ?>
+            	<div class="pull-left btn-toolbar">
+					<a href=# onclick="openGalleryWindow('<?php echo $gallery_link; ?>')" class="btn btn-primary">
+						<i class="icon-picture"></i> Gallery Image (<span class='number_image' id='number_image'><?php echo $totalGalItem; ?></span>)
+					</a>
+		 		</div>
+			<?php endif ; ?>                                    
+                                    
+            	<div class="pull-right btn-toolbar">
+					<button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+					<a href="<?php echo $cancel_link; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+		 		</div>
+			</div>
+									
+</form>			
+                			
+			
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+function openGalleryWindow(url)
+{
+	$.fancybox.open({
+		href : url,
+		type : 'iframe',
+		autoSize : false,
+	    width    : "100%",
+	    height   : "100%",		
+		closeBtn  : false,
+		padding : 5
+	});
+}
+					                                
+function openChooseFileWindow(field_id, url) 
+{
+	$.fancybox.open({
+		href : url,
+		type : 'iframe',
+		autoSize : false,
+	    width    : "80%",
+	    height   : "100%",		
+		closeBtn  : true,
+		padding : 5
+	});
+	
+    window.KCFinder = {
+        callBack: function(url) {
+            window.KCFinder = null;
+            $('#'+field_id).val(url);
+			$.fancybox.close();				
+        }
+    };
+}
+					                                
+jQuery(document).ready(function ($) {
+    $('#tabs').tab();
+    console.debug(CKEDITOR.basePath);
+
+    // Run validation form
+    $("#validation-form").validate();        
+});
+
+</script>
+
+
+<!--page specific plugin scripts-->
+<script src="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>

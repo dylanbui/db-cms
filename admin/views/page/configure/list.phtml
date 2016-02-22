@@ -1,0 +1,117 @@
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+            <div>
+                <h1><i class="icon-file-alt"></i>Configure Pages</h1>
+                <h4>Configure Pages !</h4>
+            </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+            <div class="btn-toolbar pull-left no-margin">
+                <a class="btn btn-primary" href="#" onclick="confimDelete('<?php echo site_url("page/configure/truncate"); ?>','Are you sure you want to truncate page module ?')"><i class="icon-plus"></i> Truncate page module database</a>
+                <a class="btn btn-primary" href="#" onclick="confimDelete('<?php echo site_url("page/configure/clear-all-record"); ?>','Are you sure you want to clear all record ?')"><i class="icon-cloud-upload"></i> Clear all module data record</a>
+            </div>
+            <div class="btn-toolbar pull-right no-margin">
+                <a data-toggle="modal" href="#modalCreatePage" class="btn btn-primary"><i class="icon-plus"></i> New Module Page</a>
+            </div>
+
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file-alt"></i>Page Module</h3>
+                            </div>
+                            <div class="box-content">
+                            
+								<table class="table fill-head">
+                                    <thead>
+                                        <tr>
+                                            <th width="50px">#</th>
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th width="150px">Last Update</th>
+                                            <th width="150px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($rsPages as $rowPage) : ?>
+                                        <tr>
+                                            <td># <?php echo $rowPage['id']; ?></td>
+                                            <td><?php echo h($rowPage['name']); ?></td>
+                                            <td><?php echo h($rowPage['code']); ?></td>
+                                            <td><?php echo $rowPage['last_update']; ?></td>
+                                            <td>
+                                            	<a href='#' onclick="showModal('<?php echo $copy_url.$rowPage['id']; ?>','Copy configure a module page');" title='Copy Configure' class='btn btn-small btn btn-lime'><i class='icon-copy'></i></a>
+                                            	<a href='#' onclick="confimDelete('<?php echo $delete_url.$rowPage['id']; ?>')" title='Delete' class='btn btn-small btn-danger'><i class='icon-trash'></i></a>
+												<a href='<?php echo $update_url.$rowPage['id']; ?>' title='Update' class='btn btn-small btn-primary'><i class='icon-edit'></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+			
+                			
+			
+		</div>
+	</div>
+</div>
+
+<form id="modal-form" name="modal-form" class="form-horizontal" action="<?php echo site_url('page/configure/add'); ?>" method="POST">
+<div id="modalCreatePage" aria-hidden="true" aria-labelledby="myModalLabel1" role="dialog" tabindex="-1" class="modal hide fade" style="display: none;">
+        <div class="modal-header">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h3 id="myModalLabel1">Create a module page</h3>
+        </div>
+        <div class="modal-body">
+			<div class="control-group">
+				<label class="control-label text-left">Display Name</label>
+				<div class="controls">
+					<input type="text" id="txtName" name="txtName" class="input-xlarge" placeholder="">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label text-left">Code</label>
+				<div class="controls">
+					<input type="text" id="txtCode" name="txtCode" class="input-xlarge" placeholder="">
+				</div>
+			</div>
+            <div class="control-group">
+                <label class="control-label text-left">Icon</label>
+                <div class="controls">
+                    <input type="text" id="txtPageIcon" name="txtPageIcon" class="input-xlarge" placeholder="" value="icon-list-alt">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button aria-hidden="true" data-dismiss="modal" class="btn">Close</button>
+<!--             <button data-dismiss="modal" type="submit" class="btn btn-primary">Save changes</button> -->
+            <input type="hidden" id="txtPage" name="txtPage" value="content">
+			<button type="submit" class="btn btn-primary">Save changes</button>            
+        </div>
+</div>
+</form>
+
+<script type="text/javascript">
+
+function showModal(url, title)
+{
+	$('#modal-form').attr('action',url);
+	$('#myModalLabel1').text(title);
+	$('#modalCreatePage').modal('toggle');
+}
+
+</script>
+

@@ -1,0 +1,354 @@
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> Dashboard</h1>
+                        <h4>Overview, stats, chat and more</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Dashboard Item -->
+                <div class="row-fluid">
+
+                    <div class="span3">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <i class="icon-comments icon-5x"></i>
+                                    </div>
+
+                                    <div class="pull-right span8">
+                                        <div class="huge text-right">26</div>
+                                        <div class="huge-sub text-right">New Comments!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="icon-circle-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <i class="icon-tasks icon-5x"></i>
+                                    </div>
+
+                                    <div class="pull-right span8">
+                                        <div class="huge text-right">26</div>
+                                        <div class="huge-sub text-right">New Tasks!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="icon-circle-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <i class="icon-shopping-cart icon-5x"></i>
+                                    </div>
+
+                                    <div class="pull-right span8">
+                                        <div class="huge text-right">26</div>
+                                        <div class="huge-sub text-right">New Orders!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="icon-circle-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="span3">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <i class="icon-meh icon-5x"></i>
+                                    </div>
+
+                                    <div class="pull-right span8">
+                                        <div class="huge text-right">26</div>
+                                        <div class="huge-sub text-right">Support Tickets!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="icon-circle-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END Dashboard Item -->
+                
+                <!-- BEGIN Breadcrumb -->
+                <div id="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li class="active">
+                        	<i class="icon-tasks"></i> 
+                        	Module
+                        </li>
+                    </ul>
+                </div>
+                <!-- END Breadcrumb -->
+
+                <!-- BEGIN Main Content -->
+                
+                <div class="row-fluid">
+
+                <?php
+                	$i = 1;
+                	foreach ($menuInfo as $key => $sub_menus) :
+                ?>
+
+                    <a href="<?php echo site_url($key)?>" class="quick-button span2">
+                        <i class="<?php echo $sub_menus['icon'];?> icon-4x"></i>
+                        <p><?php echo $sub_menus['name']; ?></p>
+<!--                        <span class="notification label-xlarge label-success">1.367</span>-->
+                    </a>
+
+                	<?php
+                		if(($i % 6) == 0 )
+                			echo "</div><div class='row-fluid'>";
+                    	$i++;
+                	endforeach;
+                    ?>
+                </div>
+
+                <br>
+                <!-- BEGIN Breadcrumb -->
+<!--                <div id="breadcrumbs">-->
+<!--                    <ul class="breadcrumb">-->
+<!--                        <li class="active">-->
+<!--                        	<i class="--><?php //echo $arrConfigSystemNav['icon']; ?><!--"></i> -->
+<!--                        	--><?php //echo $arrConfigSystemNav['name']; ?>
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+                <!-- END Breadcrumb -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                <?php
+                    $i = 1;
+                    foreach ($arrConfigSystemNav['sub_menus'] as $sub_menus) :
+                ?>
+
+                    <a href="<?php echo site_url($sub_menus['link']); ?>" class="quick-button span2">
+                        <i class="<?php echo $sub_menus['icon'];?> icon-4x"></i>
+                        <p><?php echo $sub_menus['name']; ?></p>
+<!--                        <span class="notification label-xlarge label-success">1.367</span>-->
+                    </a>
+
+                <?php
+                    if(($i % 6) == 0 )
+                        echo "</div><div class='row-fluid'>";
+                    $i++;
+                    endforeach;
+                ?>
+                </div>
+                
+                <div class="row-fluid">
+                    <div class="span7">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-bar-chart"></i> Visitors Chart hang moi</h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                    <a data-action="close" href="#"><i class="icon-remove"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <div id="visitors-chart" style="margin-top:20px; position:relative; height: 290px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span5">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-bar-chart"></i> Weekly Visitors Stat</h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                    <a data-action="close" href="#"><i class="icon-remove"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <ul class="weekly-stats">
+                                    <li>
+                                        <span class="inline-sparkline">134,178,264,196,307,259,287</span>
+                                        Visits: <span class="value">376</span>
+                                    </li>
+                                    <li>
+                                        <span class="inline-sparkline">89,124,197,138,235,169,186</span>
+                                        Unique Visitors: <span class="value">238</span>
+                                    </li>
+                                    <li>
+                                        <span class="inline-sparkline">625,517,586,638,669,698,763</span>
+                                        Page Views: <span class="value">514</span>
+                                    </li>
+                                    <li>
+                                        <span class="inline-sparkline">1.34,2.98,0.76,1.29,1.86,1.68,1.92</span>
+                                        Pages / Visit: <span class="value">1.43</span>
+                                    </li>
+                                    <li>
+                                        <span class="inline-sparkline">2.34,2.67,1.47,1.97,2.25,2.47,1.27</span>
+                                        Avg. Visit Duration: <span class="value">00:02:34</span>
+                                    </li>
+                                    <li>
+                                        <span class="inline-sparkline">70.34,67.41,59.45,65.43,78.42,75.92,74.29</span>
+                                        Bounce Rate: <span class="value">73.56%</span>
+                                    </li>
+                                    <li>
+                                        <span class="inline-sparkline">78.12,74.52,81.25,89.23,86.15,91.82,85.18</span>
+                                        % New Visits: <span class="value">82.65%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="span7">
+                        <div class="box box-black">
+                            <div class="box-title">
+                                <h3><i class="icon-retweet"></i> Thing To Do</h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                    <a data-action="close" href="#"><i class="icon-remove"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <ul class="things-to-do">
+                                    <li>
+                                        <p>
+                                            <i class="icon-user"></i>
+                                            <span class="value">4</span>
+                                            Accept User Registration
+                                            <a class="btn btn-success" href="#">Go</a>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-comments"></i>
+                                            <span class="value">14</span>
+                                            Review Comments
+                                            <a class="btn btn-success" href="#">Go</a>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-shopping-cart blue"></i>
+                                            <span class="value">7</span>
+                                            Pending Orders
+                                            <a class="btn btn-success" href="#">Go</a>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-file-text-alt"></i>
+                                            <span class="value">4</span>
+                                            New Invoice
+                                            <a class="btn btn-success" href="#">Go</a>
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-gear"></i>
+                                            <span class="value">3</span>
+                                            Settings To Change
+                                            <a class="btn btn-success" href="#">Go</a>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span5">
+                        <div class="box box-orange">
+                            <div class="box-title">
+                                <h3><i class="icon-bar-chart"></i> Weekly Changes</h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                    <a data-action="close" href="#"><i class="icon-remove"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <ul class="weekly-changes">
+                                    <li>
+                                        <p>
+                                            <i class="icon-arrow-up light-green"></i>
+                                            <span class="light-green">186</span>
+                                            New Comments
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-minus light-blue"></i>
+                                            <span class="light-blue">53</span>
+                                            New Users
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-arrow-down light-red"></i>
+                                            <span class="light-red">17</span>
+                                            New Articles
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-arrow-up light-green"></i>
+                                            <span class="light-green">75</span>
+                                            New Tickets
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <i class="icon-arrow-down light-red"></i>
+                                            <span class="light-red">74</span>
+                                            New Orders
+                                        </p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+                
+                
+                
+                <!-- END Main Content -->

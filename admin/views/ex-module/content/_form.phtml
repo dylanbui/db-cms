@@ -1,0 +1,118 @@
+<script type="text/javascript">
+
+function string_to_slug(str) 
+{
+	str = str.toLowerCase();
+	str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g,"a");
+	str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g,"e");
+	str = str.replace(/ì|í|ị|ỉ|ĩ/g,"i");
+	str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g,"o");
+	str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g,"u");
+	str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g,"y");
+	str = str.replace(/đ/g,"d");
+	str = str.replace(/!|@|\$|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\'| |\"|\&|\#|\[|\]|~/g,"-");
+	str = str.replace(/-+-/g,"-"); //thay thế 2- thành 1-
+	str = str.replace(/^\-+|\-+$/g,"");//cắt bỏ ký tự - ở đầu và cuối chuỗi
+	return str;
+}
+
+$(document).ready(function() {
+
+	$('#slug_title_show').html("slug-title");
+	
+    $('#title').keydown(function(event) {
+        
+        if (event.keyCode == 13) 
+		{
+        	title = string_to_slug($('#title').val())+'.html';
+			console.log(title);
+			$('#slug_title_show').html(title);
+			$('#slug_title').val(title);
+            //this.form.submit();
+            return false;
+        }
+    });
+});
+
+</script>
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> <?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?></h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i><?php echo $box_action; ?></h3>
+                                <div class="box-tool">
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+                            
+<form method="POST" id="frmContent" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Category</label>
+                                        <div class="controls">
+                                        	<?php echo $menuTreeOptionHtml; ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Title</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-xxlarge" value="<?php echo h($rowContent["title"]); ?>" id="title" name="title"
+                                            data-rule-required="true" data-msg-required="Vui lòng nhập tiêu đề">
+                                            <p class="help-block" id="slug_title_show">Start typing to auto complete!. E.g: California</p>
+                                            <input type="hidden" value="" id="slug_title" name="slug_title" />                                        
+                                        </div>
+                                    </div>
+                                    
+									<div class="control-group">
+                                       	<label class="control-label">Active</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	<input type="checkbox" id="active" name="active" value="1" <?php echo n($rowContent["active"])==1?'checked':''; ?> >
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="control-group last">
+                                        <label class="control-label" for="textfield4">Order</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-mini"  id="sort_order" name="sort_order" value="<?php echo n($rowContent["sort_order"]); ?>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+                                       <a href="<?php echo site_url('ex-module/content/list'); ?>" class="btn">Cancel</a>
+                                    </div>                                    
+							    
+</form>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+<script type="text/javascript">
+                
+$(document).ready(function() {
+	$("#frmContent").validate();
+
+});
+
+</script>                
+                
+                

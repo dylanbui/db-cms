@@ -1,0 +1,307 @@
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!--page specific css styles-->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/css/prettyPhoto.css">
+
+<!-- Add MultiFile library -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>jquery.MultiFile.js"></script>
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i>Content : <?php echo h($rowPageConf['name']); ?></h1>
+                        <h4><?php echo $page_title; ?></h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+ 			
+<form  method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" action="<?php echo $form_link; ?>">
+
+			<div class="clearfix">
+			
+			<?php if (!empty($gallery_link)) : ?>
+            	<div class="pull-left btn-toolbar">
+					<a href=# onclick="openGalleryWindow('<?php echo $gallery_link; ?>')" class="btn btn-primary">
+						<i class="icon-picture"></i> Gallery Image (<span id='number_image'><?php echo $totalGalItem; ?></span>)
+					</a>
+		 		</div>
+			<?php endif ; ?>
+                                    
+            	<div class="pull-right btn-toolbar">
+					<button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+					<a href="<?php echo $cancel_link; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+		 		</div>
+			</div>
+
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+			
+				<div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file-alt"></i><?php echo h($rowPageConf['name']); ?></h3>
+                            </div>
+                     
+                            <div class="box-content">
+                            
+                                <div class="control-group">
+                                	<label class="control-label">Choose category</label>
+                                    <div class="controls">
+                                    	<input type="text" disabled="disabled" class="input-xlarge" placeholder="Text input" id="file_path" name="file_path[abcda]">
+										<a class="btn btn-small" href=# onclick="openChooseFileWindow('file_path','<?php echo __JS_URL; ?>ckeditor/kcfinder/browse.php?type=images')" class="iframe-btn" type="button"><i class="icon-folder-open"></i></a>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                	<label class="control-label">Choose file</label>
+                                    <div class="controls">
+                                    	<?php echo load_define_input('choose_file', "data[aa][bb]"); ?>
+                                    </div>
+                                </div>                                
+                                
+                                <?php 
+                                	foreach ($arrMainField as $fKey => $fValue) :
+                                		if (df($fValue['choose'],0) == 1) : 
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label"><?php echo h(df($fValue['display_name'],$fKey)); ?></label>
+                                    <div class="controls">
+                                    	<?php echo load_define_input($fValue['type'], "main_field[{$fKey}]", df($dataContent['main_field'][$fKey])); ?>
+                                    </div>
+                                </div>
+                                	
+                                <?php
+                                		endif; 
+                                	endforeach; 
+                                ?>
+                                
+                                <?php 
+                                	if (df($arrMainImage['choose'],0) == 1) :
+	                                	if (df($arrMainImage['image']['choose'],0) == 1) : 
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label"><?php echo h(df($arrMainImage['image']['field_name'],'image')); ?></label>
+                                    <div class="controls">
+                                    	<input type="file" class="default" name="image" id="image">
+                                    	<span class='help-inline'>
+                                    		<?php 
+                                    			echo $arrMainImage['image']['width'].' x '.$arrMainImage['image']['height'];  
+                                    			if (df($arrMainImage['image_thumb']['choose'],0) == 1)
+                                    				echo " => Create thumb : ".$arrMainImage['image_thumb']['width'].' x '.$arrMainImage['image_thumb']['height'];
+                                    		?>
+                                    	</span>
+                                    </div>
+                                </div>
+                                	
+                                <?php
+	                                	endif;
+	                                	if (df($arrMainImage['icon']['choose'],0) == 1) :
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label"><?php echo h(df($arrMainImage['icon']['field_name'],'icon')); ?></label>
+                                    <div class="controls">
+                                    	<input type="file" class="default" name="icon" id="icon">
+                                    	<span class='help-inline'><?php echo $arrMainImage['icon']['width'].' x '.$arrMainImage['icon']['height']; ?></span>
+                                    </div>
+                                </div>                                                                
+                                
+                                <?php
+                                		endif;
+                                	endif; 
+                                ?>                                
+                                
+                                
+								<div class="control-group">
+                                        
+											<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+											
+											<?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+												
+										    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+										    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+										    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		
+										    		</a>
+										    	</li>
+										    	
+											<?php endforeach; ?>
+																				    	
+										    </ul>							        
+                                        
+										    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+										    
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+										    															    
+										        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>" style="margin-left: 20px;margin-right: 20px;">
+										        
+					                                <?php 
+					                                	foreach ($arrLnField as $fKey => $fValue) :
+					                                		if (df($fValue['choose'],0) == 1) : 
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label"><?php echo h(df($fValue['display_name'],$fKey)); ?></label>
+					                                    <div class="controls">
+					                                    	<?php echo load_define_input($fValue['type'], "ln_field[{$code}][{$fKey}]", df($dataContent['ln_field'][$code][$fKey])); ?>
+					                                    </div>
+					                                </div>
+					                                	
+					                                <?php
+					                                		endif; 
+					                                	endforeach; 
+					                                ?>
+					                                
+					                                <?php 
+					                                	if (df($arrLnImage['choose'],0) == 1) :
+						                                	if (df($arrLnImage['image']['choose'],0) == 1) : 
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label"><?php echo h(df($arrLnImage['image']['field_name'],'image')); ?></label>
+					                                    <div class="controls">
+					                                    	<input type="file" class="default" name="ln_image[<?php echo $code; ?>][image]" id="ln_image[<?php echo $code; ?>][image]">
+					                                    	<span class='help-inline'>
+					                                    		<?php 
+					                                    			echo $arrLnImage['image']['width'].' x '.$arrLnImage['image']['height'];  
+					                                    			if (df($arrLnImage['image_thumb']['choose'],0) == 1)
+					                                    				echo " => Create thumb : ".$arrLnImage['image_thumb']['width'].' x '.$arrLnImage['image_thumb']['height'];
+					                                    		?>
+					                                    	</span>					                                    	
+					                                    </div>
+					                                </div>
+					                                	
+					                                <?php
+						                                	endif;
+						                                	if (df($arrLnImage['icon']['choose'],0) == 1) :
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label"><?php echo h(df($arrLnImage['icon']['field_name'],'icon')); ?></label>
+					                                    <div class="controls">
+					                                    	<input type="file" class="default" name="ln_image[<?php echo $code; ?>][icon]" id="ln_image[<?php echo $code; ?>][icon]">
+					                                    	<span class='help-inline'><?php echo $arrLnImage['icon']['width'].' x '.$arrLnImage['icon']['height']; ?></span>
+					                                    </div>
+					                                </div>					                                                                
+					                                
+					                                <?php
+					                                		endif;
+					                                	endif; 
+					                                ?>                                
+										        
+										        </div>
+										        
+											<?php endforeach; ?>
+										        
+										    </div>                                            
+                                            
+                                    </div>
+                                
+                                <?php if (df($arrGalleryField['use_gallery'],0) == 1 && $page_action == 'add')  : ?>    
+                                <div class="control-group">
+                                	<label class="control-label">Upload Multi Image Gallery</label>
+                                    <div class="controls">
+                                    	<input type="file" id="image_gallery" name="image_gallery[]" class="multi max-10 accept-gif|jpg|png"/>
+                                    </div>
+                                </div>                                    
+								<?php endif; ?>
+								
+                                <div class="control-group">
+                                	<label class="control-label">Choose category</label>
+                                    <div class="controls">
+                                    	<input type="text" class="input-xlarge" placeholder="Text input" id="textfield4" name="textfield4">
+                                    </div>
+                                </div>                                    
+
+                                
+                            </div>
+                            
+                        </div>
+                    </div>			
+			
+			
+			</div>
+			<!-- END Main Content -->
+			
+			<div class="clearfix">
+			
+			<?php if (!empty($gallery_link)) : ?>
+            	<div class="pull-left btn-toolbar">
+					<a href=# onclick="openGalleryWindow('<?php echo $gallery_link; ?>')" class="btn btn-primary">
+						<i class="icon-picture"></i> Gallery Image (<span id='number_image'><?php echo $totalGalItem; ?></span>)
+					</a>
+		 		</div>
+			<?php endif ; ?>                                    
+                                    
+            	<div class="pull-right btn-toolbar">
+					<button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+					<a href="<?php echo $cancel_link; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+		 		</div>
+			</div>
+									
+</form>			
+                			
+			
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+function openGalleryWindow(url)
+{
+	$.fancybox.open({
+		href : url,
+		type : 'iframe',
+		autoSize : false,
+	    width    : "100%",
+	    height   : "100%",		
+		closeBtn  : false,
+		padding : 5
+	});
+}
+					                                
+function openChooseFileWindow(field_id, url) 
+{
+	$.fancybox.open({
+		href : url,
+		type : 'iframe',
+		autoSize : false,
+	    width    : "80%",
+	    height   : "100%",		
+		closeBtn  : true,
+		padding : 5
+	});
+	
+    window.KCFinder = {
+        callBack: function(url) {
+            window.KCFinder = null;
+            $('#'+field_id).val(url);
+			$.fancybox.close();				
+        }
+    };
+}
+					                                
+jQuery(document).ready(function ($) {
+    $('#tabs').tab();
+    console.debug(CKEDITOR.basePath);        
+});
+
+</script>
+
+
+<!--page specific plugin scripts-->
+<script src="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>

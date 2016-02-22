@@ -1,0 +1,106 @@
+
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-user"></i> User</h1>
+                        <h4>List User</h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<?php if ($_isModify) : ?>
+			<div class="btn-toolbar text-right">
+				<a href="<?php echo site_url('home/user/add'); ?>" class="btn btn-primary"><i class="icon-plus"></i> New User</a>			
+			</div>
+			<?php endif; ?>
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+
+                    <?php echo \App\Helper\AdFunc::showMessage($notify_msg['msg_title'], $notify_msg['msg_code'] ,$notify_msg['msg_content']); ?>
+
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-user"></i> List User</h3>
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-hover fill-head">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Display Name</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Group Name</th>
+                                            <?php if ($_isModify) : ?>
+                                            <th style="width: 150px">Action</th>
+                                            <?php endif;?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                    <?php
+                                    	$i = 1; 
+                                    	foreach ($rsUsers as $rowUser) :
+	                                    	$url_activate = site_url('home/user/active/'.$rowUser['id']);
+                                    		$url_edit = site_url('home/user/edit/'.$rowUser['id']);
+	                                    	$url_delete = site_url('home/user/delete/'.$rowUser['id']);
+                                    ?>
+                                    
+                                        <tr>
+                                            <td><?php echo $i; ?></td>
+                                            <td><?php echo h($rowUser['display_name']); ?></td>
+                                            <td><?php echo h($rowUser['username']); ?></td>
+                                            <td><?php echo h($rowUser['email']); ?></td>
+                                            <td>
+                                            	<?php 
+                                            		$obj = new App\Model\Base\Group();
+                                            		$rsGroup = $obj->getRowset("id IN ({$rowUser['group_id']})", NULL, 'level DESC');
+                                            		foreach ($rsGroup as $group)
+                                            			echo "<span class='badge badge-success'>{$group['group_name']}</span>&nbsp;";
+                                            	?>
+                                            </td>
+                                            
+                                            <?php if ($_isModify) : ?>
+                                            <td>
+												<?php if ($rowUser['active'] == 1) : ?>
+													<a href="<?php echo $url_activate; ?>" title="" class="btn btn-small btn-lime"><i class="icon-check"></i></a>													
+												<?php else :?>
+													<a href="<?php echo $url_activate; ?>" title="" class="btn btn-small btn-warning"><i class="icon-check-empty"></i></a>													
+												<?php endif;?>
+													
+							                    <a href="<?php echo $url_edit; ?>" title="" class="btn btn-small btn-primary"><i class="icon-edit"></i></a>
+							                    <a href="javascript:confimDelete('<?php echo $url_delete; ?>');" title="" class="btn btn-small btn-danger"><i class="icon-trash"></i></a>								                    
+                                            </td>
+                                            <?php endif; ?>
+                                        </tr>
+                                        
+									<?php
+											$i++;	 
+										endforeach; 
+									?>                                        
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+                			
+			
+		</div>
+	</div>
+</div>
+
+

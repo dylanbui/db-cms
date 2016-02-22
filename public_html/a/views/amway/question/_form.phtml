@@ -1,0 +1,113 @@
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> <?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?></h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i><?php echo $box_action; ?></h3>
+                                <div class="box-tool">
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+                            
+<form method="POST" id="frmQuestion" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Thành viên</label>
+                                        <div class="controls">
+											<select tabindex="1" class="input-xxlarge" id="member_id" name="member_id">
+											<?php foreach ($rsMembers as $rowMember) : 
+												$selected = "";
+												if ($rowMember['id'] == n($rowContent["member_id"]))
+													$selected = "selected";
+											?>
+	                                             <option value="<?php echo h($rowMember['id']); ?>" <?php echo $selected; ?>>
+		                                             <?php echo h($rowMember['fullname']); ?> [<?php echo h($rowMember['email'], " --null-- "); ?>]
+	                                             </option>
+	                                        <?php endforeach; ?>    
+                                          	</select>                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Tiêu đề</label>
+                                        <div class="controls">
+											<select tabindex="1" class="input-xxlarge" id="cat_id" name="cat_id">
+											<?php foreach ($rsCats as $rowCat) : 
+												$selected = "";
+												if ($rowCat['id'] == n($rowContent["cat_id"]))
+													$selected = "selected";
+											?>
+	                                             <option value="<?php echo h($rowCat['id']); ?>" <?php echo $selected; ?>>
+		                                             <?php echo h($rowCat['title']); ?>
+	                                             </option>
+	                                        <?php endforeach; ?>    
+                                          	</select>                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Câu hỏi</label>
+                                        <div class="controls">
+                                        	<textarea rows="3" class="input-xxlarge" id="question" name="question"
+                                        	data-rule-required="true" data-msg-required="Vui lòng nhập câu hỏi"><?php echo h($rowContent["question"]); ?></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Trả lời</label>
+                                        <div class="controls">
+                                        	<textarea rows="10" class="input-xxlarge" id="answer" name="answer"><?php echo h($rowContent["answer"]); ?></textarea>
+                                        </div>
+                                    </div>                                    
+                                
+									<div class="control-group">
+                                       	<label class="control-label">Active And Send FB Notifycation</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	<input type="checkbox" id="active" name="active" value="1" <?php echo n($rowContent["active"])==1?'checked':''; ?> >
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="control-group last">
+                                        <label class="control-label" for="textfield4">Order</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-mini"  id="sort_order" name="sort_order" value="<?php echo n($rowContent["sort_order"]); ?>">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+                                       <a href="<?php echo site_url('amway/question/list'); ?>" class="btn">Cancel</a>
+                                    </div>                                    
+							    
+</form>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+<script type="text/javascript">
+                
+$(document).ready(function() {
+	$("#frmQuestion").validate();
+
+});
+
+</script>                
+                
+                

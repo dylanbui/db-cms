@@ -1,0 +1,58 @@
+        
+            <!-- BEGIN Sidebar -->
+            <div id="sidebar" class="nav-collapse">
+            
+                <!-- BEGIN Navlist -->
+                <ul class="nav nav-list">
+                    <li class="active">
+                        <a href="#">
+                            <i class="icon-dashboard"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    
+                    <?php foreach ($menuInfo as $key => $rowMenuInfo) :
+							$have_sub_menu = isset($rowMenuInfo['sub_menus']) ? TRUE : FALSE;
+                    		$cls_dropdown_toggle = $have_sub_menu ? "class='dropdown-toggle'" : '';
+                    		$icon_dropdown_toggle = $have_sub_menu ? "<b class='arrow icon-angle-down'></b>" : '';
+                    		$main_link = $have_sub_menu ? "#" : site_url($rowMenuInfo['link']);
+                    		
+                    ?>
+                    
+                    <li>
+                        <a href="<?php echo $main_link; ?>" <?php echo $cls_dropdown_toggle; ?>>
+                            <i class="<?php echo $rowMenuInfo['icon']; ?>"></i>
+                            <span><?php echo h($rowMenuInfo['name']); ?></span>
+                            <?php echo $icon_dropdown_toggle; ?>
+                        </a>
+
+                        <?php if ($have_sub_menu) : ?>
+                        <!-- BEGIN Submenu -->
+                        <ul class="submenu" style="display: block;">
+                        
+	                        <?php foreach ($rowMenuInfo['sub_menus'] as $rowSubMenu) :?>
+	                        <li>
+	                        	<a href="<?php echo site_url($rowSubMenu['link']); ?>"><?php echo h($rowSubMenu['name']); ?></a>
+	                        </li>
+	                        <?php endforeach;?>                        
+                        
+                        </ul>
+                        <!-- END Submenu -->                        
+                        <?php endif; ?>
+                        
+                    </li>                    
+                    
+                    <?php endforeach; ?>
+                    
+                    
+                </ul>
+                <!-- END Navlist -->
+
+                <!-- BEGIN Sidebar Collapse Button -->
+                <div id="sidebar-collapse" class="visible-desktop">
+                    <i class="icon-double-angle-left"></i>
+                </div>
+                <!-- END Sidebar Collapse Button -->
+            </div>
+            <!-- END Sidebar -->
+

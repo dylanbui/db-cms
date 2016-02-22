@@ -1,0 +1,620 @@
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i>Page Configure</h1>
+                        <h4>Page Configure</h4>
+                    </div>
+        </div>		
+	</div>
+
+<form class="form-horizontal" action="<?php echo $link_url; ?>" method="POST">	
+	
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<div class="btn-toolbar text-right no-margin">
+				<button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+				<a class="btn btn-primary" href="<?php echo site_url('page/configure/list')?>"><i class="icon-remove"></i> Cancel</a>
+ 			</div>			
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+			
+				<div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file-alt"></i>Page Configure</h3>
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-1-1">Main content</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-1-2">Category</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-1-3">Gallery Image</a></li>
+                                </ul>
+                            </div>
+
+                            
+                            <div class="box-content">
+                            
+                                <div class="tab-content">
+                                
+                                	<!-- TAB Content Start -->
+                                    <div id="tab-1-1" class="tab-pane active">
+                                        <p><strong>General</strong></p>
+										<div class="control-group">
+	                                       	<label class="control-label text-left">Name</label>
+	                                       	<div class="controls">
+	                                          <input type="text" class="input-xlarge" id="txtName" name="txtName" value="<?php echo h($rowPageConf['name'])?>" placeholder="">
+	                                       	</div>
+                                    	</div>
+                                        <div class="control-group">
+                                            <label class="control-label text-left">Page Icon</label>
+                                            <div class="controls">
+                                                <input type="text" class="input-xlarge" id="txtPageIcon" name="txtPageIcon" value="<?php echo h($rowPageConf['icon'])?>" placeholder="">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label text-left"></label>
+                                            <div class="controls">
+                                                <i class="<?php echo h($rowPageConf['icon'])?> icon-5x"></i>
+                                            </div>
+                                        </div>
+										<div class="control-group">
+	                                       	<label class="control-label text-left">Description</label>
+	                                       	<div class="controls">
+	                                          <textarea rows="3" class="input-xxlarge" id="txtContent" name="txtContent" placeholder=""><?php echo h($rowPageConf['content'])?></textarea>
+	                                       	</div>
+                                    	</div>
+										<div class="control-group">
+	                                       	<label class="control-label text-left">Enable SEO Url</label>
+	                                       	<div class="controls">
+												<label class="checkbox"><input type="checkbox" name="chkSeoUrl" <?php echo \App\Helper\AdFunc::checkOrSelectInput($rowPageConf['enable_seo_url']); ?> value="1"></label>	                                       	
+	                                       	</div>
+                                    	</div>
+										<div class="control-group">
+	                                       	<label class="control-label text-left">Display Template File</label>
+	                                       	<div class="controls">
+	                                          <input type="text" class="input-xxlarge" id="txtDisplayDefaultTemplate" name="txtDisplayDefaultTemplate" value="<?php echo h($rowPageConf['display_template_file'])?>" placeholder="">
+	                                          <p class="help-block">Đây là default template hiển thị danh sách content. Không được bỏ trống. <br> Default là : page/content/display-table-content</p>
+	                                       	</div>
+                                    	</div>                                    	                                    	
+                                    	
+                                    	<hr>
+                                    	
+                                        <p><strong>Show main fields </strong></p>
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th width="250px">Field</th>
+		                                            <th>Title Display</th>
+		                                            <th>Type</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                            <th>Format Type</th>
+		                                            <th>Data Type</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    <?php foreach ($arrMainDbFields as $rowMainField) : ?>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_field[<?php echo h($rowMainField['Field']);?>][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainField[$rowMainField['Field']]['choose']); ?> value="1"><?php echo h($rowMainField['Field']); ?></label>
+                                          			</td>
+		                                            <td><input type="text" name="main_field[<?php echo h($rowMainField['Field']);?>][display_name]" value="<?php echo h($arrMainField[$rowMainField['Field']]['display_name']); ?>" class="input-block-level"></td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadInputSupportType("main_field[{$rowMainField['Field']}][type]", h($arrMainField[$rowMainField['Field']]['type'])); ?>
+                                          			</td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_field[<?php echo h($rowMainField['Field']);?>][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainField[$rowMainField['Field']]['required']); ?> value="1">
+                                          			</td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadSelectFormatType("main_field[{$rowMainField['Field']}][format_type]", h($arrMainField[$rowMainField['Field']]['format_type'])); ?>
+                                          			</td>                                          			
+		                                            <td><?php echo strtoupper(h($rowMainField['Type'])); ?></td>
+		                                        </tr>
+		                                        <tr>
+		                                            <td style="border-top:0px">&nbsp;</td>
+		                                            <td colspan="2" style="border-top:0px;">
+		                                            	<label class="inline">Type value
+		                                            	<textarea rows="2" class="input-block-level" name="main_field[<?php echo h($rowMainField['Field']); ?>][type_value]" placeholder="Type Value"><?php echo $arrMainField[$rowMainField['Field']]['type_value']; ?></textarea>
+		                                            	</label>
+                                          			</td>
+		                                            <td colspan="2" style="border-top:0px;">
+		                                            	<label class="inline">Format value
+		                                            	<textarea rows="2" class="input-block-level" name="main_field[<?php echo h($rowMainField['Field']); ?>][format_value]" placeholder="Format Value"><?php echo $arrMainField[$rowMainField['Field']]['format_value']; ?></textarea>
+		                                            	</label>		                                            
+                                          			</td>
+		                                            <td style="border-top:0px"></td>
+		                                        </tr>		                                        
+		                                    <?php endforeach; ?>    
+		                                    </tbody>
+		                                </table>
+		                                <p><strong>Show language fields</strong></p>                                        
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th width="250px">Field</th>
+		                                            <th>Title Display</th>
+		                                            <th>Type</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                            <th>Format Type</th>		                                            
+		                                            <th>Data Type</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    <?php foreach ($arrLnDbFields as $rowLnField) : ?>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_field[<?php echo h($rowLnField['Field']);?>][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnField[$rowLnField['Field']]['choose']); ?> value="1"><?php echo h($rowLnField['Field']); ?></label>
+                                          			</td>
+		                                            <td><input type="text" name="ln_field[<?php echo h($rowLnField['Field']);?>][display_name]" value="<?php echo h($arrLnField[$rowLnField['Field']]['display_name']); ?>" class="input-block-level"></td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadInputSupportType("ln_field[{$rowLnField['Field']}][type]", h($arrLnField[$rowLnField['Field']]['type']))?>
+                                          			</td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_field[<?php echo h($rowLnField['Field']);?>][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnField[$rowLnField['Field']]['required']); ?> value="1">
+                                          			</td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadSelectFormatType("ln_field[{$rowLnField['Field']}][format_type]", h($arrLnField[$rowLnField['Field']]['format_type'])); ?>
+                                          			</td>                                          			
+		                                            <td><?php echo strtoupper(h($rowLnField['Type'])); ?></td>
+			                                        <tr>
+			                                            <td style="border-top:0px">&nbsp;</td>
+			                                            <td colspan="2" style="border-top:0px;">
+			                                            	<label class="inline">Type value
+			                                            	<textarea rows="2" class="input-block-level" name="ln_field[<?php echo h($rowLnField['Field']); ?>][type_value]"><?php echo $arrLnField[$rowLnField['Field']]['type_value']; ?></textarea>
+			                                            	</label>
+	                                          			</td>
+			                                            <td colspan="2" style="border-top:0px;">
+			                                            	<label class="inline">Format value
+			                                            	<textarea rows="2" class="input-block-level" name="ln_field[<?php echo h($rowLnField['Field']); ?>][format_value]"><?php echo $arrLnField[$rowLnField['Field']]['format_value']; ?></textarea>
+			                                            	</label>		                                            
+	                                          			</td>
+			                                            <td style="border-top:0px"></td>
+			                                        </tr>		                                            
+		                                        </tr>
+		                                    <?php endforeach; ?>
+		                                    </tbody>
+		                                </table>
+		                                
+		                                <p><label class="checkbox"><input type="checkbox" name="main_image[choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['choose']); ?> value="1"><b>Main Image</b></label></p>                                        
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Field</th>
+		                                            <th>Resize</th>
+		                                            <th>Field Name</th>
+		                                            <th>Description</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_image[image][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['image']['choose']); ?> value="1">Image</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="main_image[image][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrMainImage['image']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="main_image[image][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrMainImage['image']['height'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="main_image[image][field_name]" class="input-xlarge" value="<?php echo df($arrMainImage['image']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="main_image[image][description]" class="input-block-level" value="<?php echo df($arrMainImage['image']['description']); ?>"></td>
+													<td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_image[image][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['image']['required']); ?> value="1">
+                                          			</td>
+		                                        </tr>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_image[image_thumb][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['image_thumb']['choose']); ?> value="1">Image Thumb</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="main_image[image_thumb][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrMainImage['image_thumb']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="main_image[image_thumb][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrMainImage['image_thumb']['height'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="main_image[image_thumb][field_name]" class="input-xlarge" value="<?php echo df($arrMainImage['image_thumb']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="main_image[image_thumb][description]" class="input-block-level" value="<?php echo df($arrMainImage['image_thumb']['description']); ?>"></td>
+													<td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_image[image_thumb][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['image_thumb']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>		                                    	
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_image[icon][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['icon']['choose']); ?> value="1">Icon</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="main_image[icon][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrMainImage['icon']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="main_image[icon][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrMainImage['icon']['height'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="main_image[icon][field_name]" class="input-xlarge" value="<?php echo df($arrMainImage['icon']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="main_image[icon][description]" class="input-block-level" value="<?php echo df($arrMainImage['icon']['description']); ?>"></td>
+													<td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_image[icon][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainImage['icon']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>
+		                                        		                                        
+		                                    </tbody>
+		                                </table>
+		                                
+		                                <p><label class="checkbox"><input type="checkbox" name="ln_image[choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['choose']); ?> value="1"><b>Language Image</b></label></p>                                        
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Field</th>
+		                                            <th>Resize</th>
+		                                            <th>Field Name</th>
+		                                            <th>Description</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_image[image][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['image']['choose']); ?> value="1">Image</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="ln_image[image][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrLnImage['image']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="ln_image[image][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrLnImage['image']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="ln_image[image][field_name]" class="input-xlarge" value="<?php echo df($arrLnImage['image']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="ln_image[image][description]" class="input-block-level" value="<?php echo df($arrLnImage['image']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_image[image][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['image']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_image[image_thumb][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['image_thumb']['choose']); ?> value="1">Image Thumb</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="ln_image[image_thumb][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrLnImage['image_thumb']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="ln_image[image_thumb][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrLnImage['image_thumb']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="ln_image[image_thumb][field_name]" class="input-xlarge" value="<?php echo df($arrLnImage['image_thumb']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="ln_image[image_thumb][description]" class="input-block-level" value="<?php echo df($arrLnImage['image_thumb']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_image[image_thumb][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['image_thumb']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>		                                    	
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_image[icon][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['icon']['choose']); ?> value="1">Icon</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="ln_image[icon][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrLnImage['icon']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="ln_image[icon][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrLnImage['icon']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="ln_image[icon][field_name]" class="input-xlarge" value="<?php echo df($arrLnImage['icon']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="ln_image[icon][description]" class="input-block-level" value="<?php echo df($arrLnImage['icon']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_image[icon][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnImage['icon']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>
+
+		                                    </tbody>
+		                                </table>		                                		                                
+                                        
+                                    </div>
+                                    <!-- TAB Content End -->
+                                    
+                                    
+                                    <!-- TAB Category Begin -->
+                                    <div id="tab-1-2" class="tab-pane">
+										<p><label class="checkbox"><input type="checkbox" name="use_category" <?php echo \App\Helper\AdFunc::checkOrSelectInput($intUseCategory); ?> value="1"><b>Use Category In Content Data</b></label></p>                                    	                                        
+                                        <p><label><b>Show category main fields</b></label></p>
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th width="250px">Field</th>
+		                                            <th>Name</th>
+		                                            <th>Type</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                            <th>Format Type</th>
+		                                            <th>Format Value</th>
+		                                            <th>Data Type</th>		                                            
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    <?php foreach ($arrMainCatDbFields as $rowMainCatField) : ?>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_cat_field[<?php echo h($rowMainCatField['Field']);?>][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatField[$rowMainCatField['Field']]['choose']); ?> value="1"><?php echo h($rowMainCatField['Field']); ?></label>
+                                          			</td>
+		                                            <td><input type="text" name="main_cat_field[<?php echo h($rowMainCatField['Field']);?>][display_name]" value="<?php echo h($arrMainCatField[$rowMainField['Field']]['display_name']); ?>" class="input-large"></td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadInputSupportType("main_cat_field[{$rowMainCatField['Field']}][type]", h($arrMainCatField[$rowMainCatField['Field']]['type'])); ?>
+                                          			</td>
+                                          			
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_cat_field[<?php echo h($rowMainCatField['Field']);?>][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatField[$rowMainCatField['Field']]['required']); ?> value="1">
+                                          			</td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadSelectFormatType("main_cat_field[{$rowMainCatField['Field']}][format_type]", h($arrMainCatField[$rowMainCatField['Field']]['format_type'])); ?>
+                                          			</td>                                          			
+		                                            <td>
+		                                            	<input type="text" class="input-mini" value="<?php echo h($arrMainCatField[$rowMainCatField['Field']]['format_value']); ?>" name="main_cat_field[<?php echo h($rowMainCatField['Field']); ?>][format_value]">
+                                          			</td>                                          			
+														
+														                                          			                                          			
+		                                            <td><?php echo strtoupper(h($rowMainCatField['Type'])); ?></td>
+		                                        </tr>
+		                                    <?php endforeach; ?>    
+		                                    </tbody>
+		                                </table>
+		                                <p><label><b>Show category language fields</b></label></h2></p>                                        
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th width="250px">Field</th>
+		                                            <th>Name</th>
+		                                            <th>Type</th>
+													<th style="text-align:center;">Required</th>		                                            
+		                                            <th>Format Type</th>
+		                                            <th>Format Value</th>
+		                                            <th>Data Type</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    <?php foreach ($arrLnCatDbFields as $rowLnCatField) : ?>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_cat_field[<?php echo h($rowLnCatField['Field']);?>][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatField[$rowLnCatField['Field']]['choose']); ?> value="1"><?php echo h($rowLnCatField['Field']); ?></label>
+                                          			</td>
+		                                            <td><input type="text" name="ln_cat_field[<?php echo h($rowLnCatField['Field']);?>][display_name]" value="<?php echo h($arrLnCatField[$rowLnCatField['Field']]['display_name']); ?>" class="input-large"></td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadInputSupportType("ln_cat_field[{$rowLnCatField['Field']}][type]", h($arrLnCatField[$rowLnCatField['Field']]['type']))?>
+                                          			</td>
+                                          			
+
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_cat_field[<?php echo h($rowLnCatField['Field']);?>][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatField[$rowLnCatField['Field']]['required']); ?> value="1">
+                                          			</td>
+		                                            <td>
+		                                            	<?php echo \App\Helper\AdFunc::loadSelectFormatType("ln_cat_field[{$rowLnCatField['Field']}][format_type]", h($arrLnCatField[$rowLnCatField['Field']]['format_type'])); ?>
+                                          			</td>                                          			
+		                                            <td>
+		                                            	<input type="text" class="input-mini" value="<?php echo h($arrLnCatField[$rowLnCatField['Field']]['format_value']); ?>" name="ln_cat_field[<?php echo h($rowLnCatField['Field']); ?>][format_value]">
+                                          			</td>                                          			
+                                          			
+                                          			
+                                          			                                          			
+		                                            <td><?php echo strtoupper(h($rowLnCatField['Type'])); ?></td>
+		                                        </tr>
+		                                    <?php endforeach; ?>
+		                                    </tbody>
+		                                </table>
+		                                
+		                                <p>
+		                                	<label class="checkbox">
+		                                		<input type="checkbox" name="main_cat_image[choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['choose']); ?> value="1"><b>Category Main Image</b>
+		                                	</label>
+		                                </p>                                        
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Field</th>
+		                                            <th>Resize</th>
+		                                            <th>Field Name</th>
+		                                            <th>Description</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_cat_image[image][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['image']['choose']); ?> value="1">Image</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="main_cat_image[image][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrMainCatImage['image']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="main_cat_image[image][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrMainCatImage['image']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="main_cat_image[image][field_name]" class="input-xlarge" value="<?php echo df($arrMainCatImage['image']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="main_cat_image[image][description]" class="input-block-level" value="<?php echo df($arrMainCatImage['image']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_cat_image[image][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['image']['required']); ?> value="1">
+		                                            </td>
+		                                        </tr>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_cat_image[image_thumb][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['image_thumb']['choose']); ?> value="1">Image Thumb</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="main_cat_image[image_thumb][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrMainCatImage['image_thumb']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="main_cat_image[image_thumb][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrMainCatImage['image_thumb']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="main_cat_image[image_thumb][field_name]" class="input-xlarge" value="<?php echo df($arrMainCatImage['image_thumb']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="main_cat_image[image_thumb][description]" class="input-block-level" value="<?php echo df($arrMainCatImage['image_thumb']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_cat_image[image_thumb][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['image_thumb']['required']); ?> value="1">
+		                                            </td>		                                            
+		                                        </tr>
+                                                <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="main_cat_image[icon][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['icon']['choose']); ?> value="1">Icon</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="main_cat_image[icon][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrMainCatImage['icon']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="main_cat_image[icon][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrMainCatImage['icon']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="main_cat_image[icon][field_name]" class="input-xlarge" value="<?php echo df($arrMainCatImage['icon']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="main_cat_image[icon][description]" class="input-block-level" value="<?php echo df($arrMainCatImage['icon']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="main_cat_image[icon][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrMainCatImage['icon']['required']); ?> value="1">
+		                                            </td>
+		                                        </tr>
+                                            </tbody>
+		                                </table>		                                		                                
+
+		                                <p><label class="checkbox"><input type="checkbox" name="ln_cat_image[choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['choose']); ?> value="1"><b>Category Language Image</b></label></p>                                        
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Field</th>
+		                                            <th>Resize</th>
+		                                            <th>Field Name</th>
+		                                            <th>Description</th>
+		                                            <th style="text-align:center;">Required</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_cat_image[image][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['image']['choose']); ?> value="1">Image</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="ln_cat_image[image][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrLnCatImage['image']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="ln_cat_image[image][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrLnCatImage['image']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="ln_cat_image[image][field_name]" class="input-xlarge" value="<?php echo df($arrLnCatImage['image']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="ln_cat_image[image][description]" class="input-block-level" value="<?php echo df($arrLnCatImage['image']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_cat_image[image][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['image']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_cat_image[image_thumb][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['image_thumb']['choose']); ?> value="1">Image Thumb</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="ln_cat_image[image_thumb][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrLnCatImage['image_thumb']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="ln_cat_image[image_thumb][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrLnCatImage['image_thumb']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="ln_cat_image[image_thumb][field_name]" class="input-xlarge" value="<?php echo df($arrLnCatImage['image_thumb']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="ln_cat_image[image_thumb][description]" class="input-block-level" value="<?php echo df($arrLnCatImage['image_thumb']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_cat_image[image_thumb][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['image_thumb']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>		                                    	
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="ln_cat_image[icon][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['icon']['choose']); ?> value="1">Icon</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="ln_cat_image[icon][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrLnCatImage['icon']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="ln_cat_image[icon][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrLnCatImage['icon']['width'], 0); ?>">
+		                                            </td>
+		                                            <td>
+			                                            <input type="text" name="ln_cat_image[icon][field_name]" class="input-xlarge" value="<?php echo df($arrLnCatImage['icon']['field_name']); ?>">
+                                          			</td>
+		                                            <td><input type="text" name="ln_cat_image[icon][description]" class="input-block-level" value="<?php echo df($arrLnCatImage['icon']['description']); ?>"></td>
+		                                            <td style="text-align:center;">
+		                                            	<input type="checkbox" name="ln_cat_image[icon][required]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrLnCatImage['icon']['required']); ?> value="1">
+                                          			</td>		                                            
+		                                        </tr>
+		                                    </tbody>
+		                                </table>                                        
+                                    </div>
+                                    <!-- TAB Category End -->
+
+                                    
+                                    <!-- TAB Gallery Image Begin -->
+                                    <div id="tab-1-3" class="tab-pane">
+                                        <p><label class="checkbox"><input type="checkbox" name="gallery_image[use_gallery]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrGalImage['use_gallery']); ?> value="1"><b>Use Gallery Image</b></label></p>
+										<table class="table fill-head">
+		                                    <thead>
+		                                        <tr>
+		                                            <th>Field</th>
+		                                            <th>Resize</th>
+		                                        </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="gallery_image[image][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrGalImage['image']['choose']); ?> value="1">Image</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="gallery_image[image][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrGalImage['image']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="gallery_image[image][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrGalImage['image']['width'], 0); ?>">
+		                                            </td>
+		                                        </tr>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="gallery_image[image_thumb][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrGalImage['image_thumb']['choose']); ?> value="1">Image Thumb</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="gallery_image[image_thumb][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrGalImage['image_thumb']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="gallery_image[image_thumb][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrGalImage['image_thumb']['width'], 0); ?>">
+		                                            </td>
+		                                        </tr>
+		                                        <tr>
+		                                            <td>
+		                                            	<label class="checkbox"><input type="checkbox" name="gallery_image[icon][choose]" <?php echo \App\Helper\AdFunc::checkOrSelectInput($arrGalImage['icon']['choose']); ?> value="1">Icon</label>
+                                          			</td>
+		                                            <td>
+		                                            	<input type="text" name="gallery_image[icon][width]" class="input-mini" placeholder="Width" value="<?php echo df($arrGalImage['icon']['width'], 0); ?>">
+		                                            	<span>x</span>
+		                                            	<input type="text" name="gallery_image[icon][height]" class="input-mini" placeholder="Height" value="<?php echo df($arrGalImage['icon']['width'], 0); ?>">
+		                                            </td>		                                            		                                            
+		                                        </tr>		                                        		                                        
+		                                    </tbody>
+		                                </table>                                        
+                                        
+                                    </div>
+                                    <!-- TAB Gallery Image End -->
+                                    
+                                </div>
+                                
+                                
+<!--                                           <label class="checkbox"> -->
+<!--                                             <input type="checkbox" id="is_admin" name="is_admin" value="1"> Is Administrator -->
+<!--                                           </label> -->
+
+<!--                                 <button class="btn btn-primary" type="submit"><i class="icon-ok"></i> Save</button> -->
+                                
+                            </div>
+                            
+                        </div>
+                    </div>			
+			
+			</div>
+			<!-- END Main Content -->
+			
+			<div class="btn-toolbar text-right">
+				<button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+				<a class="btn btn-primary" href="<?php echo site_url('page/configure/list')?>"><i class="icon-remove"></i> Cancel</a>
+ 			</div>
+			
+			
+		</div>
+	</div>
+	
+</form>	
+	
+	
+</div>
+
+

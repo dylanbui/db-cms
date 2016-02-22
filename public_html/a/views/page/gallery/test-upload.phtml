@@ -1,0 +1,89 @@
+<!-- Add jQuery UI main JS and CSS files -->
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>assets/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>assets/jquery-ui/jquery-ui.min.css" media="screen" />
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<link href="<?php echo __JS_URL; ?>multiUpload/uploadfile.css" rel="stylesheet">
+<script src="<?php echo __JS_URL; ?>multiUpload/jquery.uploadfile.js"></script>
+
+
+<form action="<?php echo site_url('page/gallery/test-upload'); ?>" method="POST" enctype="multipart/form-data">
+
+
+
+<div style="margin-top:0px" class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-picture"></i> Gallery</h3>
+                                <div class="box-tool">
+                                    <a href="#" onclick="javascript:parent.$.fancybox.close();"><i class="icon-remove"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                                <div class="clearfix">
+                                    <div class="pull-right btn-toolbar">
+										<a data-original-title="Upload new images" href="#" class="btn btn-primary show-tooltip" title=""><i class="icon-cloud-upload"></i> Upload</a>
+                                    </div>
+                                </div>
+                                <hr>
+                                
+                                <div id="mulitplefileuploader">Upload</div>
+
+								<div id="status"></div>                                
+                                
+                                <input type="file" id="file_upload" name="file_upload" multiple="multiple">
+                                <br>
+                                <br>
+                                <button type="submit" name="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+
+                                <?php if (!empty($upload_data)) : ?>
+                                <br>
+                                <br>                                
+                                <img alt="" src="<?php echo __UPLOAD_DATA_URL . $upload_data['file_name']; ?>" width = 500>
+                                
+                                <img alt="" src="<?php echo __UPLOAD_DATA_URL .'crop_'.$upload_data['file_name']; ?>">
+                                
+                                <?php endif; ?>
+                                
+                                
+                       
+                            </div>
+</div>
+
+</form>
+                        
+<script>
+
+$(document).ready(function()
+{
+
+var settings = {
+	url: "<?php echo site_url('page/gallery/test-upload/1/1'); ?>",
+	method: "POST",
+	allowedTypes:"jpg,png,gif",
+	fileName: "file_upload",
+	multiple: true,
+	
+	showStatusAfterSuccess:false,
+	showAbort:false,
+	showDone:false,
+	uploadButtonClass:"ajax-file-upload-green",	
+	
+	onSuccess:function(files,data,xhr)
+	{
+		console.debug(data);
+		$("#status").html("<font color='green'>Upload is success</font>");
+		
+	},
+	onError: function(files,status,errMsg)
+	{		
+		$("#status").html("<font color='red'>Upload is Failed</font>");
+	}
+}
+
+$("#mulitplefileuploader").uploadFile(settings);
+
+});
+</script>

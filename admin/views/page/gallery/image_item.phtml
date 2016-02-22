@@ -1,0 +1,13 @@
+<li id="item-<?php echo $id; ?>" class="ui-state-default">
+	<img src="<?php echo __UPLOAD_GALLERY_URL.'gal_'.$image; ?>" width=200  alt="">
+	<div class="gallery-tools">
+		<a href="#"><i class="icon-link"></i></a>
+		<a href="#"><i class="icon-pencil"></i></a>
+		<a href="<?php echo __UPLOAD_GALLERY_URL.$image; ?>" rel="prettyPhoto[pp_gal]" title="Description image">
+			<i class="icon-paper-clip"></i>
+		</a>		
+		<a href="javascript:confimDeleteModal({'image_id':'item-<?php echo $id; ?>','url':'<?php echo site_url("page/gallery/delete-ajax-image/{$page_id}/{$content_id}/$id"); ?>'});">
+			<i class="icon-trash"></i>
+		</a>
+	</div>
+</li>

@@ -1,0 +1,107 @@
+<script src="<?php echo __JS_URL. 'jquery.lazy.min.js'?>"></script>
+
+<script>
+ 
+$(document).ready(function() {
+	jQuery("img.img_lazy").lazy();
+});
+ 
+</script>
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-user"></i> <?php echo h($title); ?></h1>
+                        <h4><?php echo h($box_title); ?></h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-user"></i> <?php echo h($box_title); ?></h3>
+                            </div>
+                            <div class="box-content">
+                                <table class="table table-striped table-hover fill-head">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px">id</th>
+                                            <th style="width: 150px">fbid</th>
+                                            <th>Fullname</th>
+                                            <th>Email</th>
+                                            <th>Avatar</th>
+                                            <th style="width: 150px">Active</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                    <?php 
+                                    	foreach ($rsMembers as $rowMember) :
+	                                    	$url_activate = site_url('home/member/active/'.$rowMember['id'].'/'.$pages->offset);
+                                    ?>
+                                    
+                                        <tr>
+                                            <td><?php echo h($rowMember['id']); ?></td>
+                                            <td><?php echo h($rowMember['fbid']); ?></td>
+                                            <td><?php echo h($rowMember['fullname']); ?></td>
+                                            <td><?php echo h($rowMember['email']); ?></td>
+                                            <td>
+                                            	<div class="loading-fb-img">
+                                            	<?php if (!empty($rowMember['fbid'])) : ?>
+		                                            	<a href="http://graph.facebook.com/<?php echo h($rowMember['fbid']); ?>/picture?type=large&width=500&height=500" target="window">
+		                                            		<!-- html image tag -->
+															<img class="img_lazy" data-src="http://graph.facebook.com/<?php echo h($rowMember['fbid']); ?>/picture" 
+																	src="<?php echo __IMAGE_URL.'loading.gif'; ?>" 
+																	border="0" width="50" alt="Lazy Image" />
+		                                            	</a>
+                                            	<?php endif; ?>
+                                            	</div>
+                                            </td>
+                                            
+                                            <td>
+												<?php if ($rowMember['active'] == 1) : ?>
+													<a href="<?php echo $url_activate; ?>" title="" class="btn btn-small btn-lime"><i class="icon-check"></i></a>													
+												<?php else :?>
+													<a href="<?php echo $url_activate; ?>" title="" class="btn btn-small btn-warning"><i class="icon-check-empty"></i></a>													
+												<?php endif;?>
+                                            </td>
+                                            
+                                        </tr>
+                                        
+									<?php	 
+										endforeach; 
+									?>                                        
+                                        
+                                        
+                                    </tbody>
+                                </table>
+                                
+								<div class="pagination text-right">
+								<?php
+									echo $pages->display_pages();
+								?>
+	                            </div>                                
+                                
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+                			
+			
+		</div>
+	</div>
+</div>
+
+
+

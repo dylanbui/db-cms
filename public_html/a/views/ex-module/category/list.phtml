@@ -1,0 +1,108 @@
+<?php
+
+function displaySubMenu($rsSubMenuCats ,$counter)
+{
+	$str_html = "";
+	foreach ($rsSubMenuCats as $rowSubMenuCat)
+	{
+		$str_html .= "<tr>";
+		
+		$str_html .= "<td></td>";
+		$str_html .= "<td></td>";
+		
+		$padding = 20*$counter;
+		$str_html .= "<td style='padding-left: {$padding}px'>|-- ".h($rowSubMenuCat["name"])."</td>";
+		$str_html .= "<td>".h($rowSubMenuCat["sort_order"])."</td>";
+
+		$str_html .= "<td></td>";
+		
+		$str_html .= "<td>";
+		$str_html .=  "		<a href='javascript:confimDelete(\"".site_url('ex-module/category/delete/'.$rowSubMenuCat['id'])."\");' title='' class='btn btn-small btn-danger'><i class='icon-trash'></i></a>";
+		$str_html .=  "		<a class='btn btn-small btn-primary' href='".site_url('ex-module/category/edit').'/'.$rowSubMenuCat['id']."' title='' class='btn btn-small btn-gray'><i class='icon-edit'></i></a>";		
+		$str_html .=  "</td>";		
+		
+		$str_html .= "</tr>";
+		
+		$str_html .= displaySubMenu($rowSubMenuCat['sub_menus'] ,$counter + 1);
+	}
+	
+	return $str_html;
+}
+
+?>
+
+
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> <?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?></h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+
+			<div class="btn-toolbar text-right">
+				<a href="<?php echo site_url('ex-module/category/add'); ?>" class="btn btn-primary"><i class="icon-plus"></i> Thêm mới</a>			
+			</div>
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-table"></i><?php echo $box_action; ?></h3>
+                                <div class="box-tool">
+                                    
+                                </div>
+                            </div>
+                            <div class="box-content">
+                            
+								<div class="pull-right">
+									<label>	Records per page &nbsp;
+										<select name="table1_length" size="1">
+											<option value="10" selected="selected">10</option>
+											<option value="15">15</option>
+											<option value="25">25</option>
+											<option value="50">50</option><option value="100">100</option>
+											<option value="-1">All</option>
+										</select> 
+									</label>									
+								</div>
+								
+                                <table class="table table-striped table-hover fill-head">
+                                    <thead>
+                                        <tr>
+                                            <th width="2%">#</th>
+                                            <th width="5%"></th>
+                                            <th>Name </th>
+                                            <th style="width:70px;">Order </th>
+                                            <th style="width:50px;"></th>                                            											
+                                            <th style="width:100px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                    <?php echo displaySubMenu($arrMenuTree, 0); ?>
+                                        
+                                    </tbody>
+                                </table>
+                            
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+                			
+			
+		</div>
+	</div>
+</div>
+
+

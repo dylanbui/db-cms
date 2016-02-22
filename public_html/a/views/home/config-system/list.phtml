@@ -1,0 +1,99 @@
+            
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-cogs"></i> Configuration Systems</h1>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                
+				<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-cogs"></i>Configs</h3>
+                            </div>
+
+                            <div class="box-content">
+                            
+							    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+							    
+							    
+							    <?php
+							    	$i = 0; 
+							    	foreach ($arrConfigData as $row) : ?>
+							    
+							    	<li <?php echo ($i == 0 ? 'class="active"' : ''); ?> >
+							    		<a href="#tab_id_<?php echo $row['id']?>" data-toggle="tab">
+							    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']?>
+							    		</a>
+							    	</li>
+							    
+							    <?php
+							    		$i++; 
+							    	endforeach;?>
+							    
+							    </ul>
+							    <div id="my-tab-content" class="tab-content" style="overflow: hidden;">
+							    
+							    <?php
+							    	$i = 0; 
+							    	foreach ($arrConfigData as $row) : ?>							    
+							    
+							        <div <?php echo ($i == 0 ? 'class="tab-pane active"' : 'class="tab-pane"'); ?> id="tab_id_<?php echo $row['id']; ?>">
+							        
+								<form action="<?php echo $save_link.'/'.$row['id']?>" class="form-horizontal" method="POST">
+									
+									<?php
+							    		$arrConfigDetails = $row['config_data']; 
+							    		foreach ($arrConfigDetails as $rowConfigDetail) : ?>
+
+                                    <div class="control-group">
+                                        <label for="textfield4" class="control-label"><?php echo $rowConfigDetail['name']; ?></label>
+                                        <div class="controls">
+                                            <input type="text" name="<?php echo $rowConfigDetail['code']; ?>" id="<?php echo $rowConfigDetail['code']; ?>" value="<?php echo $rowConfigDetail['value']; ?>" class="input-xxlarge">
+                                            
+                                            <?php if(!empty($rowConfigDetail['note'])) :?>
+	                                        <blockquote>
+			                                    <h6><?php echo $rowConfigDetail['note']; ?></h6>
+			                                </blockquote>
+			                                <?php endif; ?>
+			                                                                            
+                                        </div>
+                                    </div>
+                                    
+								    <?php
+								    	endforeach;?>                                    
+                                    
+                                    <?php if($_isModify) : ?>
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+                                    </div>
+                                    <?php endif; ?>
+                                    
+                                </form>							            
+							            
+							        </div>
+							        
+							    <?php
+							    		$i++; 
+							    	endforeach;?>							        
+							        
+							    </div>
+
+ 								<script type="text/javascript"> 								
+								    jQuery(document).ready(function ($) {
+								        $('#tabs').tab();
+								    });
+								</script>                               
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- END Main Content -->                
+                

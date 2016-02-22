@@ -1,0 +1,91 @@
+<?php
+
+function displaySubMenu($page_code ,$rsSubMenuCats ,$counter)
+{
+	$str_html = "";
+	foreach ($rsSubMenuCats as $rowSubMenuCat)
+	{
+		//<li><a href="#">Action 1</a></li>
+		
+		$padding = 20*$counter;
+// 		$str_html .= "<li style='padding-left: {$padding}px'>|-- ".h($rowSubMenuCat["name"])."</li>";
+		$str_html .= "<li style='padding-left: {$padding}px'>";
+		$str_html .= "<a href='".site_url('page/content/list/'.$page_code.'/'.$rowSubMenuCat["id"])."'>|-- ".h($rowSubMenuCat["name"])."</a>";
+		$str_html .= "</li>";
+
+// 		$str_html .= "<td style='text-align: center'>";
+// 		if ($rowSubMenuCat['active'] == 1)
+// 			$str_html .= "<a href='".site_url('page/category/active/'.$page_code.'/'.$rowSubMenuCat['id'])."' title='Active' class='btn btn-circle btn-lime'><i class='icon-ok-sign'></i></a>";
+// 		else 
+// 			$str_html .= "<a href='".site_url('page/category/active/'.$page_code.'/'.$rowSubMenuCat['id'])."' title='UnActive' class='btn btn-circle btn-gray'><i class='icon-remove-circle'></i></a>";
+// 		$str_html .= "</td>";
+		
+		$str_html .= displaySubMenu($page_code ,$rowSubMenuCat['sub_menus'] ,$counter + 1);
+	}
+		
+	return $str_html;
+}
+
+?>
+
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+			<div>
+				<h1><i class="icon-list"></i><?php echo h($rowPageConf['name']); ?></h1>
+			</div>
+        </div>		
+	</div>
+	
+	<div class="container-fluid">
+	
+		<div class="btn-toolbar text-right no-margin">
+			<a href="<?php echo $add_link; ?>" class="btn btn-primary"><i class="icon-plus"></i> Add News Item</a>			
+		</div>					
+	
+		<div class="row-fluid">
+
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-table"></i> <?php echo h($rowPageConf['name']); ?></h3>
+                                
+                                <?php if(df($rowPageConf['data']['use_category'], 0 ) == 1) :?>
+								<div class="box-tool">
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><?php echo h($currentCategoryName); ?></a>
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                                        <ul class='dropdown-menu'>
+                                        <li style='padding-left: 0px'>
+                                        	<a href="<?php echo site_url('page/content/list/'.$rowPageConf['code']); ?>">Show All</a>
+                                        </li>
+										<?php echo displaySubMenu($rowPageConf['code'] ,$arrMenuTree ,0); ?>
+										</ul>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                                
+                            </div>
+                            
+                            <div class="box-content">
+	                            <?php
+// 	                            	echo $this->fetch('page/content/display-table-content');
+	                            	echo $this->fetch($rowPageConf['display_template_file']);
+	                            ?>
+                            </div>
+                            
+                        </div>
+                    </div>
+			</div>
+			<!-- END Main Content -->
+			
+                			
+			
+		</div>
+	</div>
+</div>
+

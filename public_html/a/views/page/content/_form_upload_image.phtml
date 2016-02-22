@@ -1,0 +1,62 @@
+<?php
+
+// $arrImageInfo = $arrLnImage
+// $dataContentImage = $dataContent['ln_field'][$code]['ln_image']
+// $inputFileName = ln_image[<?php echo $code; ][image]
+
+    $required = "default";
+    $required_text = "";
+    if (df($arrImageInfo['image']['required'],0) == 1
+        && is_null($dataContentImage)) // Edit hinh anh
+    {
+        $required .= " required";
+        $required_text = "<span class='red'> (*) </span>";
+    }
+    $help_inline = $arrImageInfo['image']['width'].' x '.$arrImageInfo['image']['height'];
+
+    $tmp_width = ($arrImageInfo['image']['width'] > 0 ? $arrImageInfo['image']['width'] : $arrImageInfo['image']['height'])/2;
+    $tmp_height = ($arrImageInfo['image']['height'] > 0 ? $arrImageInfo['image']['height'] : $arrImageInfo['image']['width'])/2;
+
+    $thumb_style = "max-width: ".$tmp_width."px; max-height: ".$tmp_height."px;";
+    if (df($arrImageInfo['image_thumb']['choose'],0) == 1) {
+        $help_inline .= " => Create thumb : " . $arrImageInfo['image_thumb']['width'] . ' x ' . $arrImageInfo['image_thumb']['height'];
+        $thumb_style = "max-width: {$arrImageInfo['image_thumb']['width']}px; max-height: {$arrImageInfo['image_thumb']['height']}px; line-height: 20px;";
+    }
+?>
+
+
+<div class="control-group">
+    <label class="control-label">
+        <?php
+        echo h(df($arrImageInfo['image']['field_name'],'image'));
+        echo $required_text;
+        ?>
+    </label>
+    <div class="controls">
+
+        <div data-provides="fileupload" class="fileupload fileupload-<?= is_null($dataContentImage)?'new':'exists'; ?> ">
+            <input type="hidden" value="" name="">
+            <div style="<?= $thumb_style; ?>" class="fileupload-new thumbnail">
+                <img alt="" src="http://www.placehold.it/<?=$tmp_width;?>x<?=$tmp_height;?>/EFEFEF/AAAAAA&amp;text=choose+image">
+            </div>
+            <div style="<?= $thumb_style; ?>line-height: 20px;" class="fileupload-preview fileupload-exists thumbnail">
+                <?php
+                    if(!is_null($dataContentImage))
+                        echo "<img src='".__UPLOAD_DATA_URL.$dataContentImage."' />";
+                ?>
+            </div>
+            <div>
+                <span class="btn btn-file">
+                    <span class="fileupload-new">Select image</span>
+                    <span class="fileupload-exists">Change</span>
+                    <input type="file" class="<?php echo $required; ?>"
+                           name="<?= $inputFileName; ?>"
+                           id="<?= $inputFileName; ?>">
+                </span>
+                <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+            </div>
+        </div>
+        <span class='help-inline'><?= $help_inline; ?></span>
+
+    </div>
+</div>

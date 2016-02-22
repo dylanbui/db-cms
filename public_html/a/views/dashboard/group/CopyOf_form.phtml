@@ -1,0 +1,161 @@
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> Group</h1>
+                        <h4>Group Permission !</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i> <?php echo $box_title; ?></h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+							    <ul data-tabs="tabs" class="nav nav-tabs" id="tabs">
+							    	<li class="active">
+							    		<a data-toggle="tab" href="#tab_id_1">
+							    			<i class="icon-cogs"></i>&nbsp;Group Data							    		</a>
+							    	</li>
+							    	<li>
+							    		<a data-toggle="tab" href="#tab_id_2">
+							    			<i class="icon-cogs"></i>&nbsp;Permission Data							    		</a>
+							    	</li>
+							    </ul>
+							    
+							    
+<form method="POST" class="form-horizontal" action="<?php echo $link_url; ?>">
+							    
+							    <div style="overflow: hidden;" class="tab-content" id="my-tab-content">
+							    															    
+							        <div id="tab_id_1" class="tab-pane active">
+							        
+
+	                                    <div class="control-group">
+	                                        <label class="control-label" for="textfield4">Group Name</label>
+	                                        <div class="controls">
+	                                            <input type="text" class="input-xxlarge" value="<?php echo h($rowGroup["group_name"]); ?>" id="group_name" name="group_name">
+	                                        </div>
+	                                    </div>
+	                                    
+									    
+	                                    <div class="control-group">
+	                                        <label class="control-label" for="textfield4">Level</label>
+	                                        <div class="controls">
+	                                            <input type="text" class="input-small" value="<?php echo h($rowGroup["level"]); ?>" id="level" name="level">
+	                                            
+	<!-- 											<blockquote> -->
+	<!-- 			                                    <h6>The website title </h6> -->
+	<!-- 			                                </blockquote> -->
+				                                			                                                                            
+	                                        </div>
+	                                    </div>
+	                                    
+										<div class="control-group">
+	                                       <label class="control-label"></label>
+	                                       <div class="controls">
+	                                          <label class="checkbox">
+	                                            <input type="checkbox" id="is_admin" name="is_admin" value="1" <?php echo check_or_select_input($rowGroup["is_admin"]); ?>> Is Administrator
+	                                          </label>
+	                                       </div>
+	                                    </div>                                    
+	                                    
+	                                    <div class="form-actions">
+	                                       <button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+	                                    </div>
+                                    							            
+							            
+							        </div>
+							        							    							    
+									<div id="tab_id_2" class="tab-pane">
+									
+<?php foreach ($arrAcls as $module => $rowModules) : ?>
+									
+	                                    <span class="label label-xxlarge label-info input-block-level">
+	                                    Module : <b><?php echo h($module); ?></b>
+	                                    </span>
+	                                    
+										<?php foreach ($rowModules as $controler => $rowController) : ?>											
+										<div class="control-group">
+                                       		<label class="control-label"><?php echo h($controler); ?></label>
+                                       		<div class="controls">	                                            
+	                                            <?php foreach ($rowController as $action) :
+	                                            			$key = $module.'_'.$controler.'_'.$action;
+	                                            ?>
+	                                            
+	                                            	<label class="checkbox inline">
+	                                            		<input type="checkbox" name="permission[<?php echo $key; ?>]" value="1" <?php echo check_or_select_input($arrAclResources[$key]); ?>> 
+	                                            		<?php echo h($action); ?>
+	                                          		</label>
+	                                          	
+	                                          	<?php endforeach; ?>
+                                       		</div>
+                                    	</div>
+										<?php endforeach; ?>	                                    
+                                    	
+                                    		                                    									
+<?php endforeach; ?>									
+
+	                                    <span class="label label-xxlarge label-info input-block-level">
+	                                    Module : <b>Page</b>
+	                                    </span>
+
+<?php foreach ($rsPageConfig as $rowPageConfig) : ?>											
+											
+											
+										<div class="control-group">
+                                       		<label class="control-label"><?php echo h($rowPageConfig['name']); ?></label>
+                                       		<div class="controls">
+                                            	<label class="checkbox inline">
+                                            		<input type="checkbox" <?php echo check_or_select_input($arrAclResources["page_content_list_{$rowPageConfig['code']}"]); ?> value="1" name="permission[page_content_list_<?php echo h($rowPageConfig['code']); ?>]"> 
+                                            		List	                                          		
+                                            	</label>
+                                            	<label class="checkbox inline">
+                                            		<input type="checkbox" <?php echo check_or_select_input($arrAclResources["page_content_add_{$rowPageConfig['code']}"]); ?> value="1" name="permission[page_content_add_<?php echo h($rowPageConfig['code']); ?>]"> 
+                                            		Add	                                          		
+                                            	</label>
+                                            	<label class="checkbox inline">
+                                            		<input type="checkbox" <?php echo check_or_select_input($arrAclResources["page_content_update_{$rowPageConfig['code']}"]); ?> value="1" name="permission[page_content_update_<?php echo h($rowPageConfig['code']); ?>]"> 
+                                            		Update	                                          		
+                                            	</label>
+                                            	<label class="checkbox inline">
+                                            		<input type="checkbox" <?php echo check_or_select_input($arrAclResources["page_content_delete_{$rowPageConfig['code']}"]); ?> value="1" name="permission[page_content_delete_<?php echo h($rowPageConfig['code']); ?>]"> 
+                                            		Delete	                                          		
+                                            	</label>
+                                            	<label class="checkbox inline">
+                                            		<input type="checkbox" <?php echo check_or_select_input($arrAclResources["page_content_active_{$rowPageConfig['code']}"]); ?> value="1" name="permission[page_content_active_<?php echo h($rowPageConfig['code']); ?>]"> 
+                                            		Active	                                          		
+                                            	</label>
+                                       		</div>
+                                    	</div>											
+<?php endforeach; ?>
+
+
+							            
+							        </div>							        
+
+							    </div>
+
+</form>
+							    
+ 								<script type="text/javascript"> 								
+								    jQuery(document).ready(function ($) {
+								        $('#tabs').tab();
+								    });
+								</script>                               
+                            
+                            </div>                            
+                                
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                

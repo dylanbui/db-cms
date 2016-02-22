@@ -1,0 +1,299 @@
+Array
+(
+    [main_field] => Array
+        (
+            [web_keyword] => Array
+                (
+                    [display_name] => 
+                    [type] => input
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [web_desc] => Array
+                (
+                    [choose] => 1
+                    [display_name] => web_desc
+                    [type] => input
+                    [required] => 1
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+        )
+
+    [ln_field] => Array
+        (
+            [name] => Array
+                (
+                    [choose] => 1
+                    [display_name] => Name
+                    [type] => input
+                    [required] => 1
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [title] => Array
+                (
+                    [choose] => 1
+                    [display_name] => title
+                    [type] => input
+                    [required] => 1
+                    [format_type] => email
+                    [format_value] => 
+                )
+
+            [title_1] => Array
+                (
+                    [choose] => 1
+                    [display_name] => title_1
+                    [type] => input
+                    [format_type] => number
+                    [format_value] => 
+                )
+
+            [title_2] => Array
+                (
+                    [display_name] => 
+                    [type] => input
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [content] => Array
+                (
+                    [choose] => 1
+                    [display_name] => content
+                    [type] => mce_simple
+                    [required] => 1
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [detail] => Array
+                (
+                    [display_name] => 
+                    [type] => input
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [detail_1] => Array
+                (
+                    [display_name] => 
+                    [type] => input
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [detail_2] => Array
+                (
+                    [display_name] => 
+                    [type] => input
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [detail_3] => Array
+                (
+                    [display_name] => 
+                    [type] => input
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+        )
+
+    [main_image] => Array
+        (
+            [choose] => 1
+            [image] => Array
+                (
+                    [choose] => 1
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => Image
+                    [description] => Image desc
+                    [required] => 1
+                )
+
+            [image_thumb] => Array
+                (
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+            [icon] => Array
+                (
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+        )
+
+    [ln_image] => Array
+        (
+            [choose] => 1
+            [image] => Array
+                (
+                    [choose] => 1
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => Ln Image
+                    [description] => Ln Image desc
+                    [required] => 1
+                )
+
+            [image_thumb] => Array
+                (
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+            [icon] => Array
+                (
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+        )
+
+    [use_category] => 1
+    [main_cat_field] => Array
+        (
+            [code] => Array
+                (
+                    [choose] => 1
+                    [display_name] => Ma code
+                    [type] => input
+                    [required] => 1
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+        )
+
+    [ln_cat_field] => Array
+        (
+            [name] => Array
+                (
+                    [choose] => 1
+                    [display_name] => Ten loai
+                    [type] => input
+                    [required] => 1
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+            [content] => Array
+                (
+                    [choose] => 1
+                    [display_name] => Mo ta
+                    [type] => textarea
+                    [required] => 1
+                    [format_type] => none
+                    [format_value] => 
+                )
+
+        )
+
+    [main_cat_image] => Array
+        (
+            [choose] => 1
+            [image] => Array
+                (
+                    [choose] => 1
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                    [required] => 1
+                )
+
+            [image_thumb] => Array
+                (
+                    [choose] => 1
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                    [required] => 1
+                )
+
+            [icon] => Array
+                (
+                    [choose] => 1
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                    [required] => 1
+                )
+
+        )
+
+    [ln_cat_image] => Array
+        (
+            [choose] => 1
+            [image] => Array
+                (
+                    [choose] => 1
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+            [image_thumb] => Array
+                (
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+            [icon] => Array
+                (
+                    [width] => 0
+                    [height] => 0
+                    [field_name] => 
+                    [description] => 
+                )
+
+        )
+
+    [gallery_image] => Array
+        (
+            [image] => Array
+                (
+                	[choose] => 0
+                    [width] => 0
+                    [height] => 0
+                )
+
+            [image_thumb] => Array
+                (
+	                [choose] => 0
+                    [width] => 0
+                    [height] => 0
+                )
+
+            [icon] => Array
+                (
+	                [choose] => 0
+                    [width] => 0
+                    [height] => 0
+                )
+
+        )
+
+)

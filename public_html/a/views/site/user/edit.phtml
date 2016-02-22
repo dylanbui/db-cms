@@ -1,0 +1,118 @@
+
+<!--page specific css styles-->
+        <link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>assets/chosen-bootstrap/chosen.min.css" />
+
+
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> User</h1>
+                        <h4>User Manager !</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i> <?php echo $box_title; ?></h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            <div class="box-content">
+                            
+<form method="POST" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">
+							    
+                                    <div class="control-group">
+                                        <label for="textfield4" class="control-label">Display Name</label>
+                                        <div class="controls">
+                                            <input type="text" name="display_name" id="display_name" value="<?php echo h($rowUser['display_name']); ?>" class="input-xlarge">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label for="textfield4" class="control-label">Email</label>
+                                        <div class="controls">
+                                            <input type="text" name="email" id="email" value="<?php echo h($rowUser['email']); ?>" class="input-xlarge">
+                                        </div>
+                                    </div>
+                                                                        
+                                    <div class="control-group">
+                                        <label for="password4" class="control-label">Password</label>
+                                        	<div class="controls">
+												<label class="checkbox">
+                                            		<input type="checkbox" id="reset_password" name="reset_password" value="1"> Reset password
+                                         		</label>
+                                            <input type="password" name="pw" id="pw" disabled class="input-xlarge">
+                                        </div>
+                                    </div>
+                                    
+									<div class="control-group">
+                                      	<label class="control-label">Group Name</label>
+                                      	<div class="controls">
+                                         	<select id="group_id[]" name="group_id[]" data-placeholder="Your Group Permission" class="chosen span6" multiple="multiple" tabindex="6">
+                                            	<option value=""> </option>
+                                            	
+                                            	<?php foreach ($rsGroups as $rowGroup) :
+                                            			$selected = in_array($rowGroup['id'], $arrGroupIds) ? "selected" : "";
+                                            	?>
+
+                                               	<option value="<?php echo $rowGroup['id']; ?>" <?php echo $selected?>>
+                                               		<?php echo h($rowGroup['group_name']); ?>
+                                               	</option>
+
+                                               	<?php endforeach; ?>
+                                            
+                                         	</select>
+                                      	</div>
+                                   	</div>                                    
+                                    
+                                    <div class="control-group last">
+                                        <label for="password4" class="control-label"></label>
+                                        <div class="controls">
+											<label class="checkbox">
+                                            	<input type="checkbox" id="activated" name="activated" value="1" <?php echo ($rowUser['activated']  == 1 ? "checked" : "");?> > Activated
+                                         	</label>
+                                        </div>
+                                    </div>                                    
+                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-save"></i> Save</button>
+                                       <button type="button" class="btn">Cancel</button>
+                                    </div>
+                                    
+</form>
+							    
+                            
+                            </div>                            
+                                
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>assets/chosen-bootstrap/chosen.jquery.min.js"></script>
+<script type="text/javascript">
+$('#reset_password').click(function()
+{
+    //If checkbox is checked then disable or enable input
+    if ($(this).is(':checked'))
+    {
+        $("#pw").removeAttr("disabled"); 
+
+    }
+    //If checkbox is unchecked then disable or enable input
+    else
+    { 
+        $("#pw").attr("disabled","disabled");
+        $("#pw").val("");
+    }
+});
+</script>
+
+
+

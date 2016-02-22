@@ -1,0 +1,123 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body bgcolor="#FFFFFF">
+	
+	<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#3098f0" align="center">
+		<tr>
+			<td width="20"></td>
+			<td>
+				<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:28px;">
+					Chào bạn ! Bạn có 1 câu hỏi mới từ <br><br>
+				</p>
+			</td>
+			<td width="40"></td>	
+		</tr>
+				
+		<tr height="73">
+			
+			<td width="20"></td>			
+			<td colspan="2">
+				<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+
+					<tr>
+						<td width="40"></td>
+						<td>
+							<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:12px;">
+								<b>Họ và tên : </b> <?php echo $data["fullname"]; ?> </p>
+						</td>								
+						<td width="40"></td>
+					</tr>
+					
+					<tr><td colspan="3">&nbsp;</td></tr>
+					
+					<tr>
+						<td width="40"></td>
+						<td>
+							<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:12px;">
+								<b>Email : </b> <?php echo $data["email"]; ?> </p>
+						</td>								
+						<td width="40"></td>
+					</tr>
+
+					<tr><td colspan="3">&nbsp;</td></tr>
+					
+					<tr>
+						<td width="40"></td>
+						<td>
+							<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:12px;">
+								<b>Số điện thoại : </b> <?php echo $data["cellphone"]; ?> </p>
+						</td>								
+						<td width="40"></td>
+					</tr>
+					
+					<tr><td colspan="3">&nbsp;</td></tr>
+					
+					<tr>
+						<td width="40"></td>
+						<td>
+							<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:12px;">
+								<b>Mã số ADA : </b> <?php echo $data["data"]; ?> </p>
+						</td>								
+						<td width="40"></td>
+					</tr>					
+					
+				</table>			
+			</td>			
+			
+		</tr>
+		
+		<tr><td colspan="3">&nbsp;</td></tr>	
+		
+		<tr>
+			<td width="20"></td>			
+			<td colspan="2">
+				<table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+
+					<tr>
+						<td width="60"></td>
+						<td>
+							<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:12px;">
+								<b>Tiêu đề: </b> <?php echo $data["title"]; ?> 
+							</p>
+						</td>								
+						<td width="40"></td>
+					</tr>
+					
+					<tr>
+						<td colspan="3">&nbsp;</td>
+					</tr>					
+					
+					<tr>
+						<td width="40"></td>
+						<td>
+							<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:12px;">
+								<b>Nội dung : </b> <?php echo $data["content"]; ?>
+							</p>
+						</td>								
+						<td width="40"></td>
+					</tr>
+
+				</table>			
+			</td>			
+
+		</tr>
+		
+		<tr>
+			<td width="20"></td>			
+			<td>
+				<br>
+				<p style="font-family:Arial, Helvetica, sans-serif; color:#fff; font-size:14px; line-height:28px;">
+					Câu hỏi được gửi đến vào lúc : <?php echo date("d-m-Y H:i:s"); ?>
+				</p>
+		
+			</td>
+			<td width="20"></td>				
+		</tr>	
+	</table>
+
+</body>
+</html>
+

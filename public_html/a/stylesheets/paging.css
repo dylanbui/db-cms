@@ -1,0 +1,46 @@
+.paging {
+	text-align: right;
+	padding: 10px 0;
+}
+
+.paginate {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .9em;
+}
+
+.paginate.select_item {
+	width : 60px;
+}
+
+a.paginate {
+	border: 1px solid #e0e8eb;
+	padding: 7px 10px;
+	text-decoration: none;
+	background: #fafafa;
+	color: #2283c5;
+}
+
+a.paginate:hover {
+	background-color: #EEEEEE;
+	color: #2283c5;
+	text-decoration: underline;
+}
+
+a.current {
+	border: 1px solid #6faed9;
+	font: bold .9em Arial,Helvetica,sans-serif;
+	padding: 7px 10px;
+	cursor: default;
+	background:#6faed9;
+	color: #FFF;
+	text-decoration: none;
+}
+
+span.inactive {
+	border: 1px solid #999;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .9em;
+	padding: 7px 10px;
+	color: #999;
+	cursor: default;
+}		

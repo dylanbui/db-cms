@@ -1,0 +1,49 @@
+                            
+								<table class="table fill-head">  
+                                    <thead>
+                                        <tr>
+                                            <th width="50px">#</th>
+                                            <th>
+                                                <a href='#'>Name</a>
+<!--                                             	<i class="icon-chevron-up"></i> -->
+                                            </th>
+                                            <th width="150px">
+                                            	<a href='#'>Last Update</a>
+<!--                                             	<i class="icon-chevron-down"></i> -->
+                                            </th>
+                                            <th width="80px" style="text-align: center">Active</th>
+                                            <th width="80px" style="text-align: center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($rsContent as $rowContent) : ?>
+                                        <tr>
+                                            <td># <?php echo $rowContent['id']; ?></td>
+                                            <td>
+	                                            <a href='<?php echo $update_link. '/'.$rowContent['id']; ?>' title='<?php echo h($rowContent['name']); ?>'><?php echo h($rowContent['name']); ?></a>
+                                            </td>
+                                            <td><?php echo $rowContent['last_update']; ?></td>
+                                            <td style="text-align: center">
+                                            <?php if ($rowContent['active'] == 1) : ?>
+                                            	<a href='<?php echo $active_link.'/'.$rowContent['id'].'/'.$oPaginator->offset; ?>' title='Active' class='btn btn-circle btn-lime'><i class="icon-ok-sign"></i></a>
+                                            <?php else : ?>
+                                            	<a href='<?php echo $active_link.'/'.$rowContent['id'].'/'.$oPaginator->offset; ?>' title='UnActive' class='btn btn-circle btn-gray'><i class="icon-remove-circle"></i></a>
+                                            <?php endif; ?>                                            
+                                            </td>
+                                            <td style="text-align: center">
+<a href="javascript:confimDelete('<?php echo $delete_link. '/'.$rowContent['id']; ?>');" title='Delete' class="btn btn-small btn-danger"><i class="icon-trash"></i></a>                                            	
+<a href='<?php echo $update_link. '/'.$rowContent['id']; ?>' title='Update' class='btn btn-small btn-primary'><i class='icon-edit'></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                                
+								<div class="pagination text-right">
+								<?php
+									echo $oPaginator->display_pages();
+								?>
+	                            </div>                                
+                                
+                                
+                            

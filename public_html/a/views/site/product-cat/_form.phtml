@@ -1,0 +1,185 @@
+<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+
+				<!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> Product Category</h1>
+                        <h4>Category !</h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i> <?php echo $box_title; ?></h3>
+                                <div class="box-tool">
+                                    <a data-action="collapse" href="#"><i class="icon-chevron-up"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+                            
+<form method="POST" class="form-horizontal form-bordered" action="<?php echo $link_url; ?>">                            
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Code</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-large" value="<?php echo h($rowCat['code']); ?>" id="code" name="code">
+                                        </div>
+                                    </div>
+                                    
+									<div class="control-group">
+                                      <label class="control-label">Parent</label>
+                                      <div class="controls">
+                                      		<?php echo $menuTreeOptionHtml;?>
+                                      </div>
+                                   	</div>                                    
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4"></label>
+                                        <div class="controls">
+                                            
+											<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+											
+											<?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+												
+										    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+										    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+										    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		</a>
+										    	</li>
+										    	
+											<?php endforeach; ?>
+																				    	
+										    </ul>							        
+                                        
+										    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+										    
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+										    															    
+										        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>">
+										        
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Name (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                            <input type="text" class="input-block-level" value="<?php echo h($rowCat["name_{$code}"]); ?>" id="name_<?php echo $code; ?>" name="name_<?php echo $code; ?>">
+				                                        </div>
+				                                    </div>
+				                                    
+				                                    <div class="control-group">
+				                                        <label class="control-label" for="textfield4">Short Body (<?php echo $code; ?>)</label>
+				                                        <div class="controls">
+				                                            <textarea rows="3" class="input-block-level" id="short_body_<?php echo $code; ?>" name="short_body_<?php echo $code; ?>">
+				                                            	<?php echo html($rowCat["short_body_{$code}"]); ?>
+				                                            </textarea>
+				                                        </div>
+				                                    </div>				                                    
+										        
+										        </div>
+										        
+											<?php endforeach; ?>
+										        
+										    </div>                                            
+                                            
+                                            
+                                        </div>
+                                    </div>                                    
+                                    
+									<div class="control-group">
+                                       	<label class="control-label">File 1</label>
+										<div class="controls">
+                                         <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="input-append">
+                                               <div class="uneditable-input">
+                                                  <i class="icon-file fileupload-exists"></i> 
+                                                  <span class="fileupload-preview"></span>
+                                               </div>
+                                               <span class="btn btn-file">
+                                                   <span class="fileupload-new">Select file</span>
+                                                   <span class="fileupload-exists">Change</span>
+                                                   <input type="file" class="default" id="file_1" name="file_1"/>
+                                               </span>
+                                               <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                            </div>
+                                         </div>                                         
+                                      </div>                                       	
+                                    </div>
+                                    
+									<div class="control-group">
+                                       	<label class="control-label">File 2</label>
+										<div class="controls">
+                                         <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="input-append">
+                                               <div class="uneditable-input">
+                                                  <i class="icon-file fileupload-exists"></i> 
+                                                  <span class="fileupload-preview"></span>
+                                               </div>
+                                               <span class="btn btn-file">
+                                                   <span class="fileupload-new">Select file</span>
+                                                   <span class="fileupload-exists">Change</span>
+                                                   <input type="file" class="default" id="file_2" name="file_2"/>
+                                               </span>
+                                               <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                                            </div>
+                                         </div>                                         
+                                      </div>                                       	
+                                    </div>                                                                        
+                                
+									<div class="control-group">
+                                       	<label class="control-label">Active</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	<input type="checkbox" id="active" name="active" value="1" <?php echo n($rowCat["active"])==1?'checked':''; ?> >
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="control-group last">
+                                        <label class="control-label" for="textfield4">Order</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-mini" value="<?php echo n($rowCat["sort_order"]); ?>" id="sort_order" name="sort_order">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+                                       <button type="button" class="btn">Cancel</button>
+                                    </div>                                    
+							    
+</form>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+<script type="text/javascript"> 								
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+
+	    <?php 
+			foreach ($configure_languages['languages'] as $code => $row) :
+		?>
+
+				CKEDITOR.replace( 'short_body_<?php echo $code; ?>',
+						{
+					        filebrowserBrowseUrl : '<?php echo __PUBLIC_JS_URL; ?>pdw_file_browser/index.php?editor=ckeditor',
+					        filebrowserImageBrowseUrl : '<?php echo __PUBLIC_JS_URL; ?>pdw_file_browser/index.php?editor=ckeditor&filter=image',
+					        filebrowserFlashBrowseUrl : '<?php echo __PUBLIC_JS_URL; ?>pdw_file_browser/index.php?editor=ckeditor&filter=flash',
+							
+						});
+				
+		<?php endforeach; ?>
+        
+    });
+</script>                                               
+
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>assets/bootstrap-fileupload/bootstrap-fileupload.min.js"></script>

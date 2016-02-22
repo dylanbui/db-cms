@@ -1,0 +1,112 @@
+                <!-- BEGIN Page Title -->
+                <div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i> <?php echo $box_title; ?></h1>
+                        <h4><?php echo $box_title; ?></h4>
+                    </div>
+                </div>
+                <!-- END Page Title -->
+
+                <!-- BEGIN Main Content -->
+                <div class="row-fluid">
+                    <div class="span12">
+
+						<?php echo show_message($notify_msg['msg_title'], $notify_msg['msg_code'] ,$notify_msg['msg_content']); ?>                    
+                    
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file"></i><?php echo $box_action; ?></h3>
+                                <div class="box-tool">
+                                </div>
+                            </div>
+                            
+                            <div class="box-content">
+                            
+<form method="POST" id="validation-form" class="form-horizontal form-bordered" action="#">                            
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Fullname</label>
+                                        <div class="controls">
+											<input type="text" class="input-xxlarge"  id="fullname" name="fullname" value="<?php echo h($rowContact["fullname"]); ?>" 
+											data-rule-required="true" data-msg-required="Please enter your fullname">
+                                        </div>
+                                    </div>
+
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Email</label>
+                                        <div class="controls">
+											<input type="text" class="input-xxlarge"  id="email" name="email" value="<?php echo h($rowContact["email"]); ?>"
+											data-rule-required="true" data-msg-required="Please enter your email" data-rule-email="true" data-msg-email="Please enter a valid email address">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Cellphone</label>
+                                        <div class="controls">
+											<input type="text" class="input-xxlarge"  id="address" name="address" value="<?php echo h($rowContact["cellphone"]); ?>"
+											data-rule-required="true" data-msg-required="Please enter your cellphone">                                          	                                            
+                                        </div>
+                                    </div>
+                                                                                                            
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">ADD Code</label>
+                                        <div class="controls">
+											<input type="text" class="input-xxlarge"  id="data" name="data" value="<?php echo h($rowContact["data"]); ?>">                                          	                                            
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Title</label>
+                                        <div class="controls">
+											<input type="text" class="input-xxlarge"  id="title" name="title" value="<?php echo h($rowContact["title"]); ?>"
+											data-rule-required="true" data-msg-required="Please enter title">                                          	                                            
+                                        </div>
+                                    </div>                                                                        
+                                                                        
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Content</label>
+                                        <div class="controls">
+                                        	<textarea rows="4" class="input-xxlarge" id="content" name="content"
+                                        	data-rule-required="true" data-msg-required="Please enter content"><?php echo h($rowContact["content"]); ?></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label class="control-label" for="textfield4">Answer</label>
+                                        <div class="controls">
+                                        	<textarea rows="10" class="input-xxlarge" id="answer" name="answer"><?php echo h($rowContact["answer"]); ?></textarea>
+                                        </div>
+                                    </div>                                    
+                                
+									<div class="control-group">
+                                       	<label class="control-label">Reply email to user</label>
+                                       	<div class="controls">
+                                          	<label class="checkbox">
+                                            	<input type="checkbox" id="active" name="active" value="1" <?php echo n($rowContact["active"])==1?'checked':''; ?> >
+                                          	</label>
+                                       	</div>
+                                    </div>                                    
+			                                    
+                                    <div class="form-actions">
+                                       <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> Save</button>
+                                       <a href="<?php echo site_url('home/contact/list'); ?>" class="btn">Cancel</a>
+                                    </div>                                    
+							    
+</form>
+                            
+                            </div>                            
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- END Main Content -->
+                
+                
+<script type="text/javascript">
+                
+$(document).ready(function() {
+	$("#validation-form").validate();
+
+});
+
+</script>                

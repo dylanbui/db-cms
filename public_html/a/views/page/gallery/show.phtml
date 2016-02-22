@@ -1,0 +1,148 @@
+<!-- Add jQuery UI main JS and CSS files -->
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>assets/jquery-ui/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __TEMPLATE_URL; ?>assets/jquery-ui/jquery-ui.min.css" media="screen" />
+
+<!-- View upload multi file -->
+<link href="<?php echo __JS_URL; ?>multiUpload/uploadfile.css" rel="stylesheet">
+<script src="<?php echo __JS_URL; ?>multiUpload/jquery.uploadfile.js"></script>
+
+<!-- View photo with prettyPhoto -->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/css/prettyPhoto.css">
+<script src="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>
+
+
+<div style="margin-top:0px" class="box">
+	<div class="box-title">
+		<h3><i class="icon-picture"></i> Gallery</h3>
+		<div class="box-tool">
+			<a href="#" onclick="closeIframe();"><i class="icon-remove"></i></a>
+		</div>
+	</div>
+	<div class="box-content">
+<!--                                 <div class="clearfix"> -->
+<!--                                     <div class="pull-right btn-toolbar"> -->
+<!-- 										<a data-original-title="Upload new images" href="#" class="btn btn-primary show-tooltip" title=""><i class="icon-cloud-upload"></i> Upload</a> -->
+<!--                                     </div> -->
+<!--                                 </div> -->
+                                
+		<div id="mulitplefileuploader">Upload</div>
+		<div id="status"></div>
+	                                
+		<hr>
+		<ul id="sortable" class="gallery">
+			<?php echo $strHtml; ?>
+		</ul>
+	</div>
+</div>
+                        
+<div class="modal small hide fade" id="myDeleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		<h3 id="myModalLabel">Delete Confirmation</h3>
+	</div>
+	<div class="modal-body">
+		<p class="error-text">
+			<i class="icon-warning-sign modal-icon"></i> Are you sure you want to delete image ?
+		</p>
+	</div>
+	<div class="modal-footer">
+		<a id="modal-form-cancel" class="btn" data-dismiss="modal" aria-hidden="true" href="#">Cancel</a>
+		<a id="modal-form-delete" class="btn btn-danger" data-dismiss="modal" href="#" onclick="javascript:buttonDeleteAction();">Delete</a>
+	</div>
+</div>                        
+                        
+<script type="text/javascript">
+
+var numberImages = <?= $numberImages; ?>;
+
+function closeIframe()
+{
+    // -- Truy cap vao gia tri cua parent window --
+	parent.$(".number_image").text(parseInt(numberImages));
+	parent.$.fancybox.close();	
+}
+
+$(document).ready(function () {
+
+	var settings = {
+		url: "<?php echo site_url("page/gallery/upload-image/{$page_id}/{$content_id}"); ?>",
+		method: "POST",
+		allowedTypes:"jpg,png,gif",
+		fileName: "file_upload",
+		multiple: true,
+		showStatusAfterSuccess:false,
+		showAbort:false,
+		showDone:false,
+		uploadButtonClass:"ajax-file-upload-green",	
+			
+		onSuccess:function(files,data,xhr)
+		{
+//			console.debug(data);
+			$('#sortable').append(data);
+			//$("a[rel^='prettyPhoto']").prettyPhoto();
+			jQuery("a[rel^='prettyPhoto']").prettyPhoto({
+			    social_tools: false,
+			    show_title: true /* true/false */
+			});
+            // -- Tang so luong hinh anh --
+            numberImages++;
+            console.log(numberImages);
+		},
+		onError: function(files,status,errMsg)
+		{		
+			$("#status").html("<font color='red'>Upload is Failed</font>");
+		}
+	}
+	$("#mulitplefileuploader").uploadFile(settings);
+
+    $('#sortable').sortable({
+        stop: function (event, ui) {
+            //$( "#sortable" ).disableSelection();
+            $("#sortable").unbind("click");        	
+	        var oData = $(this).sortable('serialize');
+            console.debug(oData);
+            sortImage(oData);
+		}
+    });
+
+    
+});
+
+function buttonDeleteAction()
+{
+    var image_id = $('#myDeleteConfirmModal').data('image_id');
+    var url = $('#myDeleteConfirmModal').data('url');
+    $.ajax({
+        type: 'GET',
+        url: url,
+        success: function(msg){
+            console.debug(msg);
+            $('#'+image_id).remove();
+            // -- Giam so luong hinh anh --
+            numberImages--;
+            sortImage($('#sortable').sortable('serialize'));
+        },
+        error:function(){
+            alert("failure");
+        }
+    });
+}
+
+function sortImage(oData)
+{
+    $.ajax({
+        data: oData,
+        type: 'POST',
+        url: '<?php echo site_url('page/gallery/sort-order'); ?>',
+        success: function(msg){
+            console.debug(msg);
+        },
+        error:function(){
+            alert("failure");
+        }
+    });
+}
+
+</script>                        
+                        
+                        

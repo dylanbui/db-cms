@@ -1,0 +1,41 @@
+<h1><?= $title; ?></h1>
+
+<a href="<?= $add_link; ?>" >Add Data</a>
+
+<br><br>
+
+<table width="100%" border="1" cellpadding="1" cellspacing="1">
+<tr>
+	<th>ID
+	<th>First Name
+	<th>Last Name
+	<th>Email
+	<th>Address
+	<th>Action
+</tr>
+
+<?php
+	foreach ($rs as $row) :
+?>
+	<tr>
+		<td><?= $row['user_id']; ?>
+		<td><?= h($row['first_name']); ?>
+		<td><?= h($row['last_name']); ?>
+		<td><?= h($row['email']); ?>
+		<td><?= h($row['address']); ?>
+		<td>
+			<a href="<?= $edit_link . $row['user_id']; ?>">Edit</a>&nbsp;&nbsp;|&nbsp;
+			<a href="<?= $delete_link . $row['user_id']; ?>">Delete</a>
+	</tr>
+<?
+	endforeach;
+?>
+
+</table>	
+
+
+<?php
+	echo "<br>";
+	echo $pages->display_pages(); // Optional call which will display the page numbers after the results.
+	echo $pages->display_jump_menu(); // Optional displays the page jump menu
+?>

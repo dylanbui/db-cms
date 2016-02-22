@@ -1,0 +1,166 @@
+
+<script src="<?php echo __JS_URL; ?>dropzone.js"></script>
+<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+
+
+<div class="control-group">
+    <label class="control-label text-info">Upload nhieu thu</label>
+    <div id="zone-multi-upload" class="controls">
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div id="actions" class="row-fluid">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add files...</span>
+            </span>
+        </div>
+        <span class='help-inline'>Drop files here to upload</span>
+
+
+        <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
+        <div class="row-fluid table table-striped files" id="previews">
+            <div id="template" class="row-fluid file-row">
+                <!-- This is used as the file preview template -->
+                <div class="span2">
+                    <span class="preview"><img data-dz-thumbnail /></span>
+                </div>
+                <div class="span4">
+                    <p class="name" data-dz-name></p>
+                    <strong class="error text-danger" data-dz-errormessage></strong>
+                </div>
+                <div class="span2">
+                    <p class="size" data-dz-size></p>
+                </div>
+                <div class="span4">
+                    <button data-dz-remove class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script language="JavaScript">
+
+    jQuery(document).ready(function ($) {
+        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        var previewNode = document.querySelector("#template");
+        previewNode.id = "";
+        var previewTemplate = previewNode.parentNode.innerHTML;
+        previewNode.parentNode.removeChild(previewNode);
+
+
+        var myDropzone = new Dropzone("div#zone-multi-upload", { // Make the whole body a dropzone
+            url: $('#validation-form').attr('action'), // Set the url
+            thumbnailWidth: 100,
+            thumbnailHeight: 100,
+            parallelUploads: 20,
+            maxFiles: 20,
+            previewTemplate: previewTemplate,
+            autoQueue: false, // Make sure the files aren't queued until manually added
+            previewsContainer: "#previews", // Define the container to display the previews
+            clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+            paramName: "image_gallery_new",
+            uploadMultiple: true,
+            autoProcessQueue: false,
+            hiddenInputContainer: '#zone-multi-upload'
+        });
+
+        myDropzone.on("addedfile", function(file) {
+            console.log(file);
+            // Hookup the start button
+//        file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file); };
+
+            console.log(myDropzone.hiddenFileInput);
+
+        });
+
+        // Update the total progress bar
+        myDropzone.on("totaluploadprogress", function(progress) {
+//        document.querySelector("#total-progress .progress-bar").style.width = progress + "%";
+        });
+
+        myDropzone.on("sending", function(file) {
+            // Show the total progress bar when upload starts
+//        document.querySelector("#total-progress").style.opacity = "1";
+            // And disable the start button
+//        file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+        });
+
+
+    });
+
+
+//
+//    // Hide the total progress bar when nothing's uploading anymore
+//    myDropzone.on("queuecomplete", function(progress) {
+////        document.querySelector("#total-progress").style.opacity = "0";
+//    });
+//
+//    // First change the button to actually tell Dropzone to process the queue.
+//    document.querySelector("button[type=submit]").addEventListener("click", function(e) {
+//        // Make sure that the form isn't actually being sent.
+//        e.preventDefault();
+//        e.stopPropagation();
+//        myDropzone.processQueue();
+//    });
+
+
+    // Setup the buttons for all transfers
+    // The "add files" button doesn't need to be setup because the config
+    // `clickable` has already been specified.
+//    document.querySelector("#actions .start").onclick = function() {
+//        myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+//    };
+//    document.querySelector("#actions .cancel").onclick = function() {
+//        myDropzone.removeAllFiles(true);
+//    };
+
+
+
+
+
+
+
+//        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+//        var previewNode = document.querySelector("#template");
+//        previewNode.id = "";
+//        var previewTemplate = previewNode.parentNode.innerHTML;
+//        previewNode.parentNode.removeChild(previewNode);
+//
+////        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+////        var myDropzone = new Dropzone(document.querySelector('#zone-multi-upload'), { // Make the whole body a dropzone
+//        var myDropzone = new Dropzone('div#zone-multi-upload', { // Make the whole body a dropzone
+//            url: "/target-url", // Set the url
+//            thumbnailWidth: 100,
+//            thumbnailHeight: 100,
+//            parallelUploads: 20,
+//            maxFiles: 20,
+//            previewTemplate: previewTemplate,
+//            autoQueue: false, // Make sure the files aren't queued until manually added
+//            previewsContainer: "#previews", // Define the container to display the previews
+//            clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+//            paramName: "image_gallery_new",
+//            uploadMultiple: true,
+//            autoProcessQueue: false
+//        });
+//
+//        // First change the button to actually tell Dropzone to process the queue.
+//        document.querySelector("button[type=submit]").addEventListener("click", function(e) {
+//            // Make sure that the form isn't actually being sent.
+//            console.log('vao day chua');
+//            e.preventDefault();
+////            e.stopPropagation();
+////            myDropzone.processQueue();
+//        });
+
+
+
+
+
+
+</script>
+

@@ -1,0 +1,304 @@
+
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo __JS_URL; ?>fancyBox/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<!--page specific css styles-->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/css/prettyPhoto.css">
+
+<!-- Add MultiFile library -->
+<script type="text/javascript" src="<?php echo __JS_URL; ?>jquery.MultiFile.js"></script>
+
+<div class="content">
+
+	<div class="header">
+		<div class="page-title">
+                    <div>
+                        <h1><i class="icon-file-alt"></i>Category : <?php echo h($rowPageConf['name']); ?></h1>
+                        <h4><?php echo $page_title; ?></h4>
+                    </div>
+        </div>		
+	</div>
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+ 			
+<form id="validation-form" method="POST" enctype="multipart/form-data" class="form-horizontal form-bordered" action="<?php echo $form_link; ?>">
+
+			<div class="clearfix">
+            	<div class="btn-toolbar pull-left no-margin"></div>
+            	<div class="btn-toolbar pull-right no-margin">
+					<button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+					<a href="<?php echo $cancel_link; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+		 		</div>
+			</div>
+
+			
+            <!-- BEGIN Main Content -->
+			<div class="row-fluid">
+				<div class="span12">
+				
+					<?php echo \App\Helper\AdFunc::showMessage($notify_msg['msg_title'], $notify_msg['msg_code'] ,$notify_msg['msg_content']); ?>				
+				
+                        <div class="box">
+                            <div class="box-title">
+                                <h3><i class="icon-file-alt"></i>Category : <?php echo h($rowPageConf['name']); ?></h3>
+                            </div>
+                     
+                            <div class="box-content">
+                            
+                                <div class="control-group">
+                                	<label class="control-label">Choose parent category</label>
+                                    <div class="controls">
+                                    	<?php echo $htmlCat; ?>
+                                    </div>
+                                </div>
+                                
+                                <?php 
+                                	foreach ($_arrCatMainField as $fKey => $fValue) :
+                                		if (df($fValue['choose'],0) == 1) : 
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label"><?php echo h(df($fValue['display_name'],$fKey)); ?></label>
+                                    <div class="controls">
+                                    	<?php echo load_define_input($fValue, "main_cat_field[{$fKey}]", df($dataContent['main_cat_field'][$fKey])); ?>
+                                    </div>
+                                </div>
+                                	
+                                <?php
+                                		endif; 
+                                	endforeach; 
+                                ?>
+                                
+                                <?php 
+                                	if (df($_arrCatMainImage['choose'],0) == 1) :
+	                                	if (df($_arrCatMainImage['image']['choose'],0) == 1) : 
+                                ?>
+
+                                <div class="control-group">
+                                	<label class="control-label"><?php echo h(df($_arrCatMainImage['image']['field_name'],'image')); ?></label>
+                                    <div class="controls">
+                                    	<input type="file" class="default" name="image" id="image">
+                                    	<span class='help-inline'>
+                                    		<?php 
+                                    			echo $_arrCatMainImage['image']['width'].' x '.$_arrCatMainImage['image']['height'];  
+                                    			if (df($_arrCatMainImage['image_thumb']['choose'],0) == 1)
+                                    				echo " => Create thumb : ".$_arrCatMainImage['image_thumb']['width'].' x '.$_arrCatMainImage['image_thumb']['height'];
+                                    		?>
+                                    	</span>
+                                    	<?php if (!is_null(df($dataContent['main_cat_field']['image'],NULL))) : ?>
+                                    		<br><br>
+                                    		<img src="<?php echo __UPLOAD_DATA_URL.$dataContent['main_cat_field']['image']; ?>" width="100px;">
+                                    		<a href="<?php echo site_url("page/category/delete-image/main-image/{$rowPageConf['id']}/{$cat_id}");?>">Delete</a>
+                                    	<?php endif; ?>                                    	
+                                    </div>
+                                </div>                                	
+                                	
+                                <?php
+	                                	endif;
+	                                	if (df($_arrCatMainImage['icon']['choose'],0) == 1) :
+                                ?>
+                                
+                                <div class="control-group">
+                                	<label class="control-label"><?php echo h(df($_arrCatMainImage['icon']['field_name'],'icon')); ?></label>
+                                    <div class="controls">
+                                    	<input type="file" class="default" name="icon" id="icon">
+                                    	<span class='help-inline'><?php echo $_arrCatMainImage['icon']['width'].' x '.$_arrCatMainImage['icon']['height']; ?></span>
+                                    	<?php if (!is_null(df($dataContent['main_cat_field']['icon'],NULL))) : ?>
+                                    		<br><br>
+                                    		<img src="<?php echo __UPLOAD_DATA_URL.$dataContent['main_cat_field']['icon']; ?>" width="100px;">
+                                    		<a href="<?php echo site_url("page/category/delete-image/main-icon/{$rowPageConf['id']}/{$cat_id}");?>">Delete</a>
+                                    	<?php endif; ?>                                    	
+                                    </div>
+                                </div>
+                                
+                                <?php
+                                		endif;
+                                	endif; 
+                                ?>                                
+                                
+                                
+								<div class="control-group">
+                                        
+											<ul data-tabs="tabs" class="nav nav-tabs" id="tabs-language">
+											
+											<?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+												
+										    	<li <?php echo $row['is_default'] ?  'class="active"' : ''; ?>>
+										    		<a data-toggle="tab" href="#tab_id_<?php echo $code; ?>">
+										    			<i class="icon-cogs"></i>&nbsp;<?php echo $row['name']; ?>							    		
+										    		</a>
+										    	</li>
+										    	
+											<?php endforeach; ?>
+																				    	
+										    </ul>							        
+                                        
+										    <div style="overflow: hidden;" class="tab-content" id="my-tab-language">
+										    
+										    <?php 
+												foreach ($configure_languages['languages'] as $code => $row) :
+											?>
+										    															    
+										        <div id="tab_id_<?php echo $code; ?>" class="tab-pane <?php echo $row['is_default'] ? 'active' : ''; ?>" style="margin-left: 20px;margin-right: 20px;">
+										        
+					                                <?php 
+					                                	foreach ($_arrCatLnField as $fKey => $fValue) :
+					                                		if (df($fValue['choose'],0) == 1) : 
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label"><?php echo df($fValue['display_name'],$fKey); ?></label>
+					                                    <div class="controls">
+					                                    	<?php echo \App\Helper\AdFunc::loadDefineInput($fValue, "ln_cat_field[{$code}][{$fKey}]", df($dataContent['ln_cat_field'][$code][$fKey])); ?>
+					                                    </div>
+					                                </div>
+					                                	
+					                                <?php
+					                                		endif; 
+					                                	endforeach; 
+					                                ?>
+					                                
+					                                <?php 
+					                                	if (df($_arrCatLnImage['choose'],0) == 1) :
+						                                	if (df($_arrCatLnImage['image']['choose'],0) == 1) : 
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label"><?php echo df($_arrCatLnImage['image']['field_name'],'image'); ?></label>
+					                                    <div class="controls">
+					                                    	<input type="file" class="default" name="ln_image[<?php echo $code; ?>][image]" id="ln_image[<?php echo $code; ?>][image]">
+					                                    	<span class='help-inline'>
+					                                    		<?php 
+					                                    			echo $_arrCatLnImage['image']['width'].' x '.$_arrCatLnImage['image']['height'];  
+					                                    			if (df($_arrCatLnImage['image_thumb']['choose'],0) == 1)
+					                                    				echo " => Create thumb : ".$_arrCatLnImage['image_thumb']['width'].' x '.$_arrCatLnImage['image_thumb']['height'];
+					                                    		?>
+					                                    	</span>
+					                                    	<?php if (!is_null(df($dataContent['ln_cat_field'][$code]['ln_image'],NULL))) : ?>
+					                                    		<br><br>
+					                                    		<img src="<?php echo __UPLOAD_DATA_URL.$dataContent['ln_cat_field'][$code]['ln_image']; ?>" width="100px;">
+					                                    		<a href="<?php echo site_url("page/category/delete-image/ln-image/{$rowPageConf['code']}/{$cat_id}/{$code}");?>">Delete</a>
+					                                    	<?php endif; ?>					                                    						                                    	
+					                                    </div>
+					                                </div>                                
+					                                	
+					                                <?php
+						                                	endif;
+						                                	if (df($_arrCatLnImage['icon']['choose'],0) == 1) :
+					                                ?>
+					                                
+					                                <div class="control-group">
+					                                	<label class="control-label"><?php echo h(df($_arrCatLnImage['icon']['field_name'],'icon')); ?></label>
+					                                    <div class="controls">
+					                                    	<input type="file" class="default" name="ln_image[<?php echo $code; ?>][icon]" id="ln_image[<?php echo $code; ?>][icon]">
+					                                    	<span class='help-inline'><?php echo $_arrCatLnImage['icon']['width'].' x '.$_arrCatLnImage['icon']['height']; ?></span>
+					                                    	<?php if (!is_null(df($dataContent['ln_cat_field'][$code]['ln_icon'],NULL))) : ?>
+					                                    		<br><br>
+					                                    		<img src="<?php echo __UPLOAD_DATA_URL.$dataContent['ln_cat_field'][$code]['ln_icon']; ?>" width="100px;">
+					                                    		<a href="<?php echo site_url("page/category/delete-image/ln-icon/{{$rowPageConf['code']}}/{$cat_id}/{$code}");?>">Delete</a>
+					                                    	<?php endif; ?>					                                    	
+					                                    </div>
+					                                </div>
+					                                
+					                                <?php
+					                                		endif;
+					                                	endif; 
+					                                ?>                                
+										        
+					                                <div class="control-group last"><label class="control-label"></label></div>										        
+										        
+										        </div>
+										        
+											<?php endforeach; ?>
+										        
+										    </div>                                            
+                                            
+                                    </div>
+                                    
+	                                <div class="control-group">
+	                                	<label class="control-label text-info">Sort Order</label>
+	                                    <div class="controls">
+	                                    	<input type="text" class="input-mini" id="main_cat_field[sort_order]" name="main_cat_field[sort_order]" value="<?php echo df($dataContent['main_cat_field']['sort_order'],''); ?>" /> 
+	                                    </div>
+	                                </div>
+	                                
+									<div class="control-group">
+										<label class="control-label text-info">Active</label>
+	                                    <div class="controls">
+	                                    	<input type="checkbox" id="main_cat_field[active]" name="main_cat_field[active]" value="1" <?php echo \App\Helper\AdFunc::checkOrSelectInput($dataContent['main_cat_field']['active']); ?>>
+										</div>
+									</div>                                
+                                    
+                                
+<!--                                 <div class="control-group last"> -->
+<!--                                 	<label class="control-label">Choose category</label> -->
+<!--                                     <div class="controls"> -->
+<!--                                     	<input type="text" class="input-xlarge" placeholder="Text input" id="textfield4" name="textfield4"> -->
+<!--                                     </div> -->
+<!--                                 </div>                                     -->
+
+                                
+                            </div>
+                            
+                        </div>
+                    </div>			
+			
+			
+			</div>
+			<!-- END Main Content -->
+			
+			<div class="clearfix">
+            	<div class="pull-left btn-toolbar"></div>
+            	<div class="pull-right btn-toolbar">
+					<button class="btn btn-primary" type="submit"><i class="icon-save"></i> Save</button>
+					<a href="<?php echo $cancel_link; ?>" class="btn btn-primary"><i class="icon-remove"></i> Cancel</a>
+		 		</div>
+			</div>
+									
+</form>			
+                			
+			
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+function openChooseFileWindow(field_id, url) 
+{
+	$.fancybox.open({
+		href : url,
+		type : 'iframe',
+		autoSize : false,
+	    width    : "80%",
+	    height   : "100%",		
+		closeBtn  : true,
+		padding : 5
+	});
+	
+    window.KCFinder = {
+        callBack: function(url) {
+            window.KCFinder = null;
+            $('#'+field_id).val(url);
+			$.fancybox.close();				
+        }
+    };
+}
+
+jQuery(document).ready(function ($) {
+    $('#tabs').tab();
+
+    // Run validation form
+    $("#validation-form").validate();        
+});
+
+
+</script>
+
+
+<!--page specific plugin scripts-->
+<script src="<?php echo __TEMPLATE_URL; ?>assets/prettyPhoto/js/jquery.prettyPhoto.js"></script>

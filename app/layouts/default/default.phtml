@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+<!--	<base href="http://localhost/mvc/" />-->
+	<title>Welcome to Bui Van Tien Duc MVC RENDER</title>
+	<link rel="stylesheet" href="<?= __CSS_URL; ?>style.css">
+	<link rel="stylesheet" href="<?= __CSS_URL; ?>paging.css">	
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="top">
+<h1>Simple MVC Framework</h1>
+</div>
+
+<div id="leftnav">
+<ul>
+<li><a href="<?= site_url(); ?>">Home</a></li>
+<li><a href="<?= site_url('site-index/index/sent-email'); ?>">Sent Email - PHPMailer</a></li>
+<li><a href="<?= site_url('site-index/index/sent-email-smtp'); ?>">Sent Email - Email Class</a></li>
+<li><a href="<?= site_url('site-index/home/render'); ?>">Render Action</a></li>
+<li><a href="<?= site_url('site-index/index/captcha'); ?>">Captcha Demo</a></li>
+<li><a href="<?= site_url('site-index/home/forward-demo'); ?>">Forward To Captcha Demo</a></li>
+<li><a href="<?= __BASE_URL ?>paging/page/paginator">Paging</a></li>
+<li><a href="<?= __BASE_URL ?>database/model">Normal Database</a></li>
+<li><a href="<?= __BASE_URL ?>pdo-database/pdo-model">PDO Model Database</a></li>
+<li><a href="<?= __BASE_URL ?>active-record/active-record">Active Record Database</a></li>
+<li><a href="<?= site_url('site-index/home/ckeditor'); ?>">CKEditor</a></li>
+<li><a href="<?= site_url('load/Vat-the-roi-xuong-Viet-Nam-co-the-la-cau-khong-gian-post616168.html'); ?>">Demo router</a></li>
+<li><a href="<?= site_url('links/content/load-data-test/nhung-bi-mat-lon-nhat-ve-phat-xit-duc-duoc-phat-hien-3271796.html'); ?>">Router Other Links</a></li>
+<li><a href="<?= site_url('page-module/content/load-data-test'); ?>">Page Module SEO Test</a></li>
+<li><a href="<?= site_url('site-index/index/show-config-web'); ?>">Show Web Configure</a></li>
+
+
+</ul>
+</div>
+
+<div id="content">
+	<?php echo $main_content; ?>
+</div>
+
+<div id="footer">
+	Powered By <a href="mailto:buivantienduc@yahoo.com">Bui Van Tien Duc</a>
+</div>
+
+</div>
+
+</body>
+</html>
