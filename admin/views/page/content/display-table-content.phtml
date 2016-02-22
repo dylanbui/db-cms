@@ -1,49 +1,150 @@
-                            
-								<table class="table fill-head">  
-                                    <thead>
-                                        <tr>
-                                            <th width="50px">#</th>
-                                            <th>
-                                                <a href='#'>Name</a>
-<!--                                             	<i class="icon-chevron-up"></i> -->
-                                            </th>
-                                            <th width="150px">
-                                            	<a href='#'>Last Update</a>
-<!--                                             	<i class="icon-chevron-down"></i> -->
-                                            </th>
-                                            <th width="80px" style="text-align: center">Active</th>
-                                            <th width="80px" style="text-align: center">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php foreach ($rsContent as $rowContent) : ?>
-                                        <tr>
-                                            <td># <?php echo $rowContent['id']; ?></td>
-                                            <td>
-	                                            <a href='<?php echo $update_link. '/'.$rowContent['id']; ?>' title='<?php echo h($rowContent['name']); ?>'><?php echo h($rowContent['name']); ?></a>
-                                            </td>
-                                            <td><?php echo $rowContent['last_update']; ?></td>
-                                            <td style="text-align: center">
-                                            <?php if ($rowContent['active'] == 1) : ?>
-                                            	<a href='<?php echo $active_link.'/'.$rowContent['id'].'/'.$oPaginator->offset; ?>' title='Active' class='btn btn-circle btn-lime'><i class="icon-ok-sign"></i></a>
-                                            <?php else : ?>
-                                            	<a href='<?php echo $active_link.'/'.$rowContent['id'].'/'.$oPaginator->offset; ?>' title='UnActive' class='btn btn-circle btn-gray'><i class="icon-remove-circle"></i></a>
-                                            <?php endif; ?>                                            
-                                            </td>
-                                            <td style="text-align: center">
-<a href="javascript:confimDelete('<?php echo $delete_link. '/'.$rowContent['id']; ?>');" title='Delete' class="btn btn-small btn-danger"><i class="icon-trash"></i></a>                                            	
-<a href='<?php echo $update_link. '/'.$rowContent['id']; ?>' title='Update' class='btn btn-small btn-primary'><i class='icon-edit'></i></a>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                                
-								<div class="pagination text-right">
-								<?php
-									echo $oPaginator->display_pages();
-								?>
-	                            </div>                                
-                                
-                                
-                            
+<!--page specific css styles-->
+<link rel="stylesheet" href="<?php echo __TEMPLATE_URL; ?>assets/data-tables/DT_bootstrap.css" />
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.css"/>
+
+<table id="table2" width="100%" class="table table-striped table-hover fill-head dataTable" aria-describedby="table1_info">
+    <thead>
+    <tr>
+        <th class="col_hide">ID</th>
+        <th width="2%">#</th>
+        <th class="col_link">Name</th>
+        <th width="150px" class="col_datetime">Last Update</th>
+        <th style="width: 100px;text-align: center" class="col_active">Active</th>
+        <th style="width: 70px" class="col_action">Action</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script type="text/javascript">
+
+    var contentTable = null;
+    $(document).ready(function()
+    {
+        contentTable = $('#table2').on('processing.dt', function ( e, settings, processing ) {
+            $('#processingIndicator').css( 'display', processing ? 'block' : 'none' );
+            if(processing)
+                console.log('loading ne');
+            else
+                console.log('loading xong roi');
+            // -- su ly processing --
+        }).DataTable({
+            'aoColumnDefs': [
+                {
+                    'bSortable': false,
+                    'bSearchable': false,
+                    'visible': false,
+                    'aTargets': ['col_hide'], // Column to target
+                },{
+                    'bSortable': true,
+                    'bSearchable': false
+                },{
+                    'bSortable': true,
+                    'bSearchable': true,
+                    'aTargets': ['col_link'], // Column to target
+                    "mRender": function ( data, type, row ) {
+                        // 'row' is the row's data object, and 'data' is this column's data
+                        // e.g. 'row[0]' is the comic id, and 'data' is the comic title
+                        html = '<a title="" href="<?= $update_link; ?>'+'/'+row[0]+'">'+data+'</a>';
+                        return html;
+                    }
+                },{
+                    'bSortable': true,
+                    'bSearchable': false,
+                    'aTargets': ['col_datetime'] // Column to target
+                },{
+                    'bSortable': false,
+                    'bSearchable': false,
+                    'sClass': 'text-center',
+                    'aTargets': ['col_active'], // Column to target
+                    'mRender': function ( data, type, row ) {
+                        html = "<a href='javascript:void(0);' onclick='switchStatusItem(this, "+row[0]+")' status='"+data+"' title='UnActive' class='btn btn-circle btn-gray'><i class='icon-remove-circle'></i></a>";
+                        if (data == 1)
+                            html = "<a href='javascript:void(0);' onclick='switchStatusItem(this, "+row[0]+")' status='"+data+"' title='Active' class='btn btn-circle btn-lime'><i class='icon-ok-sign'></i></a>";
+                        return html;
+                    }
+                },{
+                    'bSortable': false,
+                    'bSearchable': false,
+                    'aTargets': ['col_action'], // Column to target
+                    'mRender': function ( data, type, row ) {
+                        html = '<a href="<?php echo $update_link; ?>/'+row[0]+'" class="btn btn-small btn-gray" title=""><i class="icon-edit"></i></a>';
+//                    html += '<a href="javascript:confimDelete(\'<?php //echo $delete_link; ?>///'+row[0]+'\');" class="btn btn-small btn-danger" title=""><i class="icon-trash"></i></a>';
+                        html += '<a href="javascript:void(0);" onclick="deleteRow(this,'+row[0]+')" class="btn btn-small btn-danger" title=""><i class="icon-trash"></i></a>';
+                        return html;
+                    }
+                }],
+            "bProcessing": true,
+            "bServerSide": true,
+            "sAjaxSource": "<?= $load_data_link; ?>",
+            "iDisplayStart": <?= ($page_number * $display_length); ?>,
+            "iDisplayLength": <?= $display_length; ?>, // Default show rows
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+            "processing" : true,
+//            "oLanguage": {
+//                "sProcessing": "<img src='<?php //echo __IMAGE_URL; ?>///loading.gif'>"
+//            },
+            "sPaginationType": "full_numbers"
+        });
+    });
+
+    function deleteRow(link, id)
+    {
+        currentRow = $(link).closest("tr");
+        $('#myDeleteConfirmModal').modal('toggle');
+        $('#myQuestion').html("<i class='icon-warning-sign modal-icon'></i> Are you sure you want to delete row ? ");
+        $('#modal-form-delete').bind('click', function(e) {
+            $(link).removeClass();
+            $(link).html("<img src='<?php echo __IMAGE_URL; ?>/loading_small.gif' width='25'>");
+            $.ajax({url: '<?php echo $delete_link; ?>/'+id, success: function(result){
+                result = jQuery.parseJSON(result);
+                if(result.result)
+                {
+                    // -- Reload datatables --
+                    contentTable.row(currentRow).remove().draw(false);
+                }
+            }});
+        });
+    }
+
+    function switchStatusItem(link, id)
+    {
+        status = $(link).attr('status');
+        $(link).removeClass();
+        $(link).html("<img src='<?php echo __IMAGE_URL; ?>/loading_small.gif' width='25'>");
+        $.ajax({url: '<?php echo $active_link; ?>/'+id, success: function(result){
+            result = jQuery.parseJSON(result);
+            if(result.result)
+            {
+                if(status == 1)
+                {
+                    $(link).addClass('btn btn-circle btn-gray');
+                    $(link).html("<i class='icon-remove-circle'>");
+                    $(link).attr('status', 0);
+                } else
+                {
+                    $(link).addClass('btn btn-circle btn-lime');
+                    $(link).html("<i class='icon-ok-sign'>");
+                    $(link).attr('status', 1);
+                }
+            }
+        }});
+
+//        currentRow = $(link).closest("tr");
+//        console.log(currentRow);
+//        var data = contentTable.row(currentRow).data();
+//        console.log(data);
+//        alert( 'You clicked on '+data[0]+' row' );
+//        contentTable.row(currentRow).data('null');
+//        alert(id);
+    }
+</script>
+
+<!--page specific plugin scripts-->
+
+<script type="text/javascript" src="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.js"></script>
+<!--<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.11/api/fnDataUpdate.js"></script>-->
+<!--<script type="text/javascript" src="--><?php //echo __TEMPLATE_URL; ?><!--assets/data-tables/jquery.dataTables.js"></script>-->
+
+<script type="text/javascript" src="<?php echo __TEMPLATE_URL; ?>assets/data-tables/DT_bootstrap.js"></script>
