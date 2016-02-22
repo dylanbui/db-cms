@@ -58,7 +58,7 @@ class ContentController extends \Admin\Controller\AdminController
 		return $this->forward("common/error/error-404");
 	}
 
-    public function listAction($page_code, $cat_id = 0, $page_number = 0, $display_length = 10)
+    public function listAction($page_code, $cat_id = 0)
     {
         $this->_loadConfigPage($page_code);
         $cat_id = intval($cat_id);
@@ -77,6 +77,13 @@ class ContentController extends \Admin\Controller\AdminController
             }
             $this->oView->currentCategoryName = $currentCategoryName;
         }
+
+        // -- Use to load current page --
+        $page_number = $this->oInput->get('page_number', 0);
+        $display_length = $this->oInput->get('display_length', 10);
+
+        $this->oView->page_number = $page_number;
+        $this->oView->display_length = $display_length;
 
         $this->oView->add_link = site_url("page/content/add/".$page_code);
         $this->oView->delete_link = site_url("page/content/delete/".$page_code);
@@ -628,7 +635,7 @@ class ContentController extends \Admin\Controller\AdminController
             }
         }
 
-        $sOrder = empty($sOrder) ? 'sort_order DESC' : $sOrder;
+        $sOrder = empty($sOrder) ? 'last_update DESC' : $sOrder;
 
         $rowPageConf = $this->_objPageConf->getRow("code = ?", array($page_code));
         $page_id = $rowPageConf['id'];

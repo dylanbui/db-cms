@@ -69,15 +69,16 @@
                 'bSearchable': false,
                 'aTargets': ['col_action'], // Column to target
                 'mRender': function ( data, type, row ) {
-                    html = '<a class="btn btn-small btn-gray" title="" href="<?php echo $update_link; ?>/'+row[0]+'"><i class="icon-edit"></i></a>';
-                    html += '<a class="btn btn-small btn-danger" title="" href="javascript:confimDelete(\'<?php echo $delete_link; ?>/'+row[0]+'\');"><i class="icon-trash"></i></a>';
+                    html = '<a href="<?php echo $update_link; ?>/'+row[0]+'" class="btn btn-small btn-gray" title=""><i class="icon-edit"></i></a>';
+                    html += '<a href="javascript:confimDelete(\'<?php echo $delete_link; ?>/'+row[0]+'\');" class="btn btn-small btn-danger" title=""><i class="icon-trash"></i></a>';
                     return html;
                 }
             }],
             "bProcessing": true,
             "bServerSide": true,
             "sAjaxSource": "<?= $load_data_link; ?>",
-//            "iDisplayLength": 25, // Default show rows
+            "iDisplayStart": <?= ($page_number * $display_length); ?>,
+            "iDisplayLength": <?= $display_length; ?>, // Default show rows
             "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
             "processing" : true,
 //            "oLanguage": {

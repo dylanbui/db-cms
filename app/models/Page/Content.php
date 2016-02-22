@@ -78,10 +78,9 @@ class Content extends Model
 		return $rowPageConf;
 	}
 
-//	function getListDisplay($page_id, $ln_code, $cat_id, $offset = 0, $items_per_page = 0, $order_by = NULL)
     function getListDisplay($page_id, $ln_code, $cat_id, $where = NULL, $offset = 0, $items_per_page = 0, $order_by = NULL)
 	{
-		$sql = "SELECT pr.id ,pr.uniqid ,pr.visited ,pr.active ,pr.sort_order ,pr.last_update ,ci.name FROM ".TB_PAGE_CONTENT. " as pr INNER JOIN ".TB_PAGE_CONTENT_LN." as ci ";
+		$sql = "SELECT pr.id ,pr.uniqid ,pr.visited ,pr.active ,pr.sort_order ,ci.name ,ci.last_update FROM ".TB_PAGE_CONTENT. " as pr INNER JOIN ".TB_PAGE_CONTENT_LN." as ci ";
 		$sql .= " ON pr.id = ci.id ";
 		$sql .= " WHERE pr.page_id = ? AND ci.ln = ?";
         $sql .= !empty($where) ? " AND ({$where})" : '';
