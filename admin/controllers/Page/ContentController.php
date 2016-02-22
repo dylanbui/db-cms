@@ -58,7 +58,7 @@ class ContentController extends \Admin\Controller\AdminController
 		return $this->forward("common/error/error-404");
 	}
 
-    public function listAction($page_code, $cat_id = 0)
+    public function listAction($page_code, $cat_id = 0, $page_number = 0, $display_length = 10)
     {
         $this->_loadConfigPage($page_code);
         $cat_id = intval($cat_id);
@@ -81,7 +81,7 @@ class ContentController extends \Admin\Controller\AdminController
         $this->oView->add_link = site_url("page/content/add/".$page_code);
         $this->oView->delete_link = site_url("page/content/delete/".$page_code);
         $this->oView->update_link = site_url("page/content/update/".$page_code);
-        $this->oView->active_link = site_url("page/content/active/".$page_code);
+        $this->oView->active_link = site_url("page/content/switch-status/".$page_code);
         $this->oView->load_data_link = site_url("page/content/load-data-content/".$page_code.'/'.$cat_id);
 
         $this->renderView('page/content/list');
@@ -332,6 +332,28 @@ class ContentController extends \Admin\Controller\AdminController
 		redirect('page/content/list/'.$page_code);
 	}
 
+    public function switchStatusAction($page_code, $content_id)
+    {
+        // Load permission
+        $returnVal['result'] = '';
+        $returnVal['message'] = '';
+        $returnVal['data'] = '';
+        $this->detectModifyPermission('page/content/'.$page_code);
+        if (!$this->_isModify)
+            $returnVal['result'] = false;
+        else
+        {
+            $this->_objPageContent->setActiveField($content_id);
+            $returnVal['result'] = true;
+        }
+
+        // -- Demo sleep --
+        sleep(1);
+
+        echo json_encode($returnVal);
+        exit();
+    }
+
 	public function activeAction($page_code, $content_id, $offset = 0)
 	{
 		// Load permission
@@ -541,42 +563,10 @@ class ContentController extends \Admin\Controller\AdminController
 		}		
 	}
 
-    // TODO : Xoa nhung hinh anh khong co trong DB --
-    public function deleteContentImageAction($page_code)
-    {
-        $rowPageConf = $this->_objPageConf->getRow("code = ?", array($page_code));
-        $page_id = $rowPageConf['id'];
-
-        $sql = "SELECT pr.* ,ci.* FROM ".TB_PAGE_CONTENT. " as pr INNER JOIN ".TB_PAGE_CONTENT_LN." as ci ";
-        $sql .= " ON pr.id = ci.id ";
-        $sql .= " WHERE pr.page_id = ?";
-        $rsContent = Db::getInstance()->query($sql, array($page_id));
-
-        $rsContent = $this->_objPageContent->getAllRowsWithPage($page_id);
-        echo "<pre>";
-        print_r($rsContent);
-        echo "</pre>";
-        exit();
-
-//        foreach ($rsContent as $content)
-//        {
-//            if(!empty($content['icon'])) {
-//                @unlink(__UPLOAD_DATA_PATH.$content['icon']);
-//                echo 'Delete : '.__UPLOAD_DATA_PATH.$content['icon'];
-//            }
-//            if(!empty($content['image'])) {
-//                @unlink(__UPLOAD_DATA_PATH.$content['image']);
-//                @unlink(__UPLOAD_DATA_PATH.'thumb_'.$content['image']);
-//                echo 'Delete : '.__UPLOAD_DATA_PATH.$content['image'].' & (thumb_)';
-//            }
-//
-//        }
-    }
-
     public function loadDataContentAction($page_code, $cat_id = 0)
     {
         // -- Danh sach cot phai tuong ung voi ds hien thi --
-        $aColumns = array( 'id', 'name', 'last_update', 'active', 'id');
+        $aColumns = array('id', 'sort_order', 'name', 'last_update', 'active', 'id');
 
         // -- Paging --
         $offset = ""; $items_per_page = "";
@@ -638,7 +628,7 @@ class ContentController extends \Admin\Controller\AdminController
             }
         }
 
-        $sOrder = empty($sOrder) ? 'id DESC' : $sOrder;
+        $sOrder = empty($sOrder) ? 'sort_order DESC' : $sOrder;
 
         $rowPageConf = $this->_objPageConf->getRow("code = ?", array($page_code));
         $page_id = $rowPageConf['id'];
@@ -671,9 +661,43 @@ class ContentController extends \Admin\Controller\AdminController
             $output['aaData'][] = $row;
         }
 
+        // -- Demo sleep 3 second --
+//        sleep(3);
+
         echo json_encode($output);
         exit();
     }
 
+    // TODO : Xoa nhung hinh anh khong co trong DB --
+    public function deleteContentImageAction($page_code)
+    {
+        $rowPageConf = $this->_objPageConf->getRow("code = ?", array($page_code));
+        $page_id = $rowPageConf['id'];
+
+        $sql = "SELECT pr.* ,ci.* FROM ".TB_PAGE_CONTENT. " as pr INNER JOIN ".TB_PAGE_CONTENT_LN." as ci ";
+        $sql .= " ON pr.id = ci.id ";
+        $sql .= " WHERE pr.page_id = ?";
+        $rsContent = Db::getInstance()->query($sql, array($page_id));
+
+        $rsContent = $this->_objPageContent->getAllRowsWithPage($page_id);
+        echo "<pre>";
+        print_r($rsContent);
+        echo "</pre>";
+        exit();
+
+//        foreach ($rsContent as $content)
+//        {
+//            if(!empty($content['icon'])) {
+//                @unlink(__UPLOAD_DATA_PATH.$content['icon']);
+//                echo 'Delete : '.__UPLOAD_DATA_PATH.$content['icon'];
+//            }
+//            if(!empty($content['image'])) {
+//                @unlink(__UPLOAD_DATA_PATH.$content['image']);
+//                @unlink(__UPLOAD_DATA_PATH.'thumb_'.$content['image']);
+//                echo 'Delete : '.__UPLOAD_DATA_PATH.$content['image'].' & (thumb_)';
+//            }
+//
+//        }
+    }
 
 }
