@@ -212,8 +212,11 @@ class SessionSaveHandler
         $config_file = realpath(dirname(dirname(dirname(dirname(dirname(__SITE_PATH)))))) . '/app/config/config.php';
 
 		$configuration = require $config_file;
-		
-		$this->sessionName = $configuration['session']['session_name'];
+
+        // set the timezone
+        date_default_timezone_set($configuration['application']['timezone']);
+
+        $this->sessionName = $configuration['session']['session_name'];
 		$this->sessionTableName = $configuration['session']['table_name'];
 		$this->sessionPrimaryKey = $configuration['session']['primary_key'];
 
