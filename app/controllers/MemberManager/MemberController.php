@@ -25,10 +25,7 @@ class MemberController extends BaseController
 
 	public function indexAction()
 	{
-		$this->oSession->userdata['test_1'] = 'Thong tin duoc luu vao test';
-		$this->oSession->userdata['test'] = 'Thong tin duoc luu vao test';
-	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
-	    $this->renderView('member-manager/facebook/login');
+        $this->loginAction();
 	}
 
     public function loginAction()

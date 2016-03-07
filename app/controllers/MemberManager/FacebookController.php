@@ -3,8 +3,6 @@
 namespace App\Controller\MemberManager;
 
 use App\Lib\Core\BaseController;
-use App\Lib\Core\Request;
-//use Facebook;
 
 class FacebookController extends BaseController
 {
@@ -12,21 +10,7 @@ class FacebookController extends BaseController
 	public function __construct()
 	{
 		parent::__construct();
-		
 	}
-
-	public function indexAction() 
-	{
-		$this->oSession->userdata['test_1'] = 'Thong tin duoc luu vao test';
-		$this->oSession->userdata['test'] = 'Thong tin duoc luu vao test';
-	    $this->oView->title = 'Welcome to Bui Van Tien Duc MVC RENDER';
-	    $this->renderView('member-manager/facebook/login');
-	}
-
-    public function loginAction()
-    {
-        $this->renderView('member-manager/facebook/login');
-    }
 
     public function loadFbMemberAction()
     {
@@ -76,13 +60,15 @@ class FacebookController extends BaseController
                 // -- Neu ton tai account roi thi update fbid --
                 // -- Co the update them cac field khac tuy rule --
                 $arr = array(
-                    "fbid" => $rowMember["fbid"],
-                    "avatar" => $fbme['picture']
+                    'fbid' => $fbme['id'],
+                    'avatar' => $fbme['picture'],
+                    'access_token' => $accessToken->getValue()
                 );
                 $current_id = $objMember->update($rowMember['id'], $arr);
             }
             else
             {
+                // -- Tao 1 user account voi password --
                 $pw = strtolower(create_uniqid('7'));
                 $arr = array(
                     'fbid' => $fbme["id"],
@@ -96,6 +82,7 @@ class FacebookController extends BaseController
                     'password' => encryption($pw),
                     'plain_password' => $pw,
                     'avatar' => $fbme['picture'],
+                    'access_token' => $accessToken->getValue(),
                     'create_at' => now_to_mysql()
                 );
                 $current_id = $objMember->insert($arr);

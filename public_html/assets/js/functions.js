@@ -523,11 +523,6 @@ UI.Facebook.login = function (callBackFunc)
                 UI.Facebook.permissions = permissions.data;
             });
 
-//          if (typeof UI.Facebook.afterLogin == 'function')
-//            UI.Facebook.getUserInfo(UI.Facebook.afterLogin);
-//          else
-//            UI.Facebook.getUserInfo(null);
-
             FB.api('/me?fields=id,name,email,birthday,gender,picture.width(160).height(160)', function (response)
             {
                 UI.Facebook.userInfo = response;
@@ -550,13 +545,6 @@ UI.Facebook.login = function (callBackFunc)
                     }
                 );
 
-                //if (callBackFunc != null)
-                //    callBackFunc(response);
-                //else
-                //{
-                //    if (typeof UI.Facebook.afterLogin == 'function')
-                //        UI.Facebook.afterLogin(response);
-                //}
             });
         }
         else
@@ -570,6 +558,22 @@ UI.Facebook.login = function (callBackFunc)
         }
     }, { scope: 'email, user_friends, publish_actions, user_birthday, read_stream' });
 };
+
+UI.Facebook.loginWithCallbackLink = function (postDataLink, sucessFunc)
+{
+    UI.Facebook.login(function (fbUserInfo) {
+        console.debug(fbUserInfo);
+        $.post(postDataLink, {"fbid": fbUserInfo.id, "username": fbUserInfo.username, "fullname": fbUserInfo.name, "email": fbUserInfo.email, "birthday": fbUserInfo.birthday, "gender": fbUserInfo.gender, "accesstoken": UI.Facebook.accessToken, "totalFriends" : UI.Facebook.totalFriends}, function (respone) {
+            UI.Log.show('Thong tin tra ve sau khi callBackLink');
+            UI.Log.show(respone);
+            UI.Log.show(JSON.parse(respone));
+            if (sucessFunc != null)
+                sucessFunc(JSON.parse(respone));
+            else
+                location.reload();
+        });
+    });
+}
 
 UI.Facebook.logout = function ()
 {

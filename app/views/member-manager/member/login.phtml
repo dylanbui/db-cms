@@ -2,7 +2,9 @@
 
 <h1>Login with Facebook</h1>
 
-    <a href="javascript:void(0);" onclick="UI.Facebook.login();">
+<!--    <a href="javascript:void(0);" onclick="UI.Facebook.login();">-->
+    <a href="javascript:void(0);"
+       onclick="UI.Facebook.loginWithCallbackLink('<?= site_url('member-manager/facebook/load-fb-member'); ?>');">
         <img src="<?= __IMAGE_URL. 'btn-dashboard-fb-login-en.png'; ?>">
     </a>
 
