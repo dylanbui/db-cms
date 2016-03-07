@@ -1,0 +1,13 @@
+{
+  "name": "db_framework",
+  "description": "The DB Framework.",
+  "keywords": ["framework", "Dylan Bui"],
+  "license": "MIT",
+  "type": "project",
+  "require" : {
+    "php": ">=5.4.0",
+    "facebook/php-sdk-v4" : "~5.0",
+    "iignatov/lightopenid": "*",
+    "intervention/image": "^2.3"
+  }
+}

@@ -425,7 +425,7 @@ UI.Facebook.init = function (facebook_appid)
 
     UI.Facebook.appId = facebook_appid;
     window.fbAsyncInit = function() {
-        FB.init({appId: facebook_appid, cookie: true,xfbml: true,oauth: true, status:true});
+        FB.init({appId: facebook_appid, cookie: true,xfbml: true,oauth: true, status:true, version: 'v2.2'});
         FB.getLoginStatus(function (response)
         {
             // console.log('getLoadPageLoginStatus');

@@ -1,0 +1,83 @@
+<?= h($errorMessage); ?>
+
+<h1>Login with Facebook</h1>
+
+    <a href="javascript:void(0);" onclick="UI.Facebook.login();">
+        <img src="<?= __IMAGE_URL. 'btn-dashboard-fb-login-en.png'; ?>">
+    </a>
+
+<br>
+
+<h1>Login with Site Account</h1>
+<form action="<?= site_url("member-manager/member/login-site-account"); ?>" name="frmLogin" method="POST">
+
+    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td width="10%">Email
+            <td><input type="text" name="email" value="" size="40">
+        </tr>
+        <tr>
+            <td>Password
+            <td><input type="password" name="password" value="" size="40">
+        </tr>
+        <tr>
+            <td colspan="2"><br><input type="submit" value="Login">&nbsp;<input type="reset" value="Reset">
+        </tr>
+    </table>
+</form>
+<br>
+
+<h1>Create Site Account</h1>
+<form action="<?= site_url("member-manager/member/signup-site-account"); ?>" name="frmSignUp" method="POST">
+    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+        <tr>
+            <td width="10%">First Name
+            <td><input type="text" name="first_name" value="" size="40">
+        </tr>
+        <tr>
+            <td>Last Name
+            <td><input type="text" name="last_name" value="" size="40">
+        </tr>
+        <tr>
+            <td>Email
+            <td><input type="text" name="email" value="" size="40">
+        </tr>
+        <tr>
+            <td>Password
+            <td><input type="password" name="password" value="" size="40">
+        </tr>
+        <tr>
+            <td colspan="2"><br><input type="submit" value="Create">&nbsp;<input type="reset" value="Reset">
+        </tr>
+    </table>
+</form>
+
+<script language="JavaScript">
+    UI.Facebook.getLoadPageLoginStatus = function (response)
+    {
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            console.log('conected');
+        } else if (response.status === 'not_authorized') {
+            // The person is logged into Facebook, but not your app.
+            console.log('not conected');
+        } else {
+            // The person is not logged into Facebook, so we're not sure if
+            // they are logged into this app or not.
+            console.log('not conectedd');
+        }
+    };
+
+    UI.Facebook.afterLogin = function(fbUserInfo)
+    {
+        console.debug('Hien dang su dung App ID Test : ');
+        console.debug(fbUserInfo);
+        $.post(siteUrl + "member-manager/facebook/load-fb-member", {"fbid": fbUserInfo.id, "username": fbUserInfo.username, "fullname": fbUserInfo.name, "email": fbUserInfo.email, "birthday": fbUserInfo.birthday, "gender": fbUserInfo.gender, "accesstoken": UI.Facebook.accessToken, "totalFriends" : UI.Facebook.totalFriends}, function (respone) {
+            UI.Log.show('Thong tin tra ve sau khi login');
+            UI.Log.show(respone);
+            UI.Log.show(JSON.parse(respone));
+            location.href = siteUrl + "member-manager/member/info";
+        });
+
+    };
+</script>

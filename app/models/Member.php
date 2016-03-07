@@ -15,6 +15,11 @@ class Member extends Model
 		parent::__construct();
 	}
 
+    public function auth($email, $password)
+    {
+        return $this->getRow('email = ? AND password = ?', array($email, encryption($password)));
+    }
+
 	
 }
 	

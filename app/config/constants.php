@@ -1,4 +1,7 @@
-<?php  if ( ! defined('__SITE_PATH')) exit('No direct script access allowed');  
+<?php  if ( ! defined('__SITE_PATH')) exit('No direct script access allowed');
+
+define('_FB_APP_ID', '534956693276758');
+define('_FB_APP_SECRET', '2e23283d32b30b1c53e978b68d32c40b');
 
 define('_TB_PREFIX', $config->config_values['database_master']['db_prefix']);
 

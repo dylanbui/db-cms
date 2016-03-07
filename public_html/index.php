@@ -117,6 +117,8 @@
 	$front->addPreRequest(new Request('run/first/action')); 
 	$front->addPreRequest(new Request('run/second/action'));
 	*/
+
+    $front->addPreRequest(new \App\Lib\Core\Request('member-manager/member/get-login-info'));
 	
 	$front->dispatch();
 	

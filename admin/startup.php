@@ -1,6 +1,8 @@
 <?php  if ( ! defined('__SITE_PATH')) exit('No direct script access allowed');
 
 	// Load config files. Global config file
+    require __SITE_PATH.'/vendor/autoload.php';
+
 	require __SITE_PATH.'/app/libraries/Core/Psr4Autoloader.php';
 	// instantiate the loader
  	$loader = new Psr4Autoloader();
