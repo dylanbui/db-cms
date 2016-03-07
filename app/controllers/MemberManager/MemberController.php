@@ -69,8 +69,37 @@ class MemberController extends BaseController
 
     public function signupSiteAccountAction()
     {
+        if($this->oInput->isPost())
+        {
+            $objMember = new \App\Model\Member();
+            $email = $this->oInput->post("email");
+            $rowMember = $objMember->getRow("email = ?", array($email));
+            if(!empty($rowMember))
+            {
+                $this->oSession->set_flashdata('err_login', 'Account da ton tai roi');
+                redirect('member-manager/member/login');
+            }
 
-        redirect('member-manager/member/info');
+            $pw = $this->oInput->post('password');
+            $arr = array(
+                'gender' => $this->oInput->post("gender"),
+                'email' => $email,
+                'first_name' => $this->oInput->post("first_name"),
+                'last_name' => $this->oInput->post("last_name"),
+                'full_name' => $this->oInput->post("first_name").' '.$this->oInput->post("last_name"),
+                'password' => encryption($pw),
+                'plain_password' => $pw,
+                'create_at' => now_to_mysql()
+            );
+
+            $current_id = $objMember->insert($arr);
+
+            // -- Sau khi tao thi login luon --
+            $rowMember = $objMember->getRow("id = ?", array($current_id));
+            $this->oSession->userdata["current_user"] = $rowMember;
+            redirect('member-manager/member/info');
+        }
+        redirect('member-manager/member/login');
     }
 
     public function infoAction()
