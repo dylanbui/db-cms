@@ -1,14 +1,21 @@
 <?= h($errorMessage); ?>
 
 <h1>Login with Facebook</h1>
-
 <!--    <a href="javascript:void(0);" onclick="UI.Facebook.login();">-->
     <a href="javascript:void(0);"
        onclick="UI.Facebook.loginWithCallbackLink('<?= site_url('member-manager/facebook/load-fb-member'); ?>');">
         <img src="<?= __IMAGE_URL. 'btn-dashboard-fb-login-en.png'; ?>">
     </a>
+<br>
+
+<h1>Login with Google</h1>
+
+    <a href="#">
+        <img src="<?= __IMAGE_URL. 'signin-google-3.png'; ?>">
+    </a>
 
 <br>
+
 
 <h1>Login with Site Account</h1>
 <form action="<?= site_url("member-manager/member/login-site-account"); ?>" name="frmLogin" method="POST">

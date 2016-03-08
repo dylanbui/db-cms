@@ -7,6 +7,7 @@ use App\Lib\Core\Request;
 
 class MemberController extends BaseController
 {
+//    http://www.sitepoint.com/social-logins-php-hybridauth/
 
 	public function __construct()
 	{
@@ -34,6 +35,18 @@ class MemberController extends BaseController
             redirect('member-manager/member/info');
 
         $this->oView->errorMsg = $this->oSession->flashdata('err_login');
+
+        // -- Login Google Account --
+//        $openid = new \LightOpenID("localhost/zx-cms");
+//        $openid->identity = 'https://www.google.com/accounts/o8/id';
+//        $openid->required = array(
+//            'namePerson/first',
+//            'namePerson/last',
+//            'contact/email'
+//        );
+//        $openid->returnUrl = current_site_url('member-manager/google/login');
+//        $this->oView->googleAuthUrl = $openid->authUrl();
+//        $this->oView->openid = $openid;
 
         $this->renderView('member-manager/member/login');
     }
