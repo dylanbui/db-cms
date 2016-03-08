@@ -3,11 +3,17 @@
 	// define the site path __SITE_PATH : c:\xampp\htdocs\adv_mvc
 	define ('__SITE_PATH', realpath(dirname(dirname(dirname(__FILE__)))));
 	// __SITE_URL : /adv_mvc/
- 	define ('__SITE_URL', str_replace('public_html/','', dirname(str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME'])).'/'));
+// 	define ('__SITE_URL', str_replace('public_html/','', dirname(str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME'])).'/'));
+
+    $tmp = str_replace('public_html/',"",$_SERVER['SCRIPT_NAME']);
+    define ('__SITE_URL', str_replace(basename($tmp),"",$tmp));
+
+
 	// __BASE_URL : /adv_mvc/admin/
- 	define ('__BASE_URL', __SITE_URL.'a/');
+ 	define ('__BASE_URL', __SITE_URL);
 	// Co thu muc public_html 	
- 	define ('__PUBLIC_HTML', __SITE_URL.'public_html/');
+// 	define ('__PUBLIC_HTML', dirname(__SITE_URL).'public_html/');
+    define ('__PUBLIC_HTML', str_replace('//', '/', dirname(__SITE_URL).'/'));
 
  	// ---- Khong Thay Doi ---- //
  	define ('__ASSET_URL', __PUBLIC_HTML.'assets/');
@@ -34,11 +40,15 @@
 	define ('__UPLOAD_GALLERY_PATH', __UPLOAD_DATA_PATH . 'gallery/');
 	define ('__UPLOAD_GALLERY_URL', __UPLOAD_DATA_URL . 'gallery/');
 
-	// $const = get_defined_constants(true);
-	// echo "<pre>";
-	// print_r($const['user']);
-	// echo "</pre>";
-	// exit();
+//    echo "<pre>";
+//    print_r($_SERVER);
+//    echo "</pre>";
+//
+//    $const = get_defined_constants(true);
+//    echo "<pre>";
+//    print_r($const['user']);
+//    echo "</pre>";
+//    exit();
 
 	define ('__CONTROLLER_NAMESPACE', 'Admin\Controller');	
 		

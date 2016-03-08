@@ -142,7 +142,23 @@ class ExceptionHandler
         }
 
         // remove view contents from buffer
-        @ob_clean();
+//        ob_clean();
+//        ob_end_clean();
+
+        echo "<pre>";
+        print_r(ob_get_contents());
+        echo "</pre>";
+        exit();
+
+//        if (ob_get_length()) {
+////            ob_end_clean();
+////            ob_clean();
+//            echo "<pre>";
+//            print_r('sasdasd');
+//            echo "</pre>";
+//            exit();
+//
+//        }
 
         ob_start();
         include(__LAYOUT_PATH.'/errors/'.$view_file);
