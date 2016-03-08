@@ -12,11 +12,15 @@
 	// define the site path __SITE_PATH : c:\xampp\htdocs\adv_mvc
 	define ('__SITE_PATH', realpath(dirname(dirname(__FILE__))));
 	// __SITE_URL : /adv_mvc/
- 	define ('__SITE_URL', str_replace('public_html/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
+    $tmp = str_replace('/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+    define ('__SITE_URL', str_replace('public_html/',"",$tmp));
+// 	define ('__SITE_URL', str_replace('/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
+
+
 	// __BASE_URL : /adv_mvc/
  	define ('__BASE_URL', __SITE_URL);
  	// Co thu muc public_html 	
- 	define ('__PUBLIC_HTML', __SITE_URL.'public_html/');
+ 	define ('__PUBLIC_HTML', __SITE_URL.'/');
  	
  	// ---- Khong Thay Doi ---- // 	
  	define ('__ASSET_URL', __PUBLIC_HTML.'assets/');
@@ -52,11 +56,15 @@
  // 	// register the autoloader
  // 	$loader->register();
 
-	// $const = get_defined_constants(true);
-	// echo "<pre>";
-	// print_r($const['user']);
-	// echo "</pre>";
-	// exit();
+    echo "<pre>";
+    print_r($_SERVER);
+    echo "</pre>";
+
+	 $const = get_defined_constants(true);
+	 echo "<pre>";
+	 print_r($const['user']);
+	 echo "</pre>";
+	 exit();
 
  //    // Create configure object
  //    $config = \App\Lib\Core\Config::getInstance();
