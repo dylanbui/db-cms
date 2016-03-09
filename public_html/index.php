@@ -12,9 +12,8 @@
 	// define the site path __SITE_PATH : c:\xampp\htdocs\adv_mvc
 	define ('__SITE_PATH', realpath(dirname(dirname(__FILE__))));
 	// __SITE_URL : /adv_mvc/
-    $tmp = str_replace('public_html/',"",$_SERVER['SCRIPT_NAME']);
-    define ('__SITE_URL', str_replace(basename($tmp),"",$tmp));
-
+    $tmp = str_replace('public_html/', '', $_SERVER['SCRIPT_NAME']);
+    define ('__SITE_URL', str_replace(basename($tmp), '', $tmp));
 // 	define ('__SITE_URL', str_replace('/'.basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']));
 
 	// __BASE_URL : /adv_mvc/

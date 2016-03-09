@@ -72,13 +72,12 @@ class ExceptionHandler
         switch (APPLICATION_ENV) {
             case 'production':
             case 'staging':
-            default:
+            default :
                 ini_set('display_errors', 0);
                 error_reporting(0);
                 break;
             case 'test':
             case 'development':
-            default:
                 ini_set('display_errors', 1);
                 // error_reporting(-1);
 //                error_reporting(E_ALL ^ E_DEPRECATED); // Hien thi thong bao tat ca cac loi tru cac ham DEPRECATED
@@ -90,7 +89,6 @@ class ExceptionHandler
             if (!($errno & error_reporting())) {
                 return;
             }
-
             $options = [
                 'type'    => $errno,
                 'message' => $errstr,
@@ -98,7 +96,6 @@ class ExceptionHandler
                 'line'    => $errline,
                 'isError' => true,
             ];
-
             static::handle(new Error($options));
         });
 
@@ -111,7 +108,6 @@ class ExceptionHandler
                 'isException' => true,
                 'exception'   => $e,
             ];
-
             static::handle(new Error($options));
         });
 
@@ -142,30 +138,13 @@ class ExceptionHandler
         }
 
         // remove view contents from buffer
-//        ob_clean();
-//        ob_end_clean();
-
-        echo "<pre>";
-        print_r(ob_get_contents());
-        echo "</pre>";
-        exit();
-
-//        if (ob_get_length()) {
-////            ob_end_clean();
-////            ob_clean();
-//            echo "<pre>";
-//            print_r('sasdasd');
-//            echo "</pre>";
-//            exit();
-//
-//        }
+        @ob_clean();
 
         ob_start();
         include(__LAYOUT_PATH.'/errors/'.$view_file);
         $contents = ob_get_contents();
         ob_end_clean();
         echo $contents;
-
-        exit();
+        die();
     }
 }
