@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    ".buildpath": true,
+    ".project": true,
+    ".settings": true,
+    ".vscode": true
+  }
+}
